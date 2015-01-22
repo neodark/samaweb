@@ -1,0 +1,5 @@
+django-admin startproject samaweb
+cd samaweb/
+./manage.py migrate
+./manage.py createsuperuser
+./manage.py runserver
