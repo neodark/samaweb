@@ -1,0 +1,126 @@
+{% extends "samacore/base.html" %}
+
+{% block content %}
+    <!-- Page Content -->
+    <div class="container">
+
+    <div class="row">
+    <div class="col-md-6">
+    <h2>Section des Samaritains de Martigny</h2>
+    
+    <img id="samalogo" src="{{ STATIC_URL }}img/sama_logo.png">
+    
+    <p>HISTORIQUE DE LA SECTION DES SAMARITAINS DE MARTIGNY.</p>
+    
+    <p> Il est impossible de déterminer avec exactitude la date de la 
+    première formation d'une section de samaritains à Martigny.</p>
+    
+    <p>Il semble que ce soit durant la guerre de 39-45. Cependant, elle resta 
+    en léthargie dès la fin de la guerre et ce, jusqu'en avril 1953 où une section 
+    renait et prend son essor. Un comité provisoire, nommé à main levée est constitué
+    et fonctionne jusqu'à la fin de l'année 1953.  A cette date, il démissionne en bloc
+    pour laisser la place au nouveau comité. Ainsi démarra véritablement notre 
+    section de samaritains.</p>
+    
+    <p>
+    Nous pouvons remercier ces pionniers car, grâce à eux et à leurs successeurs, nous avons eu la joie de fêter, en 2003, le 50ième anniversaire de la section.</p>
+    
+    <p>
+    Dès le début de leurs activités, les samaritains assurèrent des postes sanitaires durant les diverses manifestations sportives ou autres. Ils étaient, plus particulièrement, présent lors de la première édition du Comptoir de Martigny, devenu depuis la Foire du Valais.
+    </p>
+    <p>
+    Actuellement, la section compte une trentaine de membres actifs, quelques membres libres et une dizaine de membres passifs. Le nombre de membres actifs est insuffisant, compte tenu du nombre croissant de manifestations où notre présence est demandée. Fort heureusement, nous pouvons compter sur le soutien d'autres sections environnantes, en particulier durant les 10 jours de la Foire du Valais où un minimum de 36 personnes est indispensable.
+    </p>
+    <p>
+    Mis à part les postes sanitaires, nous offrons au public des cours variés :
+    
+    <ul>
+    <li>-Cours de sauveteurs ( pour le permis de conduire)</li>
+    <li>-Cours complet de samaritain ( suite du cours sauveteur)</li>
+    <li>-Cours C.P.R. (réanimation cardio-pulmonaire)</li>
+    <li>-Cours U.P.E. ( urgence chez les petits enfants)</li>
+    <li>-Cours Sanitaire d'entreprises</li>
+    </ul>
+    </p>
+    <p>
+    Nous collaborons aussi avec le centre de transfusion sanguine, pour le don de sang et parfois, avec les pompiers et ambulanciers pour des exercices en commun. Cette collaboration nécessite des exercices réguliers, afin de mieux se connaître et de garantir ainsi une efficacité maximale.
+    </p>
+    <p>
+    Comme vous pouvez le constater, nous ne sommes pas au chômage et recherchons de nouveaux membres qui pourraient venir étoffer nos rangs et apporter des forces vives à notre section.
+    </p>
+    <p>
+    MARTIGNY, FEVRIER 2007               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                   LA PRESIDENTE I.UDRY                    
+    </p>
+    
+    </div>
+    
+    <div class="col-md-6">
+    <h2>Organisation de la section</h2>
+    
+    <div id='chart_div'></div>
+    <br>
+    <h2>Organisation cantonale et suisse</h2>
+    <p>
+    La section des Samaritains de Martigny fait elle-même partie d'une plus grande organisation au niveau cantonale avec l'ASSVR(Association des Sections des Samaritains du Valais Romand) et au niveau suisse avec l'ASS (Alliance Suisse des Samaritains)
+    </p>
+    <p>
+    <br>
+    Association des Sections des Samaritains du Valais Romand :
+    </p>
+    <p>
+    <img id="assvrlogo" src="{{ STATIC_URL }}img/assvr_logo.png">
+    <p><a class="button"
+    href="http://www.assvr.ch/">site de l'ASSVR</a></p>
+    
+    </p>
+    <br>
+    <p>
+    Alliance Suisse des Samaritains :
+    </p>
+    
+    <img id="asslogo" src="{{ STATIC_URL }}img/ass_logo.png">
+    <p><a class="button"
+    href="http://www.samariter.ch/fr/i/home.html">site de l'ASS</a></p>
+    </p>
+    </div>
+    </div>
+    <div class="clear"></div>
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; SamaMartigny 2014</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+    <script type='text/javascript' src='https://www.google.com/jsapi'></script>
+    <script type='text/javascript'>
+    google.load('visualization', '1', {packages:['orgchart']});
+    google.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Name');
+        data.addColumn('string', 'Manager');
+        data.addColumn('string', 'ToolTip');
+        data.addRows([
+                [{v:'Udry', f:'Isabelle UDRY<div style="color:red; font-style:italic">Présidente de Section</div>'}, '', 'Presidente'],
+                [{v:'Heritier', f:'Clément HERITIER<div style="color:red; font-style:italic">Vice Président</div>'}, 'Udry', 'Vice-President'],
+                [{v:'Kalbermatten', f:'Béatrice KALBERMATTEN<div style="color:red; font-style:italic">Caissière</div>'}, 'Heritier', 'Caissiere'],
+                [{v:'Neveu', f:'Morgane NEVEU<div style="color:red; font-style:italic">Secrétaire</div>'}, 'Heritier', 'Secretaire'],
+                [{v:'Perraudin', f:'Dr Georges Perraudin<div style="color:red; font-style:italic">Médecin de Section</div>'}, 'Heritier', 'Medecin'],
+                [{v:'Follonier', f:'Léa FOLLONIER<div style="color:red; font-style:italic">Responsable Matériel</div>'}, 'Heritier', 'Materiel'],
+                [{v:'Tarsetti', f:'Flavio TARSETTI<div style="color:red; font-style:italic">Responsable Commission Technique & Moniteur</div>'}, 'Heritier', 'Commission Technique'],
+                [{v:'LoCicero', f:'Nadine LOCICERO<div style="color:red; font-style:italic">Monitrice</div>'}, 'Tarsetti', 'Monitrice']
+                ]);
+        var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
+        chart.draw(data, {allowHtml:true});
+    }
+    </script>
+
+{% endblock %}
