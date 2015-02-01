@@ -48,6 +48,10 @@ header.carousel .fill {
     font-size: 100px;
 }
 
+/* Section Page Styles */
+table.google-visualization-orgchart-table {
+    border-collapse:initial;
+}
 /* Pricing Page Styles */
 
 .price {
