@@ -21,3 +21,8 @@ def section(request):
     param_1 = 2
     context = {'params': param_1}
     return render(request, 'samacore/section.html', context)
+
+def faq(request):
+    param_1 = 2
+    context = {'params': param_1}
+    return render(request, 'samacore/faq.html', context)
