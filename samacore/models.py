@@ -13,7 +13,7 @@ class SamaMember(models.Model):
     npa             = models.IntegerField()
     city            = models.CharField(max_length=50)
     phone           = models.CharField(max_length=30)
-    headshot        = models.ImageField(upload_to='/tmp')
+    #headshot        = models.ImageField(upload_to='/tmp')
     def __unicode__(self):
         return '%s %s'%(self.first_name, self.last_name)
 
@@ -33,12 +33,10 @@ class CourseType(models.Model):
 class Course(models.Model):
     #course_dates    = models.ManyToManyField(Date)
     #publication_date   = models.DateField()
-    persons         = models.ManyToManyField(Person)
-    types           = models.ManyToManyField(CourseType)
-    locations       = models.ManyToManyField(CourseLocation)
+    location        = models.CharField(max_length=300)
     inscription_counter     = models.IntegerField()
     max_inscription_counter = models.IntegerField()
-    status          = models.BooleanField()
+    status          = models.BooleanField(default=True)
     coursetype      = models.ForeignKey(CourseType)
 
 class Participant(models.Model):
@@ -58,6 +56,6 @@ class Participant(models.Model):
 
 class Date(models.Model):
     date            = models.DateTimeField()
-    course          = model.ForeignKey(Course)
+    course          = models.ForeignKey(Course)
     def __str__(self):
         return 'De %s a %s'%(self.date)
