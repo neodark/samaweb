@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'samacore',
+    'api',
 )
 
 MIDDLEWARE_CLASSES = (
