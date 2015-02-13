@@ -11,5 +11,9 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('samacore.urls')),
     #url(r'^section/$', samacore.views.section, name='section'),
+
+    # Include API URLs
+	url(r'^api/', include('api.urls')),
+
 )
 urlpatterns += staticfiles_urlpatterns()
