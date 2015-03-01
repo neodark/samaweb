@@ -10,3 +10,12 @@ class SamaMemberSerializer( serializers.ModelSerializer ):
 		model = SamaMember
 		fields = ( 'first_name', 'last_name', 'birth_date', 'sex', 
                    'email', 'address', 'npa', 'city', 'phone', 'id' )
+
+class CourseTypeSerializer( serializers.ModelSerializer ):
+	"""
+	Serializer to parse CourseType data
+	"""
+
+	class Meta:
+		model = CourseType
+		fields = ( 'name', 'type', 'id' )
