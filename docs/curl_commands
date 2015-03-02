@@ -2,6 +2,10 @@ REST API via curl:
 ==================
 
 ###########################################
+1 - API REQUESTS FOR 'SAMAMEMBERS'
+###########################################
+
+###########################################
 GET
 ###########################################
 curl http://localhost:8000/api/samamembers/
@@ -20,3 +24,27 @@ curl -X PUT http://localhost:8000/api/samamembers/2 -d "first_name=neo&last_name
 DELETE
 ###########################################
 curl -X DELETE http://localhost:8000/api/samamembers/2
+
+###########################################
+2 - API REQUESTS FOR 'COURSETYPE'
+###########################################
+
+###########################################
+GET
+###########################################
+curl http://localhost:8000/api/coursetype/
+
+###########################################
+POST
+###########################################
+curl -X POST http://localhost:8000/api/coursetype/ -d "name=Cours sauveteur&type=1"
+
+###########################################
+PUT
+###########################################
+curl -X PUT http://localhost:8000/api/coursetype/2 -d "name=Cours samaritains&type=1"
+
+###########################################
+DELETE
+###########################################
+curl -X DELETE http://localhost:8000/api/coursetype/2
