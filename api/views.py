@@ -7,8 +7,8 @@ from rest_framework.response import Response
 from rest_framework.generics import (
     ListCreateAPIView, RetrieveUpdateDestroyAPIView )
 
-from samacore.models import SamaMember, SamaGroup, CourseType
-from api.serializers import SamaMemberSerializer, SamaGroupSerializer, CourseTypeSerializer
+from samacore.models import SamaMember, SamaGroup, Participant, Course, CourseType
+from api.serializers import SamaMemberSerializer, SamaGroupSerializer, ParticipantSerializer, CourseSerializer, CourseTypeSerializer
 
 # Create your views here.
 
@@ -30,6 +30,48 @@ class SamaMemberList(SamaMemberMixin, ListCreateAPIView):
     pass
 
 class SamaMemberDetail(SamaMemberMixin, RetrieveUpdateDestroyAPIView):
+    """
+    Return a specific SamaMember, update it, or delete it.
+    """
+    pass
+
+class ParticipantMixin(object):
+    """
+    Mixin to inherit from.
+    Here we're setting the query set and the serializer
+    """
+    queryset = Participant.objects.all()
+    serializer_class = ParticipantSerializer
+
+class ParticipantList(ParticipantMixin, ListCreateAPIView):
+    """
+    Return a list of all the SamaMembers, or
+    create new ones
+    """
+    pass
+
+class ParticipantDetail(ParticipantMixin, RetrieveUpdateDestroyAPIView):
+    """
+    Return a specific SamaMember, update it, or delete it.
+    """
+    pass
+
+class CourseMixin(object):
+    """
+    Mixin to inherit from.
+    Here we're setting the query set and the serializer
+    """
+    queryset = Course.objects.all()
+    serializer_class = CourseSerializer
+
+class CourseList(CourseMixin, ListCreateAPIView):
+    """
+    Return a list of all the SamaMembers, or
+    create new ones
+    """
+    pass
+
+class CourseDetail(CourseMixin, RetrieveUpdateDestroyAPIView):
     """
     Return a specific SamaMember, update it, or delete it.
     """
