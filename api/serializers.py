@@ -101,9 +101,7 @@ class CourseSerializer( serializers.ModelSerializer ):
     #samamembers = serializers.PrimaryKeyRelatedField(many=True, queryset=SamaMember.objects.all(), read_only=True)
     participants = serializers.PrimaryKeyRelatedField(many=True, queryset=thequery)
     #samamembers = serializers.ManytoManyField(many=True, queryset=thequery)
-    print "1"
     #print samamembers
-    print "1"
 
     class Meta:
         model = Course
