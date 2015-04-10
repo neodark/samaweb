@@ -36,6 +36,13 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Django Rest Framework
+    'rest_framework',
+
+    # Applications and API
+    'samacore',
+    'api',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -81,3 +88,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+TEMPLATE_DIRS = (os.path.join(BASE_DIR, "templates"), )
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"), )
