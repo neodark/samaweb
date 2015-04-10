@@ -48,3 +48,27 @@ curl -X PUT http://localhost:8000/api/coursetype/2 -d "name=Cours samaritains&ty
 DELETE
 ###########################################
 curl -X DELETE http://localhost:8000/api/coursetype/2
+
+###########################################
+3 - API REQUESTS FOR 'SAMAGROUP'
+###########################################
+
+###########################################
+GET
+###########################################
+curl http://localhost:8000/api/samagroup/
+
+###########################################
+POST
+###########################################
+curl -X POST http://localhost:8000/api/samagroup/ -d "name=Moniteurs&type=1"
+
+###########################################
+PUT
+###########################################
+curl -X PUT http://localhost:8000/api/samagroup/2 -d "name=Comité&type=1"
+
+###########################################
+DELETE
+###########################################
+curl -X DELETE http://localhost:8000/api/samagroup/2
