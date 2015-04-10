@@ -12,7 +12,6 @@ class SamaGroup(models.Model):
         return '%s'%(self.name)
 
     def get_samamembers(self):
-        #samamembers = SamaMember.objects.filter(samamember_group=self)
         samamembers = SamaMember.objects.all()
         return samamembers
 
@@ -26,10 +25,7 @@ class SamaMember(models.Model):
     npa                 = models.PositiveIntegerField(_("NPA"), default=0)
     city                = models.CharField(_("City"), max_length=50)
     phone               = models.CharField(_("Phone Number"), max_length=30)
-    #samagroup           = models.ForeignKey(SamaGroup, verbose_name=_("Sama Member Group"), related_name='samamembers', blank=True, null=True)
     samagroup           = models.ManyToManyField(SamaGroup, verbose_name=_("Sama Member Group"), related_name='samamembers', blank=True, null=True)
-    #samamember_group    = models.ForeignKey(SamaGroup, verbose_name=_("Sama Member Group"), related_name='samagroups', blank=True, null=True)
-    #headshot        = models.ImageField(upload_to='/tmp')
     def __unicode__(self):
         return '%s %s'%(self.first_name, self.last_name)
 
