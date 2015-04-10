@@ -1,0 +1,209 @@
+{% extends "samacore/base.html" %}
+
+{% block content %}
+
+    <!-- Header Carousel -->
+    <header id="myCarousel" class="carousel slide">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+            <li data-target="#myCarousel" data-slide-to="3"></li>
+        </ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+            <div class="item active">
+                <div class="fill" style="background-image:url('{{ STATIC_URL }}img/banner01.jpg');"></div>
+                <div class="carousel-caption">
+                    <h2>Des gens ordinaires...</h2>
+                </div>
+            </div>
+            <div class="item">
+                <div class="fill" style="background-image:url('{{ STATIC_URL }}img/banner02.jpg');"></div>
+                <div class="carousel-caption">
+                    <h2>...regroupés pour secourir...</h2>
+                </div>
+            </div>
+            <div class="item">
+                <div class="fill" style="background-image:url('{{ STATIC_URL }}img/banner03.jpg');"></div>
+                <div class="carousel-caption">
+                    <h2>...et dispensant des cours...</h2>
+                </div>
+            </div>
+            <div class="item">
+                <div class="fill" style="background-image:url('{{ STATIC_URL }}img/banner04.jpg');"></div>
+                <div class="carousel-caption">
+                    <h2>...au large public</h2>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="icon-prev"></span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="icon-next"></span>
+        </a>
+    </header>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Marketing Icons Section -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">
+                    La Section des Samaritains de Martigny
+                </h1>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-check"></i> Un devoir citoyen et humain</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Bien que la section délivre des certificats de secourisme, il n'y a pas d'âge pour devenir secouriste.
+                          L'aide à son prochain doit être un <b>devoir humain et nécessaire</b>.</p>
+                        <p>Toi aussi <b>rejoins-nous et deviens samaritain!</b></p>
+                        <a href="#" class="btn btn-default">La section</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-gift"></i> Offre de cours publics ou privés</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Le large public peut assister à nos cours mensuels gratuit et ouvert à la population. 
+                        Le particulier peut quant à lui s'inscrire à un cours sauveteurs (obligatoires pour le permis de conduire) ou d'autres cours. L'entreprise a la possibilité
+                        d'avoir un cours privé pour ses employés.</p>
+                        <p>N'hésite pas à nous contacter...</p>
+                        <a href="#" class="btn btn-default">Cours</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-compass"></i> Présence de secouristes</h4>
+                    </div>
+                    <div class="panel-body">
+                        <p>Nous couvrons chaque année un large panel de manifestations y compris "La Foire du Valais".
+                        Le label "Fiesta" par exemple exige la présence obligatoire de samaritains. N'hésite pas à nous contacter
+                        pour de plus amples informations ou pour un devis.</p>
+                        <p>Pour assurer notre présence, prendre contact avec nous <b>au plus tôt</b>.</p>
+                        <a href="#" class="btn btn-default">Plus d'informations</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!-- Portfolio Section -->
+        <!--
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">Portfolio Heading</h2>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <a href="portfolio-item.html">
+                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
+                </a>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <a href="portfolio-item.html">
+                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
+                </a>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <a href="portfolio-item.html">
+                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
+                </a>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <a href="portfolio-item.html">
+                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
+                </a>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <a href="portfolio-item.html">
+                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
+                </a>
+            </div>
+            <div class="col-md-4 col-sm-6">
+                <a href="portfolio-item.html">
+                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
+                </a>
+            </div>
+        </div>
+        -->
+        <!-- /.row -->
+
+        <!-- Features Section -->
+        <!--
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">Modern Business Features</h2>
+            </div>
+            <div class="col-md-6">
+                <p>The Modern Business template by Start Bootstrap includes:</p>
+                <ul>
+                    <li><strong>Bootstrap v3.2.0</strong>
+                    </li>
+                    <li>jQuery v1.11.0</li>
+                    <li>Font Awesome v4.1.0</li>
+                    <li>Working PHP contact form with validation</li>
+                    <li>Unstyled page elements for easy customization</li>
+                    <li>17 HTML pages</li>
+                </ul>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, omnis doloremque non cum id reprehenderit, quisquam totam aspernatur tempora minima unde aliquid ea culpa sunt. Reiciendis quia dolorum ducimus unde.</p>
+            </div>
+            <div class="col-md-6">
+                <img class="img-responsive" src="http://placehold.it/700x450" alt="">
+            </div>
+        </div>
+        -->
+        <!-- /.row -->
+
+        <hr>
+
+        <!-- Call to Action Section -->
+        <div class="well">
+            <div class="row">
+                <div class="col-md-8">
+                    <p>La section des samaritains de Martigny est ouverte à toute personne désireuse de faire partie de la section et d'oeuvrer comme secouriste volontaire. Le bénévolat et son expérience humaine fait partie du principe fondateur des samaritains de toute la Suisse. Intéressé à nous rejoindre?</p>
+                </div>
+                <div class="col-md-4">
+                    <a class="btn btn-lg btn-default btn-block" href="#">Rejoindre la cause samaritaine</a>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; SamaMartigny 2014</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- Script to Activate the Carousel -->
+    <script>
+    $('.carousel').carousel({
+        interval: 5000 //changes the speed
+    })
+    </script>
+
+
+{% endblock%}

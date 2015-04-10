@@ -1,0 +1,74 @@
+REST API via curl:
+==================
+
+###########################################
+1 - API REQUESTS FOR 'SAMAMEMBERS'
+###########################################
+
+###########################################
+GET
+###########################################
+curl http://localhost:8000/api/samamembers/
+
+###########################################
+POST
+###########################################
+curl -X POST http://localhost:8000/api/samamembers/ -d "first_name=neo&last_name=matrix&sex=2&email=neo.matrix@gmail.com&address=street 12&npa=1234&city=matrixland&phone=123.145/34&birth_date=2015-01-25"
+
+###########################################
+PUT
+###########################################
+curl -X PUT http://localhost:8000/api/samamembers/2 -d "first_name=neo&last_name=matrix&sex=1&email=neo.matrix2@gmail.com&address=street 12&npa=1234&city=matrixland&phone=123.145/34&birth_date=2015-01-25"
+
+###########################################
+DELETE
+###########################################
+curl -X DELETE http://localhost:8000/api/samamembers/2
+
+###########################################
+2 - API REQUESTS FOR 'COURSETYPE'
+###########################################
+
+###########################################
+GET
+###########################################
+curl http://localhost:8000/api/coursetype/
+
+###########################################
+POST
+###########################################
+curl -X POST http://localhost:8000/api/coursetype/ -d "name=Cours sauveteur&type=1"
+
+###########################################
+PUT
+###########################################
+curl -X PUT http://localhost:8000/api/coursetype/2 -d "name=Cours samaritains&type=1"
+
+###########################################
+DELETE
+###########################################
+curl -X DELETE http://localhost:8000/api/coursetype/2
+
+###########################################
+3 - API REQUESTS FOR 'SAMAGROUP'
+###########################################
+
+###########################################
+GET
+###########################################
+curl http://localhost:8000/api/samagroup/
+
+###########################################
+POST
+###########################################
+curl -X POST http://localhost:8000/api/samagroup/ -d "name=Moniteurs&type=1"
+
+###########################################
+PUT
+###########################################
+curl -X PUT http://localhost:8000/api/samagroup/2 -d "name=Comité&type=1"
+
+###########################################
+DELETE
+###########################################
+curl -X DELETE http://localhost:8000/api/samagroup/2
