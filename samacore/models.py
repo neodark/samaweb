@@ -35,9 +35,13 @@ class CourseType(models.Model):
     def __str__(self):
         return '%s'%(self.name)
 
+class Date(models.Model):
+    date                = models.DateTimeField()
+    def __str__(self):
+        return '%s'%(self.date)
+
 class Course(models.Model):
-    #course_dates    = models.ManyToManyField(Date)
-    #publication_date   = models.DateField()
+    course_dates    = models.ManyToManyField(Date, verbose_name=_("Course Dates"), related_name='courses', blank=True, null=True)
     location            = models.CharField(_("Course Location"), max_length=300)
     inscription_counter     = models.PositiveIntegerField(_("Inscription Counter"), default=0)
     max_inscription_counter = models.PositiveIntegerField(_("Maximum Inscription Counter"), default=0)
@@ -57,12 +61,7 @@ class Participant(models.Model):
     city                = models.CharField(_("City"), max_length=50)
     phone               = models.CharField(_("Phone Number"), max_length=30)
     course              = models.ForeignKey(Course, verbose_name=_("Course Participation"), related_name='participants', blank=True, null=True)
+    last_course_date    = models.DateField()
     uuid_field          = UUIDField()
     def __unicode__(self):
         return '%s %s'%(self.first_name, self.last_name)
-
-class Date(models.Model):
-    date                = models.DateTimeField()
-    course              = models.ForeignKey(Course, verbose_name=_("Course Date"))
-    def __str__(self):
-        return 'De %s a %s'%(self.date)

@@ -8,6 +8,7 @@ from api.views import SamaGroupList, SamaGroupDetail
 from api.views import ParticipantList, ParticipantDetail
 from api.views import CourseList, CourseDetail
 from api.views import CourseTypeList, CourseTypeDetail
+from api.views import DateList, DateDetail
 
 router = routers.SimpleRouter()
 
@@ -24,6 +25,8 @@ urlpatterns = patterns('',
     url( r'^samagroup/(?P<pk>[0-9]+)$', SamaGroupDetail.as_view(), name = 'samagroup_detail' ),
     url( r'^participants/$', ParticipantList.as_view(), name = 'participant_list' ),
     url( r'^participants/(?P<pk>[0-9]+)$', ParticipantDetail.as_view(), name = 'participant_detail' ),
+    url( r'^date/$', DateList.as_view(), name = '_date_list' ),
+    url( r'^date/(?P<pk>[0-9]+)$', DateDetail.as_view(), name = '_date_detail' ),
     url( r'^course/$', CourseList.as_view(), name = 'course_list' ),
     url( r'^course/(?P<pk>[0-9]+)$', CourseDetail.as_view(), name = 'course_detail' ),
     url( r'^coursetype/$', CourseTypeList.as_view(), name = 'coursetype_list' ),
