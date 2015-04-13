@@ -7,8 +7,8 @@ from rest_framework.response import Response
 from rest_framework.generics import (
     ListCreateAPIView, RetrieveUpdateDestroyAPIView )
 
-from samacore.models import SamaMember, SamaGroup, Participant, Course, CourseType
-from api.serializers import SamaMemberSerializer, SamaGroupSerializer, ParticipantSerializer, CourseSerializer, CourseTypeSerializer
+from samacore.models import SamaMember, SamaGroup, Participant, Date, Course, CourseType
+from api.serializers import SamaMemberSerializer, SamaGroupSerializer, ParticipantSerializer, DateSerializer, CourseSerializer, CourseTypeSerializer
 
 # Create your views here.
 
@@ -51,6 +51,27 @@ class ParticipantList(ParticipantMixin, ListCreateAPIView):
     pass
 
 class ParticipantDetail(ParticipantMixin, RetrieveUpdateDestroyAPIView):
+    """
+    Return a specific SamaMember, update it, or delete it.
+    """
+    pass
+
+class DateMixin(object):
+    """
+    Mixin to inherit from.
+    Here we're setting the query set and the serializer
+    """
+    queryset = Date.objects.all()
+    serializer_class = DateSerializer
+
+class DateList(DateMixin, ListCreateAPIView):
+    """
+    Return a list of all the SamaMembers, or
+    create new ones
+    """
+    pass
+
+class DateDetail(DateMixin, RetrieveUpdateDestroyAPIView):
     """
     Return a specific SamaMember, update it, or delete it.
     """

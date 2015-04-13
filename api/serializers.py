@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from samacore.models import SamaMember, SamaGroup, CourseType, Course, Participant, Date
+from samacore.models import SamaMember, SamaGroup, CourseType, Date, Course, Participant, Date
 
 class SamaMemberSerializer( serializers.ModelSerializer ):
     """
@@ -30,9 +30,22 @@ class ParticipantSerializer( serializers.ModelSerializer ):
 
     class Meta:
         model = Participant
-        fields = ( 'first_name', 'last_name', 'birth_date', 'sex', 
-                   'email', 'address', 'npa', 'city', 'phone', 'id', 'course' )
+        fields = ( 'first_name', 'last_name', 'birth_date', 'sex',
+                   'email', 'address', 'npa', 'city', 'phone',
+                   'last_course_date', 'id', 'course' )
  
+class DateSerializer( serializers.ModelSerializer ):
+   """
+   Serializer to parse SamaGroup data
+   """
+
+   #thequery = Course.objects.all()
+   #courses = serializers.PrimaryKeyRelatedField(many=True, queryset=thequery)
+
+   class Meta:
+       model = Date
+       fields = ( 'date', 'id' )
+
 class CourseSerializer( serializers.ModelSerializer ):
     """
     Serializer to parse SamaGroup data
@@ -44,7 +57,7 @@ class CourseSerializer( serializers.ModelSerializer ):
     class Meta:
         model = Course
         fields = ( 'location', 'inscription_counter', 'max_inscription_counter',
-        'status', 'course_type', 'id', 'participants' )
+        'status', 'course_type', 'course_dates', 'id', 'participants' )
 
 class CourseTypeSerializer( serializers.ModelSerializer ):
     """
