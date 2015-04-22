@@ -1355,3 +1355,123 @@ class TestAPITestParticipant(TestCase):
         request4 = self.client.get('/api/coursetype/', format='json')
         self.assertEqual(request4.status_code, status.HTTP_200_OK)
         self.assertEqual(len(json.loads(request4.content)), 0)
+
+class TestAPITestParticipantsRelatedToCoursesRelatedToCourseTypesAndDates(TestCase):
+    #urls = 'api.tests.test_testing'
+
+    def setUp(self):
+        self.client = APIClient()
+
+        self.json_data_date = {\
+                     'date':'2014-01-25T19:00:00Z',\
+                     'id':1}
+
+        self.updated_json_data_date = {\
+                     'date':'2015-10-30T20:30:00Z',\
+                     'id':1}
+
+        self.json_data_coursetype = {\
+                     'name':'cours 1',\
+                     'course_identifier':1,\
+                     'courses':[],\
+                     'id':1}
+
+        self.json_data_coursetype_updated = {\
+                     'name':'cours 2',\
+                     'course_identifier':2,\
+                     'courses':[],\
+                     'id':1}
+
+        self.updated_json_data_coursetype = {\
+                     'name':'cours 1',\
+                     'course_identifier':1,\
+                     'courses':[1],\
+                     'id':1}
+
+        self.updated_json_data_coursetype_updated = {\
+                     'name':'cours 2',\
+                     'course_identifier':2,\
+                     'courses':[1],\
+                     'id':1}
+
+        self.json_data_course = {\
+                     'course_dates':[],\
+                     'location':'Geneva',\
+                     'inscription_counter':0,\
+                     'max_inscription_counter':12,\
+                     'status':True,\
+                     'course_type':1,\
+                     'participants':[],\
+                     'id':1}
+
+        self.json_data_course_updated = {\
+                     'course_dates':[],\
+                     'location':'Rome',\
+                     'inscription_counter':1,\
+                     'max_inscription_counter':16,\
+                     'status':False,\
+                     'course_type':1,\
+                     'participants':[],\
+                     'id':1}
+
+        self.updated_json_data_course = {\
+                     'course_dates':[1],\
+                     'location':'Geneva',\
+                     'inscription_counter':0,\
+                     'max_inscription_counter':12,\
+                     'status':True,\
+                     'course_type':1,\
+                     'participants':[1],\
+                     'id':1}
+
+        self.updated_json_data_course_updated = {\
+                     'course_dates':[1],\
+                     'location':'Rome',\
+                     'inscription_counter':1,\
+                     'max_inscription_counter':16,\
+                     'status':False,\
+                     'course_type':1,\
+                     'participants':[1],\
+                     'id':1}
+
+        self.json_data_participant = {\
+                     'first_name':'neo',\
+                     'last_name':'matrix',\
+                     'birth_date':'2015-01-25',\
+                     'sex':2,\
+                     'email':'neo.matrix@gmail.com',\
+                     'address':'street 12',\
+                     'npa':1234,\
+                     'city':'matrixland',\
+                     'phone':'123.145/34',\
+                     'course':1,\
+                     'last_course_date':'2015-02-11',\
+                     'id':1}
+
+        self.json_data_participant_updated = {\
+                     'first_name':'one',\
+                     'last_name':'matrix2',\
+                     'birth_date':'2015-07-25',\
+                     'sex':1,\
+                     'email':'neo.matrix2@gmail.com',\
+                     'address':'street 15',\
+                     'npa':5678,\
+                     'city':'matrixlandupdated',\
+                     'phone':'567.123/89',\
+                     'course':1,\
+                     'last_course_date':'2015-03-12',\
+                     'id':1}
+
+    def test_simple_test(self):
+        """
+        Simple test
+        """
+        self.assertEqual(2,2)
+
+    def test_get_empty_db(self):
+        """
+        Testing GET on an empty database
+        """
+        request = self.client.get('/api/participants/', {}, format='json')
+        self.assertEqual(request.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(json.loads(request.content)), 0)
