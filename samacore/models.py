@@ -41,12 +41,12 @@ class Date(models.Model):
         return '%s'%(self.date)
 
 class Course(models.Model):
-    course_dates    = models.ManyToManyField(Date, verbose_name=_("Course Dates"), related_name='courses', blank=True)
-    location            = models.CharField(_("Course Location"), max_length=300)
+    course_dates            = models.ManyToManyField(Date, verbose_name=_("Course Dates"), related_name='courses', blank=True)
+    location                = models.CharField(_("Course Location"), max_length=300)
     inscription_counter     = models.PositiveIntegerField(_("Inscription Counter"), default=0)
     max_inscription_counter = models.PositiveIntegerField(_("Maximum Inscription Counter"), default=0)
-    status              = models.BooleanField(_("Course Status"), default=True)
-    course_type         = models.ForeignKey(CourseType, verbose_name=_("Type of Course"), related_name='courses', blank=True, null=True)
+    status                  = models.BooleanField(_("Course Status"), default=True)
+    course_type             = models.ForeignKey(CourseType, verbose_name=_("Type of Course"), related_name='courses', blank=True, null=True)
     def __str__(self):
         return 'Location:%s - CourseType:%s'%(self.location, self.course_type)
 
