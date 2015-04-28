@@ -25,7 +25,7 @@ class SamaMember(models.Model):
     npa                 = models.PositiveIntegerField(_("NPA"), default=0)
     city                = models.CharField(_("City"), max_length=50)
     phone               = models.CharField(_("Phone Number"), max_length=30)
-    samagroup           = models.ManyToManyField(SamaGroup, verbose_name=_("Sama Member Group"), related_name='samamembers', blank=True, null=True)
+    samagroup           = models.ManyToManyField(SamaGroup, verbose_name=_("Sama Member Group"), related_name='samamembers', blank=True)
     def __unicode__(self):
         return '%s %s'%(self.first_name, self.last_name)
 
@@ -41,7 +41,7 @@ class Date(models.Model):
         return '%s'%(self.date)
 
 class Course(models.Model):
-    course_dates    = models.ManyToManyField(Date, verbose_name=_("Course Dates"), related_name='courses', blank=True, null=True)
+    course_dates    = models.ManyToManyField(Date, verbose_name=_("Course Dates"), related_name='courses', blank=True)
     location            = models.CharField(_("Course Location"), max_length=300)
     inscription_counter     = models.PositiveIntegerField(_("Inscription Counter"), default=0)
     max_inscription_counter = models.PositiveIntegerField(_("Maximum Inscription Counter"), default=0)
