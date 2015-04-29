@@ -9,5 +9,6 @@ urlpatterns = patterns('',
     url(r'^$', views.index, name='index'),
     url(r'^index/$', views.index, name='index'),
     url(r'^section/$', views.section, name='section'),
+    url(r'^cours/$', views.courses, name='courses'),
     url(r'^faq/$', views.faq, name='faq'),
 )
