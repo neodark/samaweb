@@ -5,9 +5,6 @@ python:
   - "3.3"
   - "3.4"
 env:
-  - DJANGO=1.5
-  - DJANGO=1.6
-  - DJANGO=1.7
   - DJANGO=1.8
 install:
   - pip install -q Django==$DJANGO --use-mirrors
@@ -15,7 +12,6 @@ install:
   - pip install -r requirements.txt
   - pip install coveralls
 before_script:
-  - "pep8 --exclude=migrations --ignore=E501,E225 src"
   - pyflakes -x W src
 script:
   - python manage.py test
