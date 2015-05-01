@@ -1,0 +1,17 @@
+language: python
+python:
+  - "2.7"
+env:
+  - DJANGO=1.8
+install:
+  - pip install -q Django==$DJANGO --use-mirrors
+  - pip install https://github.com/dcramer/pyflakes/tarball/master
+  - pip install -r requirements.txt
+  - pip install coveralls
+before_script:
+  - pyflakes -x W src
+script:
+  - python manage.py test
+  - coverage run --source=api,samacore,samaweb manage.py test
+  - coverage report -m
+after_success: coveralls
