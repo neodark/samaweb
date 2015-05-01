@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+import dj_database_url
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -70,6 +71,15 @@ DATABASES = {
     }
 }
 
+## Parse database configuration from $DATABASE_URL
+#
+#DATABASES = {
+#    'default': dj_database_url.config()
+#}
+#
+## Honor the 'X-Forwarded-Proto' header for request.is_secure()
+#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
@@ -83,10 +93,28 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Parse database configuration from $DATABASE_URL
+DATABASES['default'] =  dj_database_url.config()
+
+# Enable Connection Pooling (if desired)
+#DATABASES['default']['ENGINE'] = 'django_postgrespool'
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Allow all host headers
+ALLOWED_HOSTS = ['*']
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+STATIC_ROOT = 'staticfiles'
+
 STATIC_URL = '/static/'
 TEMPLATE_DIRS = (os.path.join(BASE_DIR, "templates"), )
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"), )
+
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
