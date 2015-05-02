@@ -30,6 +30,10 @@ The backend REST API has unit tests to verify the good a
 The continuous integration system integrates Travis to check the commits and Coveralls
 to follow the code coverage.
 
+####Automatic deployment via Heroku
+
+    $ travis encrypt $(heroku auth:token) --add deploy.api_key
+
 ##Deployment test via Heroku
 
 The deployment of the website cand be tested via **Heroku**
