@@ -1,17 +1,26 @@
 language: python
 python:
-  - "2.7"
+- '2.7'
 env:
-  - DJANGO=1.8
+- DJANGO=1.8
 install:
-  - pip install -q Django==$DJANGO --use-mirrors
-  - pip install https://github.com/dcramer/pyflakes/tarball/master
-  - pip install -r requirements.txt
-  - pip install coveralls
+- pip install -q Django==$DJANGO --use-mirrors
+- pip install https://github.com/dcramer/pyflakes/tarball/master
+- pip install -r requirements.txt
+- pip install coveralls
 before_script:
-  - pyflakes -x W src
+- pyflakes -x W src
 script:
-  - python manage.py test
-  - coverage run --source=api,samacore,samaweb manage.py test
-  - coverage report -m
+- python manage.py test
+- coverage run --source=api,samacore,samaweb manage.py test
+- coverage report -m
 after_success: coveralls
+before_deploy: echo 'beginning of the deployment'
+deploy:
+  provider: heroku
+  on:
+    all_branches: true
+  api_key:
+    secure: QN/vKMtjNOFEThcbMKSH47ne3eU5+KpRMbKmA5DKtYXcHZvsWH3SHoyt5Q8xrfqiJZQhv219QPVGLesjcESX2Ytlaf5NkRfFgP6I+pGVNBFPrwz+h9eIRDoxw/FxFcOHn8cd6mt+gG87aelf/vPzgXNgmiKZpUnQ+1VQ9T8EWe4=
+after_deploy:
+- echo 'Deployment ended'
