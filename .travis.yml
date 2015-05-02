@@ -3,6 +3,8 @@ python:
 - '2.7'
 env:
 - DJANGO=1.8
+before_install: echo 'started tests'
+- cp samaweb/local_settings.py samaweb/settings.py
 install:
 - pip install -q Django==$DJANGO --use-mirrors
 - pip install https://github.com/dcramer/pyflakes/tarball/master
@@ -16,6 +18,7 @@ script:
 - coverage report -m
 after_success: coveralls
 before_deploy: echo 'beginning of the deployment'
+- cp samaweb/deploy_settings.py samaweb/settings.py
 deploy:
   provider: heroku
   on:
