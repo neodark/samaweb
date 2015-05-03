@@ -37,7 +37,7 @@
                             <small>Premiers secours pour futurs conducteurs</small>
                         </h3>
                         <p>Ce cours est requis pour le permis de conduire.</p>
-                        <a href="{% url 'section' %}" class="btn btn-primary">Inscription</a>
+                        <a id="sauveteurs" class="btn btn-primary btn-course">Inscription</a>
                     </div>
                 </div>
             </div>
@@ -49,7 +49,7 @@
                             <small>Cours plus approfondi des premiers secours</small>
                         </h3>
                         <p>Ce cours est requis aux guides de montagnes, moniteurs de ski, maître nageur, etc.</p>
-                        <a href="#" class="btn btn-primary">Inscription</a>
+                        <a id="samaritains" class="btn btn-primary btn-course">Inscription</a>
                     </div>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                         </h3>
                         <p>Ce cours est axé sur l'utilisation des premiers secours
                         et de l'utilisation du défibrillateur.</p>
-                        <a href="#" class="btn btn-primary">Inscription</a>
+                        <a id="blsaed" class="btn btn-primary btn-course">Inscription</a>
                     </div>
                 </div>
             </div>
@@ -75,7 +75,7 @@
                         </h3>
                         <p>Enseignement des techniques de premiers secours en cas d'Urgence
                         pour la Petite Enfance.</p>
-                        <a href="#" class="btn btn-primary">Inscription</a>
+                        <a id="upe" class="btn btn-primary btn-course">Inscription</a>
                     </div>
                 </div>
             </div>
@@ -109,5 +109,12 @@
             });
         });
     </script>
-
+    <script type='text/javascript'>
+    //$('.btn btn-primary').click(function(){
+    $('.btn-course').click(function(event){
+        //MyFunction();
+        alert(event.target.id);
+        //return false;
+        });
+    </script>
 {% endblock %}
