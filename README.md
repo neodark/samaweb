@@ -18,7 +18,7 @@ The development instance uses a local_settings to target a sqlite db
 
 ##Running tests
 
-The backend REST API has unit tests to verify the good a
+The backend REST API has unit tests to verify it's good functionality
 
 ###Running a single test
     $ python manage.py test api.tests.TestAPITestClientSamaGroup
@@ -27,10 +27,12 @@ The backend REST API has unit tests to verify the good a
 
 ##Integration of Travis CI / Coveralls
 
-The continuous integration system integrates Travis to check the commits and Coveralls
+The continuous integration system integrates *Travis* to check the commits and *Coveralls*
 to follow the code coverage.
 
 ####Automatic deployment via Heroku
+
+To automate the process and avoid *Travis* storing publicly *Heroku* access keys:
 
     $ travis encrypt $(heroku auth:token) --add deploy.api_key
 
