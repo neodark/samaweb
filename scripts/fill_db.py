@@ -16,13 +16,11 @@
 # Copyright (c) 2015 - Flavio Tarsetti Software                        #
 ########################################################################
 
-
 import os
 from optparse import OptionParser
 from time import localtime, strftime
 import json
 from pprint import pprint
-
 
 #=========================================================
 # GLOBAL VARS
@@ -37,7 +35,7 @@ Version : %s"""%Version+"""\nProject  : %s"""%Project+"""\n---------------------
 
 # Program settings
 path_json   = 'db_fill/course.json'
-web_url     = 'http://localhost:5000/api/course/'
+web_url     = 'http://localhost:5000/api/'
 options     = {}
 
 #=========================================================
@@ -80,8 +78,11 @@ def parse_options():
 
 def loadData(path):
     data = {}
+    print path
     with open(path) as data_file:
+        print data_file
         data = json.load(data_file)
+        print data
 
     if options.verbosity:
         pprint(data)
@@ -92,24 +93,32 @@ def postData(data, url):
 
     import urllib2,json
 
-    postdata = course
+    print data
+    postdata = data
 
     req = urllib2.Request(url)
     req.add_header('Content-Type','application/json')
     data = json.dumps(postdata)
 
     response = urllib2.urlopen(req,data)
-
-    print len(data)
-    for course in data["Course"]:
-        print course
+    return response
 
 def fill_db(data):
     for key in data:
-        pprint(key)
-        pprint(data[key])
-        for one_data in (data[key]):
-            print one_data
+        print key
+        if key != "urlmap":
+            print "\nPopulating %s..."%key
+            if options.verbosity:
+                pprint(data[key])
+            pprint(data[key])
+            #for one_data in (data[key]):
+            #    response = postData(one_data, web_url)
+            #    print response.geturl()
+            #    print response.info()
+            #    print response.getcode()
+            #    print ".",
+            #    if options.verbosity:
+            #        pprint(one_data)
 
 #=========================================================
 # MAIN FUNCTION DEFINITION
@@ -122,11 +131,9 @@ def main():
     data = loadData(path_json)
     fill_db(data)
 
-
 #=========================================================
 # MAIN
 #=========================================================
 
 if __name__ == '__main__':
     main()
-
