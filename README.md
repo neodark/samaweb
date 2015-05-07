@@ -77,3 +77,9 @@ Running a **Gunicorn** server instance to verify the website is working
 
 ####Synchronize the POSTGRES database on Heroku (Note: Heroku doesn't support sqlite)
     $ heroku run python manage.py syncdb
+
+##Populating the database
+
+Adding test data to the database could be done using a script:
+
+    $ python ./scripts/db_set.py --json_file scripts/dataset/test_data.json
