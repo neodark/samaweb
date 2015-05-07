@@ -3,22 +3,26 @@
          {
             "id":1,
             "name":"Sauveteurs",
-            "course_identifier":1
+            "course_identifier":1,
+            "courses":[]
          },
          {
             "id":2,
             "name":"Samaritains",
-            "course_identifier":2
+            "course_identifier":2,
+            "courses":[]
          },
          {
             "id":3,
             "name":"BLS-AED",
-            "course_identifier":3
+            "course_identifier":3,
+            "courses":[]
          },
          {
             "id":4,
             "name":"UPE",
-            "course_identifier":4
+            "course_identifier":4,
+            "courses":[]
          }
         ],
  "Course":[
@@ -97,7 +101,7 @@
         ],
  "urlmap":
         {
-            "CourseType": "coursetype",
-            "Course": "course",
+            "CourseType": "coursetype/",
+            "Course": "course/"
         }
 }

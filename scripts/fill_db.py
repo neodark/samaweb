@@ -93,9 +93,13 @@ def postData(data, url):
 
     import urllib2,json
 
-    print data
+    if options.verbosity:
+        print "Posted data: %s"%data
+
     postdata = data
 
+    print postdata
+    print url
     req = urllib2.Request(url)
     req.add_header('Content-Type','application/json')
     data = json.dumps(postdata)
@@ -104,22 +108,30 @@ def postData(data, url):
     return response
 
 def fill_db(data):
+    global web_url
     for key in data:
         print key
         if key != "urlmap":
             print "\nPopulating %s..."%key
             if options.verbosity:
                 pprint(data[key])
-            pprint(data[key])
-            #for one_data in (data[key]):
-            #    response = postData(one_data, web_url)
-            #    print response.geturl()
-            #    print response.info()
-            #    print response.getcode()
-            #    print ".",
-            #    if options.verbosity:
-            #        pprint(one_data)
-
+            for one_data in (data[key]):
+                url_end = data["urlmap"][key]
+                url_endpoint = web_url+url_end
+                print url_endpoint
+                response = postData(one_data, url_endpoint)
+                print response.geturl()
+                print response.info()
+                print response.getcode()
+                print ".",
+                if options.verbosity:
+                    pprint(one_data)
+#=========================================================
+# EXPERIMENTS LAUNCHED
+#=========================================================
+def end():
+    print "End of program\n";
+    print strftime("%a, %d %b %Y %H:%M:%S +0000", localtime())
 #=========================================================
 # MAIN FUNCTION DEFINITION
 #=========================================================
@@ -130,6 +142,7 @@ def main():
     options = parse_options()
     data = loadData(path_json)
     fill_db(data)
+    end()
 
 #=========================================================
 # MAIN
