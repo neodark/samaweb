@@ -24,7 +24,7 @@
  "Course":[
          {
             "id":1,
-            "location":"Paris", 
+            "location":"Paris",
             "inscription_counter":0,
             "max_inscription_counter":12,
             "status":false,
@@ -33,7 +33,7 @@
          },
          {
             "id":2,
-            "location":"Rome", 
+            "location":"Rome",
             "inscription_counter":0,
             "max_inscription_counter":12,
             "status":false,
@@ -42,17 +42,53 @@
          },
          {
             "id":3,
-            "location":"Paris", 
-            "inscription_counter":0,
+            "location":"Paris",
+            "inscription_counter":3,
             "max_inscription_counter":12,
-            "status":false,
+            "status":true,
             "course_dates":"",
             "participants":""
          },
          {
             "id":4,
-            "location":"Paris", 
+            "location":"Paris",
             "inscription_counter":0,
+            "max_inscription_counter":12,
+            "status":true,
+            "course_dates":"",
+            "participants":""
+         },
+         {
+            "id":5,
+            "location":"Rome",
+            "inscription_counter":4,
+            "max_inscription_counter":12,
+            "status":true,
+            "course_dates":"",
+            "participants":""
+         },
+         {
+            "id":6,
+            "location":"Rome",
+            "inscription_counter":5,
+            "max_inscription_counter":12,
+            "status":true,
+            "course_dates":"",
+            "participants":""
+         },
+         {
+            "id":7,
+            "location":"Paris",
+            "inscription_counter":6,
+            "max_inscription_counter":12,
+            "status":true,
+            "course_dates":"",
+            "participants":""
+         },
+         {
+            "id":8,
+            "location":"Paris",
+            "inscription_counter":7,
             "max_inscription_counter":12,
             "status":false,
             "course_dates":"",
