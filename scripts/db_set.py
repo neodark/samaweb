@@ -17,6 +17,7 @@
 ########################################################################
 
 import os
+import sys
 from optparse import OptionParser
 from time import localtime, strftime
 import json
@@ -88,7 +89,7 @@ def postData(data, url):
     import urllib2,json
 
     if options.verbosity:
-        print "Posted data: %s"%data
+        print "POST data: %s"%data
 
     postdata = data
 
@@ -97,6 +98,46 @@ def postData(data, url):
     data = json.dumps(postdata)
 
     response = urllib2.urlopen(req,data)
+    return response
+
+def getData(url):
+
+    import urllib2,json
+
+    if options.verbosity:
+        print "GET data: %s"%data
+
+    req = urllib2.Request(url)
+    req.add_header('Content-Type','application/json')
+
+    response = urllib2.urlopen(req)
+    if options.verbosity:
+        print response.geturl()
+        print response.info()
+        print response.getcode()
+        pprint(json.loads(response.read()))
+    return response
+
+def deleteData(url):
+
+    import urllib2,json
+
+    if options.verbosity:
+        print "DELETE data: %s"%data
+
+    req = urllib2.Request(url)
+    req.add_header('Content-Type','application/json')
+    req.get_method = lambda: 'DELETE' # creates the delete method
+
+    response = urllib2.urlopen(req)
+    print ".",
+    sys.stdout.flush()
+
+    if options.verbosity:
+        print response.geturl()
+        print response.info()
+        print response.getcode()
+        pprint(json.loads(response.read()))
     return response
 
 def fill_db(data):
@@ -111,6 +152,7 @@ def fill_db(data):
                 url_endpoint = web_url+url_end
                 response = postData(one_data, url_endpoint)
                 print ".",
+                sys.stdout.flush()
                 if options.verbosity:
                     print url_endpoint
                     print response.geturl()
@@ -118,6 +160,52 @@ def fill_db(data):
                     print response.getcode()
                     pprint(one_data)
     print "\nFinished data population\n"
+
+def retrieve_db(data):
+    global web_url
+    for key in data:
+        if key != "urlmap":
+            print "\nRetrieving %s..."%key
+            if options.verbosity:
+                pprint(data[key])
+            url_end = data["urlmap"][key]
+            url_endpoint = web_url+url_end
+            getData(url_endpoint)
+            print ".",
+            sys.stdout.flush()
+            if options.verbosity:
+                print url_endpoint
+                print response.geturl()
+                print response.info()
+                print response.getcode()
+                pprint(one_data)
+    print "\nFinished retrieving all data\n"
+
+def delete_db(data):
+    global web_url
+    for key in data:
+        if key != "urlmap":
+            print "\nDeleting %s..."%key
+            if options.verbosity:
+                pprint(data[key])
+            url_end = data["urlmap"][key]
+            url_endpoint = web_url+url_end
+            response = getData(url_endpoint)
+            json_response = json.loads(response.read())
+            for one_data in json_response:
+                url_endpoint_id = url_endpoint + unicode(one_data["id"])
+                deleteData(url_endpoint_id)
+                if options.verbosity:
+                    print "delete data"
+                    pprint(one_data)
+                    pprint(one_data["id"])
+            if options.verbosity:
+                print url_endpoint
+                print response.geturl()
+                print response.info()
+                print response.getcode()
+                pprint(one_data)
+    print "\nFinished deleting all data\n"
 
 #=========================================================
 # EXPERIMENTS LAUNCHED
@@ -135,6 +223,8 @@ def main():
     options = parse_options()
     data = loadData(options.json_file)
     fill_db(data)
+    retrieve_db(data)
+    delete_db(data)
     end()
 
 #=========================================================
