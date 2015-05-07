@@ -2,22 +2,22 @@
  "CourseType":[
          {
             "id":1,
-            "name":"Sauveteurs", 
+            "name":"Sauveteurs",
             "course_identifier":1
          },
          {
             "id":2,
-            "name":"Samaritains", 
+            "name":"Samaritains",
             "course_identifier":2
          },
          {
             "id":3,
-            "name":"BLS-AED", 
+            "name":"BLS-AED",
             "course_identifier":3
          },
          {
             "id":4,
-            "name":"UPE", 
+            "name":"UPE",
             "course_identifier":4
          }
         ],
@@ -94,5 +94,10 @@
             "course_dates":"",
             "participants":""
          }
-        ]
+        ],
+ "urlmap":
+        {
+            "CourseType": "coursetype",
+            "Course": "course",
+        }
 }
