@@ -25,7 +25,6 @@ from pprint import pprint
 #=========================================================
 # GLOBAL VARS
 #=========================================================
-
 # Program information
 Version = "1.0"
 Project = "SAMAWEB"
@@ -34,14 +33,12 @@ program_description = """--------------------------------------------
 Version : %s"""%Version+"""\nProject  : %s"""%Project+"""\n--------------------------------------------"""
 
 # Program settings
-path_json   = 'db_fill/course.json'
 web_url     = 'http://localhost:5000/api/'
 options     = {}
 
 #=========================================================
 # LOCAL FUNCTIONS DEFINITION
 #=========================================================
-
 def software_description():
     print program_description
 
@@ -72,17 +69,14 @@ def parse_options():
     print "--------------------------------------------"
     print "  json file: %s"% options.json_file
     print "  verbosity: %s" % options.verbosity
-    print "--------------------------------------------\n\n";
+    print "--------------------------------------------\n";
 
     return options
 
 def loadData(path):
     data = {}
-    print path
     with open(path) as data_file:
-        print data_file
         data = json.load(data_file)
-        print data
 
     if options.verbosity:
         pprint(data)
@@ -98,8 +92,6 @@ def postData(data, url):
 
     postdata = data
 
-    print postdata
-    print url
     req = urllib2.Request(url)
     req.add_header('Content-Type','application/json')
     data = json.dumps(postdata)
@@ -110,7 +102,6 @@ def postData(data, url):
 def fill_db(data):
     global web_url
     for key in data:
-        print key
         if key != "urlmap":
             print "\nPopulating %s..."%key
             if options.verbosity:
@@ -118,35 +109,36 @@ def fill_db(data):
             for one_data in (data[key]):
                 url_end = data["urlmap"][key]
                 url_endpoint = web_url+url_end
-                print url_endpoint
                 response = postData(one_data, url_endpoint)
-                print response.geturl()
-                print response.info()
-                print response.getcode()
                 print ".",
                 if options.verbosity:
+                    print url_endpoint
+                    print response.geturl()
+                    print response.info()
+                    print response.getcode()
                     pprint(one_data)
+    print "\nFinished data population\n"
+
 #=========================================================
 # EXPERIMENTS LAUNCHED
 #=========================================================
 def end():
     print "End of program\n";
     print strftime("%a, %d %b %Y %H:%M:%S +0000", localtime())
+
 #=========================================================
 # MAIN FUNCTION DEFINITION
 #=========================================================
-
 def main():
     global options
     software_description()
     options = parse_options()
-    data = loadData(path_json)
+    data = loadData(options.json_file)
     fill_db(data)
     end()
 
 #=========================================================
 # MAIN
 #=========================================================
-
 if __name__ == '__main__':
     main()
