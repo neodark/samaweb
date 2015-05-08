@@ -37,7 +37,7 @@
                             <small>Premiers secours pour futurs conducteurs</small>
                         </h3>
                         <p>Ce cours est requis pour le permis de conduire.</p>
-                        <a id="sauveteurs" class="btn btn-primary btn-course">Inscription</a>
+                        <a id="sauveteurs" href="{{URL_PREFIX}}/specific_cours/?coursetype=Sauveteurs" class="btn btn-primary btn-course">Inscription</a>
                     </div>
                 </div>
             </div>
@@ -107,14 +107,6 @@
                 $('a[href="#' + id + '"]').closest('.panel-heading').removeClass('active-faq');
                 $('a[href="#' + id + '"] .panel-title span').html('<i class="glyphicon glyphicon-plus"></i>');
             });
-        });
-    </script>
-    <script type='text/javascript'>
-    //$('.btn btn-primary').click(function(){
-    $('.btn-course').click(function(event){
-        //MyFunction();
-        alert(event.target.id);
-        //return false;
         });
     </script>
 {% endblock %}
