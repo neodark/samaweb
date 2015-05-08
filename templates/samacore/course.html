@@ -1,0 +1,135 @@
+{% extends "samacore/base.html" %}
+
+{% block title %}FAQ{% endblock %}
+
+{% block section %}faq{% endblock %}
+
+{% block content %}
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Page Heading/Breadcrumbs -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Samaritains
+                    <small>Divers cours</small>
+                </h1>
+                <ol class="breadcrumb">
+                <h2>4 cours proposés</h2>
+                 <p>Nous proposons divers cours à la population, comprenant des cours dispensés aux entreprises et des cours dispensés à un plus large public</p>
+                <p>Ci-dessous, vous trouverez une liste de nos <b>cours publics</b></p>
+               </ol>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!-- Team Members -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">Offres de cours</h2>
+            </div>
+            <div class="col-md-6 text-center">
+                <div class="thumbnail">
+                    <img class="img-responsive" src="{{ STATIC_URL }}img/car-icon.png" alt="">
+                    <div class="caption">
+                        <h3>Cours Sauveteurs<br>
+                            <small>Premiers secours pour futurs conducteurs</small>
+                        </h3>
+                        <p>Ce cours est requis pour le permis de conduire.</p>
+                        <a id="sauveteurs" class="btn btn-primary btn-course">Inscription</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 text-center">
+                <div class="thumbnail">
+                    <img class="img-responsive" src="{{ STATIC_URL }}img/medicine-box-icon.png" alt="">
+                    <div class="caption">
+                        <h3>Cours Samaritain<br>
+                            <small>Cours plus approfondi des premiers secours</small>
+                        </h3>
+                        <p>Ce cours est requis aux guides de montagnes, moniteurs de ski, maître nageur, etc.</p>
+                        <a id="samaritains" class="btn btn-primary btn-course">Inscription</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 text-center">
+                <div class="thumbnail">
+                    <img class="img-responsive" src="{{ STATIC_URL }}img/heart-beat-icon.png" alt="">
+                    <div class="caption">
+                        <h3>Cours BLS-AED<br>
+                            <small>Basic Life Support/Defibrillateur semi-automatique</small>
+                        </h3>
+                        <p>Ce cours est axé sur l'utilisation des premiers secours
+                        et de l'utilisation du défibrillateur.</p>
+                        <a id="blsaed" class="btn btn-primary btn-course">Inscription</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 text-center">
+                <div class="thumbnail">
+                    <img class="img-responsive" src="{{ STATIC_URL }}img/medical-cap-icon.png" alt="">
+                    <div class="caption">
+                        <h3>Cours UPE<br>
+                            <small>Urgence Petite Enfance</small>
+                        </h3>
+                        <p>Enseignement des techniques de premiers secours en cas d'Urgence
+                        pour la Petite Enfance.</p>
+                        <a id="upe" class="btn btn-primary btn-course">Inscription</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; SamaMartigny 2014</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+    <script type='text/javascript'>
+        $(document).ready(function() {
+            $('.collapse').on('show.bs.collapse', function() {
+                var id = $(this).attr('id');
+                $('a[href="#' + id + '"]').closest('.panel-heading').addClass('active-faq');
+                $('a[href="#' + id + '"] .panel-title span').html('<i class="glyphicon glyphicon-minus"></i>');
+            });
+            $('.collapse').on('hide.bs.collapse', function() {
+                var id = $(this).attr('id');
+                $('a[href="#' + id + '"]').closest('.panel-heading').removeClass('active-faq');
+                $('a[href="#' + id + '"] .panel-title span').html('<i class="glyphicon glyphicon-plus"></i>');
+            });
+        });
+    </script>
+    <script type='text/javascript'>
+    jQuery(document).ready(function() {
+        var url = "{% url 'course_list' %}";
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: {
+                coursetype: "{{ coursetype }}",
+            },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+
+            success: function(data) {
+                console.log(data);
+            },
+
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert('Error: ' + errorThrown);
+            }
+        });
+
+    });
+    </script>
+{% endblock %}
