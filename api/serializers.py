@@ -58,6 +58,7 @@ class CourseSerializer( serializers.ModelSerializer ):
         model = Course
         fields = ( 'location', 'inscription_counter', 'max_inscription_counter',
         'status', 'course_type', 'course_dates', 'id', 'participants' )
+        depth = 1
 
 class CourseTypeSerializer( serializers.ModelSerializer ):
     """
