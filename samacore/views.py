@@ -31,3 +31,11 @@ def faq(request):
     param_1 = 2
     context = {'params': param_1}
     return render(request, 'samacore/faq.html', context)
+
+def course(request):
+    coursetype = ''
+    if request.GET.has_key('coursetype'):
+        coursetype = request.GET['coursetype']
+
+    context = {'coursetype': coursetype}
+    return render(request, 'samacore/course.html', context)
