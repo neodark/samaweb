@@ -40,6 +40,9 @@ class Date(models.Model):
     def __str__(self):
         return '%s'%(self.date)
 
+    class Meta:
+        ordering = ('date',)
+
 class Course(models.Model):
     course_dates            = models.ManyToManyField(Date, verbose_name=_("Course Dates"), related_name='courses', blank=True)
     location                = models.CharField(_("Course Location"), max_length=300)
