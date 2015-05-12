@@ -39,34 +39,31 @@ class DateSerializer( serializers.ModelSerializer ):
    Serializer to parse SamaGroup data
    """
 
-   #thequery = Course.objects.all()
-   #courses = serializers.PrimaryKeyRelatedField(many=True, queryset=thequery)
+   thequery = Course.objects.all()
+   courses = serializers.PrimaryKeyRelatedField(many=True, queryset=thequery)
 
    class Meta:
        model = Date
-       fields = ( 'date', 'id' )
+       fields = ( 'date', 'id', 'courses' )
 
 class CourseSerializer( serializers.ModelSerializer ):
     """
     Serializer to parse SamaGroup data
     """
-
-    thequery = Participant.objects.all() 
-    participants = serializers.PrimaryKeyRelatedField(many=True, queryset=thequery)
+    course_dates = DateSerializer(many=True, read_only=True)
+    participants = ParticipantSerializer(many=True, read_only=True)
 
     class Meta:
         model = Course
         fields = ( 'location', 'inscription_counter', 'max_inscription_counter',
         'status', 'course_type', 'course_dates', 'id', 'participants' )
-        depth = 1
 
 class CourseTypeSerializer( serializers.ModelSerializer ):
     """
     Serializer to parse CourseType data
     """
 
-    thequery = Course.objects.all() 
-    courses = serializers.PrimaryKeyRelatedField(many=True, queryset=thequery)
+    courses = CourseSerializer(many=True, read_only=True)
 
     class Meta:
         model = CourseType
