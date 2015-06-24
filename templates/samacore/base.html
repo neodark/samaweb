@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-ng-app="samawebApp">
 
 <head>
 
@@ -138,6 +138,14 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    <!-- AngularJS -->
+    <script src="{% static 'js/angular.min.js' %}"></script>
+
+    <!-- App libs -->
+    <script src="{% static 'samaweb/app/app.js' %}"></script>
+    <script src="{% static 'samaweb/app/controllers/courseController.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'samaweb/app/factories/courseFactory.js' %}" type="text/javascript" charset="utf-8"></script>
 
     {% block content %}{% endblock %}
 
