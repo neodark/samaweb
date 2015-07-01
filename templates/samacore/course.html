@@ -9,7 +9,7 @@
 {% block content %}
 
     <!-- Page Content -->
-    <div class="container" ng-controller="courseController" ng-init="init('{{ coursetype }}', '{% url 'course_list' %}')">
+    <div class="container" ng-controller="courseController" ng-init="init('{{ coursetype }}', '{% url 'course_list' %}', '{{ URL_PREFIX }}', '{% static . %}')">
 
         <!-- Page Heading/Breadcrumbs -->
         <div class="row">
@@ -27,63 +27,8 @@
         <!-- /.row -->
 
         <!-- Courses -->
-        <div data-ng-include="'{% static "samaweb/app/partials/courseInfo.html" %}'">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h2 class="page-header">Offres de cours</h2>
-                </div>
-                <div class="col-md-6 text-center">
-                    <div class="thumbnail">
-                        <img class="img-responsive" src="{{ STATIC_URL }}img/car-icon.png" alt="">
-                        <div class="caption">
-                            <h3>Cours Sauveteurs<br>
-                                <small>Premiers secours pour futurs conducteurs</small>
-                            </h3>
-                            <p>Ce cours est requis pour le permis de conduire.</p>
-                            <a id="sauveteurs" class="btn btn-primary btn-course">Inscription</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 text-center">
-                    <div class="thumbnail">
-                        <img class="img-responsive" src="{{ STATIC_URL }}img/medicine-box-icon.png" alt="">
-                        <div class="caption">
-                            <h3>Cours Samaritain<br>
-                                <small>Cours plus approfondi des premiers secours</small>
-                            </h3>
-                            <p>Ce cours est requis aux guides de montagnes, moniteurs de ski, maître nageur, etc.</p>
-                            <a id="samaritains" class="btn btn-primary btn-course">Inscription</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 text-center">
-                    <div class="thumbnail">
-                        <img class="img-responsive" src="{{ STATIC_URL }}img/heart-beat-icon.png" alt="">
-                        <div class="caption">
-                            <h3>Cours BLS-AED<br>
-                                <small>Basic Life Support/Defibrillateur semi-automatique</small>
-                            </h3>
-                            <p>Ce cours est axé sur l'utilisation des premiers secours
-                            et de l'utilisation du défibrillateur.</p>
-                            <a id="blsaed" class="btn btn-primary btn-course">Inscription</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 text-center">
-                    <div class="thumbnail">
-                        <img class="img-responsive" src="{{ STATIC_URL }}img/medical-cap-icon.png" alt="">
-                        <div class="caption">
-                            <h3>Cours UPE<br>
-                                <small>Urgence Petite Enfance</small>
-                            </h3>
-                            <p>Enseignement des techniques de premiers secours en cas d'Urgence
-                            pour la Petite Enfance.</p>
-                            <a id="upe" class="btn btn-primary btn-course">Inscription</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+       <div ui-view="courseInfo"></div>
         <!-- /.row -->
 
         <hr>
