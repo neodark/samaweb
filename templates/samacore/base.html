@@ -141,23 +141,13 @@
 
     <!-- AngularJS -->
     <script src="{% static 'js/angular.min.js' %}"></script>
+    <script src="{% static 'js/angular-ui-router.min.js' %}"></script>
 
     <!-- App libs -->
     <script src="{% static 'samaweb/app/app.js' %}"></script>
+    <script src="{% static 'samaweb/app/app.config.js' %}"></script>
     <script src="{% static 'samaweb/app/controllers/courseController.js' %}" type="text/javascript" charset="utf-8"></script>
     <script src="{% static 'samaweb/app/factories/courseFactory.js' %}" type="text/javascript" charset="utf-8"></script>
-
-    <script>
-    var STATIC_URL = '{{ STATIC_URL|escapejs }}';
-    var MEDIA_URL  = '{{ MEDIA_URL|escapejs }}';
-    function static(path) {
-        return STATIC_URL + path;
-    }
-    function static_media(path) {
-        return MEDIA_URL + path;
-    }
-    </script>
-
 
     {% block content %}{% endblock %}
 
