@@ -9,7 +9,7 @@
 {% block content %}
 
     <!-- Page Content -->
-    <div class="container" ng-controller="courseController" ng-init="init('{{ coursetype }}', '{% url 'course_list' %}', '{{ URL_PREFIX }}', '{% static . %}')">
+    <div class="container" ng-controller="courseController" ng-init="init('{{ coursetype }}', '{% url 'course_list' %}')">
 
         <!-- Page Heading/Breadcrumbs -->
         <div class="row">
@@ -33,6 +33,7 @@
 
         <hr>
 
+        <img class="img-responsive" src="{% static 'img/car-icon.png' %}" alt="">
         <!-- Footer -->
         <footer>
             <div class="row">
