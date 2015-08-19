@@ -97,7 +97,12 @@ def postData(data, url):
     req.add_header('Content-Type','application/json')
     data = json.dumps(postdata)
 
-    response = urllib2.urlopen(req,data)
+    response = None
+    try:
+        response = urllib2.urlopen(req,data)
+    except Exception,e:
+        print '    %s' % str(e)
+
     return response
 
 def getData(url):
