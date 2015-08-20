@@ -19,6 +19,11 @@
                 </h1>
                 <ol class="breadcrumb">
                 <h2>4 cours proposés</h2>
+                <img ng-if="course_type == 'Sauveteurs'" class="img-responsive course-img" src="{% static 'img/car-icon.png' %}" alt="">
+                <img ng-if="course_type == 'Samaritains'" class="img-responsive course-img" src="{% static 'img/medicine-box-icon.png' %}" alt="">
+                <img ng-if="course_type == 'BLS-AED'" class="img-responsive course-img" src="{% static 'img/heart-beat-icon.png' %}" alt="">
+                <img ng-if="course_type == 'UPE'" class="img-responsive course-img" src="{% static 'img/medical-cap-icon.png' %}" alt="">
+
                  <p>Nous proposons divers cours à la population, comprenant des cours dispensés aux entreprises et des cours dispensés à un plus large public</p>
                 <p>Ci-dessous, vous trouverez une liste de nos <b>cours publics</b></p>
                </ol>
@@ -33,7 +38,6 @@
 
         <hr>
 
-        <img class="img-responsive" src="{% static 'img/car-icon.png' %}" alt="">
         <!-- Footer -->
         <footer>
             <div class="row">
