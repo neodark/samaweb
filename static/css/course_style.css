@@ -1,4 +1,5 @@
 img.course-img
 {
-    max-width: 4%;
+    display:inline;
+    max-width: 2em;
 }
