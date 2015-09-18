@@ -37,8 +37,12 @@ class CourseType(models.Model):
 
 class Date(models.Model):
     date                = models.DateTimeField()
+    end_time            = models.TimeField()
     def __str__(self):
         return '%s'%(self.date)
+
+    class Meta:
+        ordering = ('date',)
 
 class Course(models.Model):
     course_dates            = models.ManyToManyField(Date, verbose_name=_("Course Dates"), related_name='courses', blank=True)

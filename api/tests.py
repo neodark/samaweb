@@ -669,11 +669,15 @@ class TestAPITestDate(TestCase):
         self.client = APIClient()
         self.json_data = {\
                      'date':'2014-01-25T19:00:00Z',\
-                     'id':1}
+                     'end_time':'22:00:00',\
+                     'id':1,\
+                     'courses':[]}
 
         self.updated_json_data = {\
                      'date':'2015-10-30T20:30:00Z',\
-                     'id':1}
+                     'end_time':'23:00:00',\
+                     'id':1,\
+                     'courses':[]}
 
     def test_simple_test(self):
         """
@@ -998,11 +1002,23 @@ class TestAPITestCourse(TestCase):
 
         self.assertEqual(json_get, json.dumps(self.json_data_course, sort_keys=True))
 
+        request2 = self.client.get('/api/coursetype/', format='json')
+        self.assertEqual(request2.status_code, status.HTTP_200_OK)
+        json_get = ""
+        for key in json.loads(request2.content):
+            json_get = json.dumps(key, sort_keys=True)
+
+        tmp_json = self.json_data_coursetype
+        tmp_json['courses'].append(self.json_data_course)
+        self.assertEqual(json_get, json.dumps(tmp_json, sort_keys=True))
+
         request3 = self.client.put('/api/coursetype/1', self.updated_json_data_coursetype, format='json')
         self.assertEqual(request3.status_code, status.HTTP_200_OK)
 
-        self.assertEqual(json.dumps(request3.data, sort_keys=True), json.dumps(OrderedDict(self.updated_json_data_coursetype), sort_keys=True))
-        self.assertEqual(json.dumps(json.loads(request3.content), sort_keys=True), json.dumps(self.updated_json_data_coursetype, sort_keys=True))
+        tmp_json = self.updated_json_data_coursetype
+        tmp_json['courses'].append(self.json_data_course)
+        self.assertEqual(json.dumps(request3.data, sort_keys=True), json.dumps(OrderedDict(tmp_json), sort_keys=True))
+        self.assertEqual(json.dumps(json.loads(request3.content), sort_keys=True), json.dumps(tmp_json, sort_keys=True))
 
         request4 = self.client.get('/api/coursetype/', format='json')
         self.assertEqual(request4.status_code, status.HTTP_200_OK)
@@ -1247,11 +1263,33 @@ class TestAPITestParticipant(TestCase):
 
         self.assertEqual(json_get, json.dumps(self.json_data_participant, sort_keys=True))
 
+        request6 = self.client.get('/api/course/', format='json')
+        self.assertEqual(request6.status_code, status.HTTP_200_OK)
+        json_get = ""
+        for key in json.loads(request6.content):
+            json_get = json.dumps(key, sort_keys=True)
+
+        tmp_json = self.json_data_course
+        tmp_json['participants'].append(self.json_data_participant)
+        self.assertEqual(json_get, json.dumps(tmp_json, sort_keys=True))
+
+        request2 = self.client.get('/api/coursetype/', format='json')
+        self.assertEqual(request2.status_code, status.HTTP_200_OK)
+        json_get = ""
+        for key in json.loads(request2.content):
+            json_get = json.dumps(key, sort_keys=True)
+
+        tmp_json = self.json_data_coursetype
+        tmp_json['courses'].append(self.json_data_course)
+        self.assertEqual(json_get, json.dumps(tmp_json, sort_keys=True))
+
         request3 = self.client.put('/api/coursetype/1', self.updated_json_data_coursetype, format='json')
         self.assertEqual(request3.status_code, status.HTTP_200_OK)
 
-        self.assertEqual(json.dumps(request3.data, sort_keys=True), json.dumps(OrderedDict(self.updated_json_data_coursetype), sort_keys=True))
-        self.assertEqual(json.dumps(json.loads(request3.content), sort_keys=True), json.dumps(self.updated_json_data_coursetype, sort_keys=True))
+        tmp_json = self.updated_json_data_coursetype
+        tmp_json['courses'].append(self.json_data_course)
+        self.assertEqual(json.dumps(request3.data, sort_keys=True), json.dumps(OrderedDict(tmp_json), sort_keys=True))
+        self.assertEqual(json.dumps(json.loads(request3.content), sort_keys=True), json.dumps(tmp_json, sort_keys=True))
 
         request4 = self.client.get('/api/coursetype/', format='json')
         self.assertEqual(request4.status_code, status.HTTP_200_OK)
@@ -1264,8 +1302,10 @@ class TestAPITestParticipant(TestCase):
         request7 = self.client.put('/api/course/1', self.updated_json_data_course, format='json')
         self.assertEqual(request7.status_code, status.HTTP_200_OK)
 
-        self.assertEqual(json.dumps(request7.data, sort_keys=True), json.dumps(OrderedDict(self.updated_json_data_course), sort_keys=True))
-        self.assertEqual(json.dumps(json.loads(request7.content), sort_keys=True), json.dumps(self.updated_json_data_course, sort_keys=True))
+        tmp_json = self.updated_json_data_course
+        tmp_json['participants'].append(self.json_data_participant)
+        self.assertEqual(json.dumps(request7.data, sort_keys=True), json.dumps(OrderedDict(tmp_json), sort_keys=True))
+        self.assertEqual(json.dumps(json.loads(request7.content), sort_keys=True), json.dumps(tmp_json, sort_keys=True))
 
         request8 = self.client.get('/api/course/', format='json')
         self.assertEqual(request8.status_code, status.HTTP_200_OK)
@@ -1364,11 +1404,15 @@ class TestAPITestParticipantsRelatedToCoursesRelatedToCourseTypesAndDates(TestCa
 
         self.json_data_date = {\
                      'date':'2014-01-25T19:00:00Z',\
-                     'id':1}
+                     'end_time':'19:00:00',\
+                     'id':1,\
+                     'courses':[]}
 
         self.updated_json_data_date = {\
                      'date':'2015-10-30T20:30:00Z',\
-                     'id':1}
+                     'end_time':'22:00:00',\
+                     'id':1,\
+                     'courses':[]}
 
         self.json_data_coursetype = {\
                      'name':'cours 1',\
@@ -1385,13 +1429,13 @@ class TestAPITestParticipantsRelatedToCoursesRelatedToCourseTypesAndDates(TestCa
         self.updated_json_data_coursetype = {\
                      'name':'cours 1',\
                      'course_identifier':1,\
-                     'courses':[1],\
+                     'courses':[],\
                      'id':1}
 
         self.updated_json_data_coursetype_updated = {\
                      'name':'cours 2',\
                      'course_identifier':2,\
-                     'courses':[1],\
+                     'courses':[],\
                      'id':1}
 
         self.json_data_course = {\
@@ -1405,7 +1449,7 @@ class TestAPITestParticipantsRelatedToCoursesRelatedToCourseTypesAndDates(TestCa
                      'id':1}
 
         self.json_data_course_date = {\
-                     'course_dates':[1],\
+                     'course_dates':[],\
                      'location':'Geneva',\
                      'inscription_counter':0,\
                      'max_inscription_counter':12,\
@@ -1415,13 +1459,13 @@ class TestAPITestParticipantsRelatedToCoursesRelatedToCourseTypesAndDates(TestCa
                      'id':1}
 
         self.json_data_course_date_participant = {\
-                     'course_dates':[1],\
+                     'course_dates':[],\
                      'location':'Geneva',\
                      'inscription_counter':0,\
                      'max_inscription_counter':12,\
                      'status':True,\
                      'course_type':1,\
-                     'participants':[1],\
+                     'participants':[],\
                      'id':1}
 
         self.json_data_course_date_participant_repost = {\
@@ -1435,13 +1479,13 @@ class TestAPITestParticipantsRelatedToCoursesRelatedToCourseTypesAndDates(TestCa
                      'id':1}
 
         self.updated_json_data_course_date_participant = {\
-                     'course_dates':[1],\
+                     'course_dates':[],\
                      'location':'Rome',\
                      'inscription_counter':1,\
                      'max_inscription_counter':16,\
                      'status':False,\
                      'course_type':1,\
-                     'participants':[1],\
+                     'participants':[],\
                      'id':1}
 
         self.json_data_participant_nocourse = {\
@@ -1518,6 +1562,33 @@ class TestAPITestParticipantsRelatedToCoursesRelatedToCourseTypesAndDates(TestCa
         """
         Testing a POST and GET on a database
         """
+        request3 = self.client.post('/api/coursetype/', self.json_data_coursetype, format='json')
+        self.assertEqual(request3.status_code, status.HTTP_201_CREATED)
+
+        self.assertEqual(json.dumps(request3.data, sort_keys=True), json.dumps(OrderedDict(self.json_data_coursetype), sort_keys=True))
+        self.assertEqual(json.dumps(json.loads(request3.content), sort_keys=True), json.dumps(self.json_data_coursetype, sort_keys=True))
+
+        request4 = self.client.get('/api/coursetype/', format='json')
+        self.assertEqual(request4.status_code, status.HTTP_200_OK)
+        json_get = ""
+        for key in json.loads(request4.content):
+            json_get = json.dumps(key, sort_keys=True)
+
+        self.assertEqual(json_get, json.dumps(self.json_data_coursetype, sort_keys=True))
+
+        request3 = self.client.post('/api/course/', self.json_data_course, format='json')
+        self.assertEqual(request3.status_code, status.HTTP_201_CREATED)
+
+        self.assertEqual(json.dumps(request3.data, sort_keys=True), json.dumps(OrderedDict(self.json_data_course), sort_keys=True))
+        self.assertEqual(json.dumps(json.loads(request3.content), sort_keys=True), json.dumps(self.json_data_course, sort_keys=True))
+
+        request4 = self.client.get('/api/course/', format='json')
+        self.assertEqual(request4.status_code, status.HTTP_200_OK)
+        json_get = ""
+        for key in json.loads(request4.content):
+            json_get = json.dumps(key, sort_keys=True)
+
+        self.assertEqual(json_get, json.dumps(self.json_data_course, sort_keys=True))
 
         request1 = self.client.post('/api/date/', self.json_data_date, format='json')
         self.assertEqual(request1.status_code, status.HTTP_201_CREATED)
@@ -1533,41 +1604,15 @@ class TestAPITestParticipantsRelatedToCoursesRelatedToCourseTypesAndDates(TestCa
 
         self.assertEqual(json_get, json.dumps(self.json_data_date, sort_keys=True))
 
-        request3 = self.client.post('/api/coursetype/', self.json_data_coursetype, format='json')
-        self.assertEqual(request3.status_code, status.HTTP_201_CREATED)
-
-        self.assertEqual(json.dumps(request3.data, sort_keys=True), json.dumps(OrderedDict(self.json_data_coursetype), sort_keys=True))
-        self.assertEqual(json.dumps(json.loads(request3.content), sort_keys=True), json.dumps(self.json_data_coursetype, sort_keys=True))
-
         request4 = self.client.get('/api/coursetype/', format='json')
         self.assertEqual(request4.status_code, status.HTTP_200_OK)
         json_get = ""
         for key in json.loads(request4.content):
             json_get = json.dumps(key, sort_keys=True)
 
-        self.assertEqual(json_get, json.dumps(self.json_data_coursetype, sort_keys=True))
-
-        request3 = self.client.post('/api/course/', self.json_data_course_date, format='json')
-        self.assertEqual(request3.status_code, status.HTTP_201_CREATED)
-
-        self.assertEqual(json.dumps(request3.data, sort_keys=True), json.dumps(OrderedDict(self.json_data_course_date), sort_keys=True))
-        self.assertEqual(json.dumps(json.loads(request3.content), sort_keys=True), json.dumps(self.json_data_course_date, sort_keys=True))
-
-        request4 = self.client.get('/api/course/', format='json')
-        self.assertEqual(request4.status_code, status.HTTP_200_OK)
-        json_get = ""
-        for key in json.loads(request4.content):
-            json_get = json.dumps(key, sort_keys=True)
-
-        self.assertEqual(json_get, json.dumps(self.json_data_course_date, sort_keys=True))
-
-        request4 = self.client.get('/api/coursetype/', format='json')
-        self.assertEqual(request4.status_code, status.HTTP_200_OK)
-        json_get = ""
-        for key in json.loads(request4.content):
-            json_get = json.dumps(key, sort_keys=True)
-
-        self.assertEqual(json_get, json.dumps(self.updated_json_data_coursetype, sort_keys=True))
+        tmp_json = self.json_data_coursetype
+        tmp_json['courses'].append(self.json_data_course)
+        self.assertEqual(json_get, json.dumps(tmp_json, sort_keys=True))
 
         request5 = self.client.post('/api/participants/', self.json_data_participant, format='json')
         self.assertEqual(request5.status_code, status.HTTP_201_CREATED)
@@ -1589,7 +1634,9 @@ class TestAPITestParticipantsRelatedToCoursesRelatedToCourseTypesAndDates(TestCa
         for key in json.loads(request7.content):
             json_get = json.dumps(key, sort_keys=True)
 
-        self.assertEqual(json_get, json.dumps(self.json_data_course_date_participant, sort_keys=True))
+        tmp_json = self.json_data_course
+        tmp_json['participants'].append(self.json_data_participant)
+        self.assertEqual(json_get, json.dumps(tmp_json, sort_keys=True))
 
     def test_put_relation_date_coursetype_courses_participants_db(self):
         """
@@ -1624,11 +1671,11 @@ class TestAPITestParticipantsRelatedToCoursesRelatedToCourseTypesAndDates(TestCa
 
         self.assertEqual(json_get, json.dumps(self.json_data_coursetype, sort_keys=True))
 
-        request3 = self.client.post('/api/course/', self.json_data_course_date, format='json')
+        request3 = self.client.post('/api/course/', self.json_data_course, format='json')
         self.assertEqual(request3.status_code, status.HTTP_201_CREATED)
 
-        self.assertEqual(json.dumps(request3.data, sort_keys=True), json.dumps(OrderedDict(self.json_data_course_date), sort_keys=True))
-        self.assertEqual(json.dumps(json.loads(request3.content), sort_keys=True), json.dumps(self.json_data_course_date, sort_keys=True))
+        self.assertEqual(json.dumps(request3.data, sort_keys=True), json.dumps(OrderedDict(self.json_data_course), sort_keys=True))
+        self.assertEqual(json.dumps(json.loads(request3.content), sort_keys=True), json.dumps(self.json_data_course, sort_keys=True))
 
         request4 = self.client.get('/api/course/', format='json')
         self.assertEqual(request4.status_code, status.HTTP_200_OK)
@@ -1636,7 +1683,9 @@ class TestAPITestParticipantsRelatedToCoursesRelatedToCourseTypesAndDates(TestCa
         for key in json.loads(request4.content):
             json_get = json.dumps(key, sort_keys=True)
 
-        self.assertEqual(json_get, json.dumps(self.json_data_course_date, sort_keys=True))
+        #tmp_json = self.json_data_course
+        #tmp_json['participants'].append(self.json_data_participant)
+        self.assertEqual(json_get, json.dumps(self.json_data_course, sort_keys=True))
 
         request4 = self.client.get('/api/coursetype/', format='json')
         self.assertEqual(request4.status_code, status.HTTP_200_OK)
@@ -1644,7 +1693,9 @@ class TestAPITestParticipantsRelatedToCoursesRelatedToCourseTypesAndDates(TestCa
         for key in json.loads(request4.content):
             json_get = json.dumps(key, sort_keys=True)
 
-        self.assertEqual(json_get, json.dumps(self.updated_json_data_coursetype, sort_keys=True))
+        tmp_json = self.json_data_coursetype
+        tmp_json['courses'].append(self.json_data_course)
+        self.assertEqual(json_get, json.dumps(tmp_json, sort_keys=True))
 
         request5 = self.client.post('/api/participants/', self.json_data_participant, format='json')
         self.assertEqual(request5.status_code, status.HTTP_201_CREATED)
@@ -1666,7 +1717,9 @@ class TestAPITestParticipantsRelatedToCoursesRelatedToCourseTypesAndDates(TestCa
         for key in json.loads(request7.content):
             json_get = json.dumps(key, sort_keys=True)
 
-        self.assertEqual(json_get, json.dumps(self.json_data_course_date_participant, sort_keys=True))
+        tmp_json = self.json_data_course
+        tmp_json['participants'].append(self.json_data_participant)
+        self.assertEqual(json_get, json.dumps(tmp_json, sort_keys=True))
 
         request1 = self.client.put('/api/date/1', self.updated_json_data_date, format='json')
         self.assertEqual(request1.status_code, status.HTTP_200_OK)
@@ -1682,11 +1735,19 @@ class TestAPITestParticipantsRelatedToCoursesRelatedToCourseTypesAndDates(TestCa
 
         self.assertEqual(json_get, json.dumps(self.updated_json_data_date, sort_keys=True))
 
+        request7 = self.client.get('/api/course/', format='json')
+        self.assertEqual(request7.status_code, status.HTTP_200_OK)
+        json_get = ""
+        for key in json.loads(request7.content):
+            json_get = json.dumps(key, sort_keys=True)
+
+        self.assertEqual(json_get, json.dumps(self.json_data_course, sort_keys=True))
+
         request3 = self.client.put('/api/coursetype/1', self.updated_json_data_coursetype, format='json')
         self.assertEqual(request3.status_code, status.HTTP_200_OK)
 
-        self.assertEqual(json.dumps(request3.data, sort_keys=True), json.dumps(OrderedDict(self.updated_json_data_coursetype), sort_keys=True))
-        self.assertEqual(json.dumps(json.loads(request3.content), sort_keys=True), json.dumps(self.updated_json_data_coursetype, sort_keys=True))
+        self.assertEqual(json.dumps(request3.data, sort_keys=True), json.dumps(OrderedDict(self.json_data_coursetype), sort_keys=True))
+        self.assertEqual(json.dumps(json.loads(request3.content), sort_keys=True), json.dumps(self.json_data_coursetype, sort_keys=True))
 
         request4 = self.client.get('/api/coursetype/', format='json')
         self.assertEqual(request4.status_code, status.HTTP_200_OK)
@@ -1694,7 +1755,7 @@ class TestAPITestParticipantsRelatedToCoursesRelatedToCourseTypesAndDates(TestCa
         for key in json.loads(request4.content):
             json_get = json.dumps(key, sort_keys=True)
 
-        self.assertEqual(json_get, json.dumps(self.updated_json_data_coursetype, sort_keys=True))
+        self.assertEqual(json_get, json.dumps(self.json_data_coursetype, sort_keys=True))
 
         request4 = self.client.get('/api/course/', format='json')
         self.assertEqual(request4.status_code, status.HTTP_200_OK)
@@ -1702,13 +1763,16 @@ class TestAPITestParticipantsRelatedToCoursesRelatedToCourseTypesAndDates(TestCa
         for key in json.loads(request4.content):
             json_get = json.dumps(key, sort_keys=True)
 
-        self.assertEqual(json_get, json.dumps(self.json_data_course_date_participant, sort_keys=True))
+        tmp_json = self.json_data_course
+        self.assertEqual(json_get, json.dumps(tmp_json, sort_keys=True))
 
         request4 = self.client.put('/api/course/1', self.updated_json_data_course_date_participant, format='json')
         self.assertEqual(request4.status_code, status.HTTP_200_OK)
 
-        self.assertEqual(json.dumps(request4.data, sort_keys=True), json.dumps(OrderedDict(self.updated_json_data_course_date_participant), sort_keys=True))
-        self.assertEqual(json.dumps(json.loads(request4.content), sort_keys=True), json.dumps(self.updated_json_data_course_date_participant, sort_keys=True))
+        tmp_json = self.updated_json_data_course_date_participant
+        tmp_json['participants'].append(self.json_data_participant)
+        self.assertEqual(json.dumps(request4.data, sort_keys=True), json.dumps(OrderedDict(tmp_json), sort_keys=True))
+        self.assertEqual(json.dumps(json.loads(request4.content), sort_keys=True), json.dumps(tmp_json, sort_keys=True))
 
         request4 = self.client.get('/api/course/', format='json')
         self.assertEqual(request4.status_code, status.HTTP_200_OK)
@@ -1724,7 +1788,9 @@ class TestAPITestParticipantsRelatedToCoursesRelatedToCourseTypesAndDates(TestCa
         for key in json.loads(request4.content):
             json_get = json.dumps(key, sort_keys=True)
 
-        self.assertEqual(json_get, json.dumps(self.updated_json_data_coursetype, sort_keys=True))
+        tmp_json = self.updated_json_data_coursetype
+        tmp_json['courses'].append(self.updated_json_data_course_date_participant)
+        self.assertEqual(json_get, json.dumps(tmp_json, sort_keys=True))
 
         request6 = self.client.get('/api/participants/', format='json')
         self.assertEqual(request6.status_code, status.HTTP_200_OK)
@@ -1754,6 +1820,9 @@ class TestAPITestParticipantsRelatedToCoursesRelatedToCourseTypesAndDates(TestCa
         for key in json.loads(request7.content):
             json_get = json.dumps(key, sort_keys=True)
 
+        tmp_json = self.updated_json_data_course_date_participant
+        tmp_json['participants'] =  []
+        tmp_json['participants'].append(self.updated_json_data_participant)
         self.assertEqual(json_get, json.dumps(self.updated_json_data_course_date_participant, sort_keys=True))
 
         request4 = self.client.get('/api/coursetype/', format='json')
@@ -1825,7 +1894,9 @@ class TestAPITestParticipantsRelatedToCoursesRelatedToCourseTypesAndDates(TestCa
         for key in json.loads(request4.content):
             json_get = json.dumps(key, sort_keys=True)
 
-        self.assertEqual(json_get, json.dumps(self.updated_json_data_coursetype, sort_keys=True))
+        tmp_json = self.updated_json_data_coursetype
+        tmp_json['courses'].append(self.json_data_course)
+        self.assertEqual(json_get, json.dumps(tmp_json, sort_keys=True))
 
         request5 = self.client.post('/api/participants/', self.json_data_participant, format='json')
         self.assertEqual(request5.status_code, status.HTTP_201_CREATED)
@@ -1847,7 +1918,9 @@ class TestAPITestParticipantsRelatedToCoursesRelatedToCourseTypesAndDates(TestCa
         for key in json.loads(request7.content):
             json_get = json.dumps(key, sort_keys=True)
 
-        self.assertEqual(json_get, json.dumps(self.json_data_course_date_participant, sort_keys=True))
+        tmp_json = self.json_data_course_date_participant
+        tmp_json['participants'].append(self.json_data_participant)
+        self.assertEqual(json_get, json.dumps(tmp_json, sort_keys=True))
 
         #Delete participant
         request8 = self.client.delete('/api/participants/1', format='json')
@@ -1886,7 +1959,10 @@ class TestAPITestParticipantsRelatedToCoursesRelatedToCourseTypesAndDates(TestCa
         for key in json.loads(request7.content):
             json_get = json.dumps(key, sort_keys=True)
 
-        self.assertEqual(json_get, json.dumps(self.json_data_course_date_participant_repost, sort_keys=True))
+        tmp_json = self.json_data_course_date_participant
+        tmp_json['participants'] = []
+        tmp_json['participants'].append(self.json_data_participant_repost)
+        self.assertEqual(json_get, json.dumps(tmp_json, sort_keys=True))
 
         #Delete course automatically deletes all participants
         request10 = self.client.delete('/api/course/1', format='json')

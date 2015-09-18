@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-ng-app="samawebApp">
 
 <head>
 
@@ -22,6 +22,9 @@
 
     <!-- Custom Fonts -->
     <link href="{% static 'font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+
+    <!-- Custom Styles -->
+    <link href="{% static 'css/course_style.css' %}" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -56,9 +59,6 @@
                     </li>
                     <li>
                         <a href="{% url 'courses' %}">Cours</a>
-                    </li>
-                    <li>
-                        <a href="about.html">Organisation</a>
                     </li>
                     <li>
                         <a href="{% url 'faq' %}">FAQ</a>
@@ -141,6 +141,16 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    <!-- AngularJS -->
+    <script src="{% static 'js/angular.min.js' %}"></script>
+    <script src="{% static 'js/angular-ui-router.min.js' %}"></script>
+
+    <!-- App libs -->
+    <script src="{% static 'samaweb/app/app.js' %}"></script>
+    <script src="{% static 'samaweb/app/app.config.js' %}"></script>
+    <script src="{% static 'samaweb/app/controllers/courseController.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'samaweb/app/factories/courseFactory.js' %}" type="text/javascript" charset="utf-8"></script>
 
     {% block content %}{% endblock %}
 

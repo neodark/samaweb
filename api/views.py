@@ -90,6 +90,14 @@ class CourseList(CourseMixin, ListCreateAPIView):
     Return a list of all the SamaMembers, or
     create new ones
     """
+
+    def get_queryset(self):
+        queryset = Course.objects.all()
+        coursetype = self.request.QUERY_PARAMS.get('coursetype', None)
+        if coursetype is not None:
+            queryset = queryset.filter(course_type__name=coursetype)
+        return queryset
+
     pass
 
 class CourseDetail(CourseMixin, RetrieveUpdateDestroyAPIView):
