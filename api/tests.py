@@ -669,11 +669,13 @@ class TestAPITestDate(TestCase):
         self.client = APIClient()
         self.json_data = {\
                      'date':'2014-01-25T19:00:00Z',\
+                     'end_time':'22:00:00',\
                      'id':1,\
                      'courses':[]}
 
         self.updated_json_data = {\
                      'date':'2015-10-30T20:30:00Z',\
+                     'end_time':'23:00:00',\
                      'id':1,\
                      'courses':[]}
 
@@ -1402,11 +1404,13 @@ class TestAPITestParticipantsRelatedToCoursesRelatedToCourseTypesAndDates(TestCa
 
         self.json_data_date = {\
                      'date':'2014-01-25T19:00:00Z',\
+                     'end_time':'19:00:00',\
                      'id':1,\
                      'courses':[]}
 
         self.updated_json_data_date = {\
                      'date':'2015-10-30T20:30:00Z',\
+                     'end_time':'22:00:00',\
                      'id':1,\
                      'courses':[]}
 
