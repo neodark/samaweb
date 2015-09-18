@@ -37,6 +37,7 @@ class CourseType(models.Model):
 
 class Date(models.Model):
     date                = models.DateTimeField()
+    end_time            = models.TimeField()
     def __str__(self):
         return '%s'%(self.date)
 

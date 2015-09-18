@@ -44,7 +44,7 @@ class DateSerializer( serializers.ModelSerializer ):
 
    class Meta:
        model = Date
-       fields = ( 'date', 'id', 'courses' )
+       fields = ( 'date', 'end_time', 'id', 'courses' )
 
 class CourseSerializer( serializers.ModelSerializer ):
     """
