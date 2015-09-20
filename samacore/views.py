@@ -41,6 +41,18 @@ def course(request):
     context = {'coursetype': coursetype}
     return render(request, 'samacore/course.html', context)
 
+def register_course(request):
+    coursetype = ''
+    courseid = ''
+    if request.GET.has_key('coursetype'):
+        coursetype = request.GET['coursetype']
+    if request.GET.has_key('courseid'):
+        courseid = request.GET['courseid']
+
+    context = {'coursetype': coursetype,
+               'courseid': courseid}
+    return render(request, 'samacore/register_course.html', context)
+
 #------------------------------------------------
 
 
