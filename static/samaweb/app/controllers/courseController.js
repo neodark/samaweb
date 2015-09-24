@@ -5,19 +5,35 @@ app.controller('courseController',['$scope', 'courseFactory', function ($scope, 
    $scope.courses;
    $scope.course_type;
    $scope.course_list_url;
+   $scope.birthdate_year = [];
 
-  $scope.submitted = false;
-  $scope.signupForm = function() {
-    if ($scope.signup_form.$valid) {
-      // Submit as normal
-      console.log("submit as normal");
-      console.log($scope.signup_form);
-    } else {
-      console.log("submit error");
-      console.log($scope.signup_form);
-      $scope.signup_form.submitted = true;
-    }
-  }
+   var currentTime = new Date();
+   var year = currentTime.getFullYear();
+
+   console.log(year);
+   console.log(currentTime);
+   for (var i = year-30; i < year; i++)
+   {
+        var item_dict = {};
+        item_dict["identifier"] = i;
+        item_dict["name"] = i;
+        $scope.birthdate_year.push(item_dict);
+   }
+
+   console.log($scope.birthdate_year);
+
+   $scope.submitted = false;
+   $scope.signupForm = function() {
+     if ($scope.signup_form.$valid) {
+       // Submit as normal
+       console.log("submit as normal");
+       console.log($scope.signup_form);
+     } else {
+       console.log("submit error");
+       console.log($scope.signup_form);
+       $scope.signup_form.submitted = true;
+     }
+   }
 
 
    $scope.init = function(course_type, course_list_url)

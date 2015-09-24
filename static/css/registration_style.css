@@ -55,6 +55,11 @@ legend{
         font-weight:bold;
     }
 .form .form-control { margin-bottom: 10px; }
+
+.error-container .error {
+    color: red;
+    font-weight: bold;
+}
 @media (min-width:768px) {
     #home{
         margin-top:50px;
