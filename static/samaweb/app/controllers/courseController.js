@@ -6,13 +6,15 @@ app.controller('courseController',['$scope', 'courseFactory', function ($scope, 
    $scope.course_type;
    $scope.course_list_url;
    $scope.birthdate_year = [];
+   $scope.birthdate_month = [];
+   $scope.birthdate_month_name = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet",
+   "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+   $scope.birthdate_day = [];
 
    var currentTime = new Date();
    var year = currentTime.getFullYear();
 
-   console.log(year);
-   console.log(currentTime);
-   for (var i = year-30; i < year; i++)
+   for (var i = year-70; i < year; i++)
    {
         var item_dict = {};
         item_dict["identifier"] = i;
@@ -20,7 +22,21 @@ app.controller('courseController',['$scope', 'courseFactory', function ($scope, 
         $scope.birthdate_year.push(item_dict);
    }
 
-   console.log($scope.birthdate_year);
+   for (var i = 1; i < 13; i++)
+   {
+        var item_dict = {};
+        item_dict["identifier"] = i;
+        item_dict["name"] = $scope.birthdate_month_name[i-1];
+        $scope.birthdate_month.push(item_dict);
+   }
+
+   for (var i = 1; i < 32; i++)
+   {
+        var item_dict = {};
+        item_dict["identifier"] = i;
+        item_dict["name"] = i;
+        $scope.birthdate_day.push(item_dict);
+   }
 
    $scope.submitted = false;
    $scope.signupForm = function() {
