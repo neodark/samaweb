@@ -3,7 +3,7 @@ SAMA WEB
 -------------------------
 ## Project health
 [![Build Status](https://travis-ci.org/neodark/samaweb.svg?branch=master)](https://travis-ci.org/neodark/samaweb?branch=master)
-[![Coverage Status](https://coveralls.io/repos/neodark/samaweb/badge.png?branch=master)](https://coveralls.io/repos/neodark/samaweb?branch=master)
+[![Coverage Status](https://coveralls.io/repos/neodark/samaweb/badge.svg?branch=master&service=github)](https://coveralls.io/github/neodark/samaweb?branch=master)
 
 ##Project description
 
