@@ -1,6 +1,10 @@
 -------------------------
 SAMA WEB
 -------------------------
+## Project health
+[![Build Status](https://travis-ci.org/neodark/samaweb.svg?branch=master)](https://travis-ci.org/neodark/samaweb?branch=master)
+[![Coverage Status](https://coveralls.io/repos/neodark/samaweb/badge.png?branch=master)](https://coveralls.io/repos/neodark/samaweb?branch=master)
+
 ##Project description
 
 Building a website for the samaritains using [Django](https://www.djangoproject.com/).
