@@ -10,9 +10,19 @@ app.controller('courseController',['$scope', 'courseFactory', function ($scope, 
    $scope.birthdate_month_name = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet",
    "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
    $scope.birthdate_day = [];
+   $scope.gender_type = ["M.", "Mme."];
+   $scope.gender = [];
 
    var currentTime = new Date();
    var year = currentTime.getFullYear();
+
+   for (var i = 0; i < $scope.gender_type.length; i++)
+   {
+        var item_dict = {};
+        item_dict["identifier"] = i;
+        item_dict["name"] = $scope.gender_type[i];
+        $scope.gender.push(item_dict);
+   }
 
    for (var i = year-70; i < year; i++)
    {
