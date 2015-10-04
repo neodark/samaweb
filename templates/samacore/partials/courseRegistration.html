@@ -6,13 +6,14 @@
             <form name="signup_form" no-validate ng-submit="signupForm()">
                     <legend>Coordonnées du participant au cours</legend>
                     <h4>Vous êtes priés de rentrer chaque champ afin de pouvoir valider votre inscription au cours.</h4>
-
-                     <label>Sexe : </label>                    <label class="radio-inline">
-                        <input type="radio" name="gender" value="M" id=male />Monsieur
-                    </label>
-                    <label class="radio-inline">
-                        <input type="radio" name="gender" value="F" id=female />Madame
-                    </label>
+                    <label>Vos informations: </label>
+                    <div class="row">
+                        <div class="col-xs-4 col-md-4">
+                            <select name="gender_type" class = "form-control input-lg">
+                            <option ng-repeat="gender_type in gender" value="{$ gender_type.identifier $}">{$ gender_type.name $}</option>
+                            </select>
+                        </div>
+                    </div>
                     <br />
                     <div class="row">
                         <div class="col-xs-6 col-md-6">
@@ -209,9 +210,9 @@
                         </div>
 
                     <br />
-              <span class="help-block">By clicking Create my account, you agree to our Terms and that you have read our Data Use Policy, including our Cookie Use.</span>
+              <span class="help-block">En cliquant sur "Je m'insscris au cours", vous vous engager à avoir fournis vos informations correctement et à ne pas nuire au bon fonctionnement du site par de faux enregistrements.</span>
                     <button class="btn btn-lg btn-primary btn-block signup-btn" type="submit">
-                        Create my account</button>
+                        Je m'inscris au cours</button>
                     <br />
             </form>
         </div>
