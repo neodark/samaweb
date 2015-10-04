@@ -48,7 +48,7 @@ app.controller('courseController',['$scope', 'courseFactory', function ($scope, 
         $scope.birthdate_day.push(item_dict);
    }
 
-   $scope.submitted = false;
+   //$scope.submitted = false;
    $scope.signupForm = function() {
      if ($scope.signup_form.$valid) {
        // Submit as normal
@@ -57,7 +57,11 @@ app.controller('courseController',['$scope', 'courseFactory', function ($scope, 
      } else {
        console.log("submit error");
        console.log($scope.signup_form);
-       $scope.signup_form.submitted = true;
+       console.log($scope.signup_form.lastname.$valid);
+       if(! $scope.signup_form.gender_type_select.$valid)
+       {
+       }
+       //$scope.signup_form.submitted = true;
      }
    }
 
