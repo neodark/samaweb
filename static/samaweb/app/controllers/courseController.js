@@ -60,6 +60,7 @@ app.controller('courseController',['$scope', 'courseFactory', function ($scope, 
        console.log($scope.signup_form.lastname.$valid);
        if(! $scope.signup_form.gender_type_select.$valid)
        {
+            alert("Merci d'indiquer M. ou Mme. dans le menu au dessus de votre prénom");
        }
        //$scope.signup_form.submitted = true;
      }
