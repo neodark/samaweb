@@ -49,20 +49,84 @@ app.controller('courseController',['$scope', 'courseFactory', function ($scope, 
    }
 
    //$scope.submitted = false;
-   $scope.signupForm = function() {
-     if ($scope.signup_form.$valid) {
-       // Submit as normal
-       console.log("submit as normal");
-       console.log($scope.signup_form);
-     } else {
-       console.log("submit error");
-       console.log($scope.signup_form);
-       console.log($scope.signup_form.lastname.$valid);
-       if(! $scope.signup_form.gender_type_select.$valid)
+   $scope.signupForm = function()
+   {
+       if ($scope.signup_form.$valid)
        {
-            alert("Merci d'indiquer M. ou Mme. dans le menu au dessus de votre prénom");
+           // Submit as normal
+           console.log("submit as normal");
+           console.log($scope.signup_form);
+
+           var data_participant = {};
+           data_participant["sex"] = $scope.signup_form.gender_type_select.$modelValue;
+           data_participant["first_name"] = $scope.signup_form.firstname.$modelValue;
+           data_participant["last_name"] = $scope.signup_form.lastname.$modelValue;
+           data_participant["birth_date"] = '2015-01-25';
+           data_participant["address"] = $scope.signup_form.address.$modelValue;
+           data_participant["npa"] = $scope.signup_form.npa.$modelValue;
+           data_participant["city"] = $scope.signup_form.city.$modelValue;
+           data_participant["phone"] = $scope.signup_form.phone.$modelValue;
+           data_participant["email"] = $scope.signup_form.email.$modelValue;
+           data_participant["course"] = 1;
+           data_participant["last_course_date"] = '2015-02-11';
+
+           courseFactory.registerParticipant(data_participant);
        }
-       //$scope.signup_form.submitted = true;
+       else
+       {
+           console.log("submit error");
+           console.log($scope.signup_form);
+           console.log($scope.signup_form.lastname.$valid);
+           if(! $scope.signup_form.gender_type_select.$valid)
+           {
+               bootbox.alert("Merci d'indiquer M. ou Mme. dans le menu au dessus de votre prénom", function()
+               {
+               });
+           }
+           if(! $scope.signup_form.firstname.$valid)
+           {
+               bootbox.alert("Votre prénom n'est pas valide", function()
+               {
+               });
+           }
+           if(! $scope.signup_form.lastname.$valid)
+           {
+               bootbox.alert("Votre nom n'est pas valide", function()
+               {
+               });
+           }
+           if(! $scope.signup_form.address.$valid)
+           {
+               bootbox.alert("Merci d'indiquer votre adresse", function()
+               {
+               });
+           }
+           if(! $scope.signup_form.npa.$valid)
+           {
+               bootbox.alert("Merci d'indiquer le numéro postale de votre ville de résidence(exemple: 1920)", function()
+               {
+               });
+           }
+           if(! $scope.signup_form.city.$valid)
+           {
+               bootbox.alert("Merci d'indiquer votre ville de résidence", function()
+               {
+               });
+           }
+           if(! $scope.signup_form.phone.$valid)
+           {
+               bootbox.alert("Merci d'indiquer votre numéro de téléphone", function()
+               {
+               });
+           }
+           if(! $scope.signup_form.email.$valid)
+           {
+               bootbox.alert("Merci d'indiquer votre adresse email", function()
+               {
+               });
+           }
+
+     //$scope.signup_form.submitted = true;
      }
    }
 
