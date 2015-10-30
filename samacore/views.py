@@ -41,6 +41,12 @@ def course(request):
     context = {'coursetype': coursetype}
     return render(request, 'samacore/course.html', context)
 
+def admin_login(request):
+    param_1 = 2
+    context = {'params': param_1}
+    return render(request, 'samacore/admin_login.html', context)
+
+
 def register_course(request):
     coursetype = ''
     courseid = ''
