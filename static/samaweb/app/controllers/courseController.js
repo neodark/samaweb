@@ -1,6 +1,6 @@
 //This controller retrieves data from the courseFactory through the REST API and associates it with the $scope
 //The $scope is ultimately bound to the course view
-app.controller('courseController',['$scope', 'courseFactory', function ($scope, courseFactory) {
+app.controller('courseController',['$scope', 'courseFactory', 'authFactory', function ($scope, courseFactory, authFactory) {
 
    $scope.courses;
    $scope.course_type;
@@ -131,12 +131,11 @@ app.controller('courseController',['$scope', 'courseFactory', function ($scope, 
    }
 
 
-   $scope.init = function(course_type, course_list_url)
+   $scope.initCourse = function(course_type, course_list_url)
    {
        $scope.course_type     = course_type;
        $scope.course_list_url = course_list_url;
        getCourseData($scope.course_type, $scope.course_list_url);
-       console.log($scope);
    }
  
    function getCourseData(course_type, course_list_url)
@@ -149,4 +148,29 @@ app.controller('courseController',['$scope', 'courseFactory', function ($scope, 
                $scope.status = 'Unable to load courses data: ' + error.message;
            });
    }
+
+   $scope.login = function(username, password)
+   {
+       authFactory.login(username, password)
+           .success(function (loginData) {
+               $scope.status = 'Successfully logged in user: ' + loginData;
+               $scope.user = loginData.username;
+           })
+           .error(function (error) {
+               $scope.status = 'Unable to login user: ' + error.message;
+           });
+   }
+
+   $scope.logout = function()
+   {
+       authFactory.logout()
+           .success(function (loginData) {
+               $scope.status = 'Successfully logged out user: ' + loginData;
+               $scope.user = undefined;
+           })
+           .error(function (error) {
+               $scope.status = 'Unable to logout user: ' + error.message;
+           });
+   }
+
 }]);
