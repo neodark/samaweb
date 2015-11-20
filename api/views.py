@@ -12,6 +12,16 @@ from api.serializers import SamaMemberSerializer, SamaGroupSerializer, Participa
 
 from rest_framework.views import APIView
 
+#For UserView and AuthView
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from rest_framework import viewsets
+from rest_framework.permissions import AllowAny
+
+from .permissions import IsStaffOrTargetUser
+
+from . import authentication, serializers  # see previous post[1] for user serializer.
+
 # Create your views here.
 
 # Class based views
@@ -150,13 +160,6 @@ class SamaGroupDetail(SamaGroupMixin, RetrieveUpdateDestroyAPIView):
     """
     pass
 
-from django.contrib.auth.models import User
-from rest_framework import viewsets
-from rest_framework.permissions import AllowAny
-
-from .permissions import IsStaffOrTargetUser
-
-
 class UserView(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     model = User
@@ -166,11 +169,20 @@ class UserView(viewsets.ModelViewSet):
         return (AllowAny() if self.request.method == 'POST'
                 else IsStaffOrTargetUser()),
 
-from . import authentication, serializers  # see previous post[1] for user serializer.
 
 class AuthView(APIView):
     authentication_classes = (authentication.QuietBasicAuthentication,)
     serializer_class = serializers.UserSerializer
 
     def post(self, request, *args, **kwargs):
-        return Response(self.serializer_class(request.user).data)
+        #Decode in base 64 and retrieve username and password
+        import base64
+        username = base64.standard_b64decode(request.data["username"])
+        password = base64.standard_b64decode(request.data["password"])
+        user = authenticate(username=username, password=password)
+        login(request, user)
+        return Response(serializers.UserSerializer(user).data)
+
+    def delete(self, request, *args, **kwargs):
+        logout(request)
+        return Response()

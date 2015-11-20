@@ -75,9 +75,9 @@ from rest_framework import serializers
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('password', 'first_name', 'last_name', 'email',)
+        fields = ('id', 'username', 'password', 'first_name', 'last_name', 'email',)
+        read_only_fields = ('id', 'is_staff', 'is_superuser', 'is_active', 'date_joined',)
         write_only_fields = ('password',)
-        read_only_fields = ('is_staff', 'is_superuser', 'is_active', 'date_joined',)
 
     def restore_object(self, attrs, instance=None):
         # call set_password on user object. Without this

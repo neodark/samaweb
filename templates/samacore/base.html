@@ -42,7 +42,7 @@
 <body>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div Class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -73,6 +73,7 @@
                     <li>
                         <a href="{% url 'admin_login' %}">Admin</a>
                     </li>
+
                     <!--
                     <li>
                         <a href="services.html">Services</a>
@@ -139,7 +140,7 @@
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
-    </nav>
+    </div>
     <!-- jQuery -->
     <script src="{% static 'js/jquery.js' %}"></script>
 
@@ -155,34 +156,21 @@
     <script src="{% static 'js/angular.min.js' %}"></script>
     <script src="{% static 'js/angular-ui-router.min.js' %}"></script>
 
+    <!-- Custom libs -->
+    <script src="{% static 'js/base_64_encoder_decoder.js' %}"></script>
+
     <!-- App libs -->
     <script src="{% static 'samaweb/app/app.js' %}"></script>
     <script src="{% static 'samaweb/app/app.config.js' %}"></script>
     <script src="{% static 'samaweb/app/controllers/courseController.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'samaweb/app/controllers/authController.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'samaweb/app/services/authStateService.js' %}" type="text/javascript" charset="utf-8"></script>
     <script src="{% static 'samaweb/app/factories/courseFactory.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'samaweb/app/factories/authFactory.js' %}" type="text/javascript" charset="utf-8"></script>
 
+    <div id="outerdiv" ng-controller="courseController">
     {% block content %}{% endblock %}
-
-    <script type="text/javascript">
-    function checkCredentials(username, password){
-        function setHeader(xhr) {
-            // as per HTTP authentication spec [2], credentials must be
-            // encoded in base64. Lets use window.btoa [3]
-            xhr.setRequestHeader ("Authorization", "Basic " +
-                                   btoa(username + ':' + password));
-        }
-
-        $.ajax({type: "POST",  url: "/api/auth/",  beforeSend: setHeader}).
-            fail(function(resp){
-                console.log('bad credentials.')
-            }).
-            done(function(resp){
-                console.log('welcome ' + resp.email)
-            });
-    }
-    </script>
-
-
+    </div>
 </body>
 
 </html>
