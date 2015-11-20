@@ -9,6 +9,8 @@ from api.views import ParticipantList, ParticipantDetail
 from api.views import CourseList, CourseDetail
 from api.views import CourseTypeList, CourseTypeDetail
 from api.views import DateList, DateDetail
+from api.views import UserView
+from api.views import AuthView
 
 router = routers.SimpleRouter()
 
@@ -31,5 +33,7 @@ urlpatterns = patterns('',
     url( r'^course/(?P<pk>[0-9]+)$', CourseDetail.as_view(), name = 'course_detail' ),
     url( r'^coursetype/$', CourseTypeList.as_view(), name = 'coursetype_list' ),
     url( r'^coursetype/(?P<pk>[0-9]+)$', CourseTypeDetail.as_view(), name = 'coursetype_detail' ),
+    url(r'^accounts/$', UserView.as_view('list')),
+    url(r'^auth/$', AuthView.as_view(), name='authenticate'),
     url( r'^', include(router.urls) ),
 )
