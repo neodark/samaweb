@@ -26,7 +26,10 @@ def section(request):
 def courses(request):
     param_1 = 2
     context = {'params': param_1}
-    return render(request, 'samacore/courses.html', context)
+    if request.user.is_anonymous():
+        return render(request, 'samacore/courses.html', context)
+    else:
+        return render(request, 'samacore/courses.html', context)
 
 def faq(request):
     param_1 = 2
