@@ -168,7 +168,7 @@
     <script src="{% static 'samaweb/app/factories/courseFactory.js' %}" type="text/javascript" charset="utf-8"></script>
     <script src="{% static 'samaweb/app/factories/authFactory.js' %}" type="text/javascript" charset="utf-8"></script>
 
-    <div id="outerdiv" ng-controller="courseController">
+    <div id="outerdiv" ng-controller="courseController" ng-init="authState.user='{{user.username}}'">
     {% block content %}{% endblock %}
     </div>
 </body>
