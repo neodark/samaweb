@@ -14,6 +14,9 @@
 
     <title>Section des Samaritains - Martigny</title>
 
+    <!-- Favicon for the website -->
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}"/>
+
     <!-- Bootstrap Core CSS -->
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 
@@ -25,6 +28,7 @@
 
     <!-- Custom Styles -->
     <link href="{% static 'css/course_style.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/registration_style.css' %}" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -38,7 +42,7 @@
 <body>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div Class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -67,8 +71,9 @@
                         <a href="about.html">Membres</a>
                     </li>
                     <li>
-                        <a href="about.html">Admin</a>
+                        <a href="{% url 'admin_login' %}">Admin</a>
                     </li>
+
                     <!--
                     <li>
                         <a href="services.html">Services</a>
@@ -135,25 +140,37 @@
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
-    </nav>
+    </div>
     <!-- jQuery -->
     <script src="{% static 'js/jquery.js' %}"></script>
 
+    <!-- jQuery Validate -->
+
     <!-- Bootstrap Core JavaScript -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    <!-- Bootbox to handle modals and dialog boxes -->
+    <script src="{% static 'js/bootbox.min.js' %}"></script>
 
     <!-- AngularJS -->
     <script src="{% static 'js/angular.min.js' %}"></script>
     <script src="{% static 'js/angular-ui-router.min.js' %}"></script>
 
+    <!-- Custom libs -->
+    <script src="{% static 'js/base_64_encoder_decoder.js' %}"></script>
+
     <!-- App libs -->
     <script src="{% static 'samaweb/app/app.js' %}"></script>
     <script src="{% static 'samaweb/app/app.config.js' %}"></script>
     <script src="{% static 'samaweb/app/controllers/courseController.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'samaweb/app/controllers/authController.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'samaweb/app/services/authStateService.js' %}" type="text/javascript" charset="utf-8"></script>
     <script src="{% static 'samaweb/app/factories/courseFactory.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'samaweb/app/factories/authFactory.js' %}" type="text/javascript" charset="utf-8"></script>
 
+    <div id="outerdiv" ng-controller="courseController">
     {% block content %}{% endblock %}
-
+    </div>
 </body>
 
 </html>
