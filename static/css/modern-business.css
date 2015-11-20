@@ -25,17 +25,17 @@ body {
 
 /* Home Page Carousel */
 
-header.carousel {
-    height: 50%;
+.carousel {
+    height: 45em;
 }
 
-header.carousel .item,
-header.carousel .item.active,
-header.carousel .carousel-inner {
+.carousel .item,
+.carousel .item.active,
+.carousel .carousel-inner {
     height: 100%;
 }
 
-header.carousel .fill {
+.carousel .fill {
     width: 100%;
     height: 100%;
     background-position: center;
@@ -136,7 +136,7 @@ footer {
         margin-bottom: 15px;
     }
 
-    header.carousel .carousel {
+    .carousel .carousel {
         height: 70%;
     }
 }
