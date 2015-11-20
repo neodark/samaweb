@@ -12,6 +12,14 @@
     <div class="container" ng-init="initCourse('{{ coursetype }}', '{% url 'course_list' %}')">
 
         <!-- Page Heading/Breadcrumbs -->
+        <div class="row" ng-show="authState.user">
+            <div class="col-lg-12">
+            <div class="alert alert-danger alert_login" role="alert">
+                <b>Avec de grands pouvoirs, viennent de grande responsabilité!</b> N'oubliez pas que <i>vous êtes connecté</i> en tant que <b>{$ authState.user $}</b></br>
+            Cela signifie que vous souhaitez faire des modifications au contenu du site. Si ce n'est pas le cas, vous êtes priés de vous <i>déconnecter </i> depuis le menu <b>Admin</b>
+            </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">{{ coursetype }}
