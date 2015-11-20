@@ -1,6 +1,8 @@
 //This controller retrieves data from the courseFactory through the REST API and associates it with the $scope
 //The $scope is ultimately bound to the course view
-app.controller('courseController',['$scope', 'courseFactory', 'authFactory', function ($scope, courseFactory, authFactory) {
+app.controller('courseController',['$scope', 'courseFactory', 'authState', 'authFactory', function ($scope, courseFactory, authState, authFactory) {
+
+   $scope.authState = authState;
 
    $scope.courses;
    $scope.course_type;
