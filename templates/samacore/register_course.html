@@ -9,7 +9,7 @@
 {% block content %}
 
     <!-- Page Content -->
-    <div class="container" ng-init="initCourse('{{ coursetype }}', '{% url 'course_list' %}')">
+    <div class="container" ng-controller="courseController" ng-init="init('{{ coursetype }}', '{% url 'course_list' %}')">
 
         <!-- Page Heading/Breadcrumbs -->
         <div class="row">
@@ -24,8 +24,8 @@
                 </h1>
                 <ol class="breadcrumb">
                 <h2>Inscription à un cours</h2>
-                <p>Parmi l'offre de cours <b>{{ coursetype }}</b> de l'année, choisissez le cours avec les dates qui vous conviennent, ci-dessous, et cliquez sur <b>Inscription</b></p>
-                <p>Vous serez guidez pas à pas durant le processus d'inscription. Nous vous prions déjà de bien vouloir rentrer <b>toutes vos coordonnées correctement</b></p>
+                <p>Afin de pouvoir vous enregister au cours <b>{{ coursetype }}</b></p>
+                <p>Merci de bien vouloir rentrer <b>toutes vos coordonnées correctement</b> et cliquez sur <b>Inscription</b></p>
                </ol>
             </div>
         </div>
@@ -33,7 +33,7 @@
 
         <!-- Courses -->
 
-       <div ui-view="courseInfo"></div>
+       <div ui-view="courseRegistration"></div>
         <!-- /.row -->
 
         <hr>
@@ -61,6 +61,37 @@
                 $('a[href="#' + id + '"]').closest('.panel-heading').removeClass('active-faq');
                 $('a[href="#' + id + '"] .panel-title span').html('<i class="glyphicon glyphicon-plus"></i>');
             });
+
+            //$('#contact-form').validate({
+            //    rules: {
+            //        name: {
+            //            minlength: 2,
+            //            required: true
+            //        },
+            //        email: {
+            //            required: true,
+            //            email: true
+            //        },
+            //        subject: {
+            //            selectcheck: true
+            //        },
+            //        message: {
+            //            minlength: 2,
+            //            required: true
+            //        }
+            //    },
+            //    highlight: function (element) {
+            //        $(element).closest('.control-group').removeClass('success').addClass('error');
+            //    },
+            //    success: function (element) {
+            //        element.text('OK!').addClass('valid')
+            //            .closest('.control-group').removeClass('error').addClass('success');
+            //    }
+            //});
+            //jQuery.validator.addMethod('selectcheck', function (value) {
+            //    return (value != 'na');
+            //}, "year required");
+
         });
     </script>
     <script type='text/javascript'>
