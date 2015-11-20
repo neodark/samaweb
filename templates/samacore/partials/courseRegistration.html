@@ -1,0 +1,247 @@
+{% load staticfiles %}
+
+<div class="" id="wrap">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <form name="signup_form" no-validate ng-submit="signupForm()">
+                    <legend>Coordonnées du participant au cours</legend>
+                    <h4>Vous êtes priés de rentrer chaque champ afin de pouvoir valider votre inscription au cours.</h4>
+                    <label>Vos informations: </label>
+                    <div class="row">
+                        <div class="col-xs-4 col-md-4">
+                            <select
+                            name="gender_type_select"
+                            class="form-control input-lg"
+                            ng-model="signup.gender_type_select"
+                            required>
+                            <option ng-repeat="gender_type in gender" value="{$ gender_type.identifier $}">{$ gender_type.name $}</option>
+                             <option value="">---</option>
+                            </select>
+                            <div class="error-container"
+                                 ng-show="signup_form.gender_type_select.$dirty && signup_form.gender_type_select.$invalid && !signup_form.gender_type_select.$focused">
+                              <small class="error"
+                                     ng-show="signup_form.gender_type_select.$error.required && !signup_form.gender_type_select.$focused">
+                                     Merci de spécifier votre sexe.
+                              </small>
+                              <small class="error"
+                                     ng-show="signup_form.gender_type_select.$error.minlength && !signup_form.gender_type_select.$focused">
+                                      Ce champ ne peut pas être vide
+                              </small>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-xs-6 col-md-6">
+                            <input
+                            type="text"
+                            name="firstname"
+                            value=""
+                            class="form-control input-lg"
+                            placeholder="Prénom"
+                            ng-model="signup.firstname"
+                            ng-minlength=2 required ng-focus/>
+                            <div class="error-container"
+                                 ng-show="signup_form.firstname.$dirty && signup_form.firstname.$invalid && !signup_form.firstname.$focused">
+                              <small class="error"
+                                     ng-show="signup_form.firstname.$error.required && !signup_form.firstname.$focused">
+                                     Votre prénom est requis.
+                              </small>
+                              <small class="error"
+                                     ng-show="signup_form.firstname.$error.minlength && !signup_form.firstname.$focused">
+                                      Votre prénom ne contient pas assez de caractères
+                              </small>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-6">
+                            <input type="text"
+                            name="lastname"
+                            value=""
+                            class="form-control input-lg"
+                            placeholder="Nom de famille"
+                            ng-model="signup.lastname"
+                            ng-minlength=2 required ng-focus/>
+                            <div class="error-container"
+                                 ng-show="signup_form.lastname.$dirty && signup_form.lastname.$invalid && !signup_form.lastname.$focused">
+                              <small class="error"
+                                     ng-show="signup_form.lastname.$error.required && !signup_form.lastname.$focused">
+                                     Votre nom de famille est requis.
+                              </small>
+                              <small class="error"
+                                     ng-show="signup_form.lastname.$error.minlength && !signup_form.lastname.$focused">
+                                      Votre nom de famille ne contient pas assez de caractères
+                              </small>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <label>Date de naissance:</label>
+                    <div class="row">
+                        <div class="col-xs-4 col-md-4">
+                            <select name="day" class = "form-control input-lg">
+                            <option ng-repeat="day in birthdate_day" value="{$ day.identifier $}">{$ day.name $}</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-4 col-md-4">
+                            <select name="month" class = "form-control input-lg">
+                            <option ng-repeat="month in birthdate_month" value="{$ month.identifier $}">{$ month.name $}</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-4 col-md-4">
+                            <select name="year" class = "form-control input-lg">
+                            <option ng-repeat="year in birthdate_year" value="{$ year.identifier $}">{$ year.name $}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <label>Adresse:</label>
+                    <input
+                        ng-class="{error: signup_form.address.$dirty && signup_form.address.$invalid}"
+                        type="address"
+                        name="address"
+                        value=""
+                        class="form-control input-lg"
+                        placeholder="Votre Adresse (Rue)"
+                        ng-model="signup.address"
+                        ng-minlength=3 ng-maxlength=20 required ng-focus/>
+                        <div class="error-container"
+                             ng-show="signup_form.address.$dirty && signup_form.address.$invalid && !signup_form.address.$focused">
+                          <small class="error"
+                                 ng-show="signup_form.address.$error.required && !signup_form.address.$focused">
+                                 Votre adresse email est requise.
+                          </small>
+                          <small class="error"
+                                 ng-show="signup_form.address.$error.minlength && !signup_form.address.$focused">
+                                  Votre adresse email doit être supérieur à 3 caractères
+                          </small>
+                          <small class="error"
+                                 ng-show="signup_form.address.$error.address && !signup_form.address.$focused">
+                                 Ceci n'est pas une adresse email valide. Merci d'insérér une adresse email valide.
+                          </small>
+                          <small class="error"
+                                 ng-show="signup_form.address.$error.maxlength && !signup_form.address.$focused">
+                                  Votre adresse email ne peut pas être supérieur à 20 caractères
+                          </small>
+                        </div>
+                    <div class="row">
+                        <div class="col-xs-4 col-md-4">
+                            <input
+                            type="text"
+                            name="npa"
+                            value=""
+                            class="form-control input-lg"
+                            placeholder="NPA (Code ville)"
+                            ng-model="signup.npa"
+                            ng-minlength=2 required ng-focus/>
+                            <div class="error-container"
+                                 ng-show="signup_form.npa.$dirty && signup_form.npa.$invalid && !signup_form.npa.$focused">
+                              <small class="error"
+                                     ng-show="signup_form.npa.$error.required && !signup_form.npa.$focused">
+                                     Votre prénom est requis.
+                              </small>
+                              <small class="error"
+                                     ng-show="signup_form.npa.$error.minlength && !signup_form.npa.$focused">
+                                      Votre prénom ne contient pas assez de caractères
+                              </small>
+                            </div>
+                        </div>
+                        <div class="col-xs-8 col-md-8">
+                            <input type="text"
+                            name="city"
+                            value=""
+                            class="form-control input-lg"
+                            placeholder="Ville"
+                            ng-model="signup.city"
+                            ng-minlength=2 required ng-focus/>
+                            <div class="error-container"
+                                 ng-show="signup_form.city.$dirty && signup_form.city.$invalid && !signup_form.city.$focused">
+                              <small class="error"
+                                     ng-show="signup_form.city.$error.required && !signup_form.city.$focused">
+                                     Votre nom de famille est requis.
+                              </small>
+                              <small class="error"
+                                     ng-show="signup_form.city.$error.minlength && !signup_form.city.$focused">
+                                      Votre nom de famille ne contient pas assez de caractères
+                              </small>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <label>Informations de contact:</label>
+                    <input
+                        ng-class="{error: signup_form.phone.$dirty && signup_form.phone.$invalid}"
+                        type="phone"
+                        name="phone"
+                        value=""
+                        class="form-control input-lg"
+                        placeholder="Votre numéro de téléphone"
+                        ng-model="signup.phone"
+                        ng-minlength=3 ng-maxlength=20 required ng-focus/>
+                        <div class="error-container"
+                             ng-show="signup_form.phone.$dirty && signup_form.phone.$invalid && !signup_form.phone.$focused">
+                          <small class="error"
+                                 ng-show="signup_form.phone.$error.required && !signup_form.phone.$focused">
+                                 Votre numéro de téléphone est requis.
+                          </small>
+                          <small class="error"
+                                 ng-show="signup_form.phone.$error.minlength && !signup_form.phone.$focused">
+                                  Votre numéro de téléphone doit être complet
+                          </small>
+                          <small class="error"
+                                 ng-show="signup_form.phone.$error.phone && !signup_form.phone.$focused">
+                                 Ceci n'est pas un numéro de téléphone valide. Merci d'insérér un numéro de téléphone valide.
+                          </small>
+                          <small class="error"
+                                 ng-show="signup_form.phone.$error.maxlength && !signup_form.phone.$focused">
+                                  Votre numéro de téléphone ne peut pas être supérieur à 20 caractères
+                          </small>
+                        </div>
+                    <input
+                        ng-class="{error: signup_form.email.$dirty && signup_form.email.$invalid}"
+                        type="email"
+                        name="email"
+                        value=""
+                        class="form-control input-lg"
+                        placeholder="Votre Adresse Email"
+                        ng-model="signup.email"
+                        ng-minlength=3 required ng-focus/>
+                        <div class="error-container"
+                             ng-show="signup_form.email.$dirty && signup_form.email.$invalid && !signup_form.email.$focused">
+                          <small class="error"
+                                 ng-show="signup_form.email.$error.required && !signup_form.email.$focused">
+                                 Votre adresse email est requise.
+                          </small>
+                          <small class="error"
+                                 ng-show="signup_form.email.$error.minlength && !signup_form.email.$focused">
+                                  Votre adresse email doit être supérieur à 3 caractères
+                          </small>
+                          <small class="error"
+                                 ng-show="signup_form.email.$error.email && !signup_form.email.$focused">
+                                 Ceci n'est pas une adresse email valide. Merci d'insérér une adresse email valide.
+                          </small>
+                        </div>
+
+                    <br />
+              <span class="help-block">En cliquant sur "Je m'insscris au cours", vous vous engager à avoir fournis vos informations correctement et à ne pas nuire au bon fonctionnement du site par de faux enregistrements.</span>
+                    <button class="btn btn-lg btn-primary btn-block signup-btn" type="submit">
+                        Je m'inscris au cours</button>
+                    <br />
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type='text/javascript'>
+var elements = document.getElementsByTagName("INPUT");
+for (var i = 0; i < elements.length; i++) {
+    elements[i].oninvalid = function(e) {
+        e.target.setCustomValidity("");
+        if (!e.target.validity.valid) {
+            e.target.setCustomValidity("Ce champ est obligatoire et ne peut pas rester vide");
+        }
+    };
+    elements[i].oninput = function(e) {
+        e.target.setCustomValidity("");
+    };
+}
+</script>

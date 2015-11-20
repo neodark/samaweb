@@ -1,6 +1,13 @@
 -------------------------
 SAMA WEB
 -------------------------
+## Project health
+
+| Branch        | Build status | Coverage status |
+| ------------- | ------------ |-----------------|
+| master        | [![Build Status](https://travis-ci.org/neodark/samaweb.svg?branch=master)](https://travis-ci.org/neodark/samaweb?branch=master) | [![Coverage Status](https://coveralls.io/repos/neodark/samaweb/badge.svg?branch=master&service=github)](https://coveralls.io/github/neodark/samaweb?branch=master) |
+| devel         |  [![Build Status](https://travis-ci.org/neodark/samaweb.svg?branch=devel)](https://travis-ci.org/neodark/samaweb?branch=devel)  | [![Coverage Status](https://coveralls.io/repos/neodark/samaweb/badge.svg?branch=devel&service=github)](https://coveralls.io/github/neodark/samaweb?branch=devel) |
+
 ##Project description
 
 Building a website for the samaritains using [Django](https://www.djangoproject.com/).

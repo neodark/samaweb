@@ -8,7 +8,19 @@ from rest_framework.generics import (
     ListCreateAPIView, RetrieveUpdateDestroyAPIView )
 
 from samacore.models import SamaMember, SamaGroup, Participant, Date, Course, CourseType
-from api.serializers import SamaMemberSerializer, SamaGroupSerializer, ParticipantSerializer, DateSerializer, CourseSerializer, CourseTypeSerializer
+from api.serializers import SamaMemberSerializer, SamaGroupSerializer, ParticipantSerializer, DateSerializer, CourseSerializer, CourseTypeSerializer, UserSerializer
+
+from rest_framework.views import APIView
+
+#For UserView and AuthView
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from rest_framework import viewsets
+from rest_framework.permissions import AllowAny
+
+from .permissions import IsStaffOrTargetUser
+
+from . import authentication, serializers  # see previous post[1] for user serializer.
 
 # Create your views here.
 
@@ -147,3 +159,30 @@ class SamaGroupDetail(SamaGroupMixin, RetrieveUpdateDestroyAPIView):
     Return a specific SamaMember, update it, or delete it.
     """
     pass
+
+class UserView(viewsets.ModelViewSet):
+    serializer_class = UserSerializer
+    model = User
+
+    def get_permissions(self):
+        # allow non-authenticated user to create via POST
+        return (AllowAny() if self.request.method == 'POST'
+                else IsStaffOrTargetUser()),
+
+
+class AuthView(APIView):
+    authentication_classes = (authentication.QuietBasicAuthentication,)
+    serializer_class = serializers.UserSerializer
+
+    def post(self, request, *args, **kwargs):
+        #Decode in base 64 and retrieve username and password
+        import base64
+        username = base64.standard_b64decode(request.data["username"])
+        password = base64.standard_b64decode(request.data["password"])
+        user = authenticate(username=username, password=password)
+        login(request, user)
+        return Response(serializers.UserSerializer(user).data)
+
+    def delete(self, request, *args, **kwargs):
+        logout(request)
+        return Response()

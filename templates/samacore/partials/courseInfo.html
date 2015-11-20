@@ -1,7 +1,7 @@
 {% load staticfiles %}
 
 <div class="span3 course" data-ng-repeat="course in courses">
-    <div class="col-md-6 text-center">
+    <div class="col-md-12 text-center">
         <div class="thumbnail">
             <img ng-if="course_type == 'Sauveteurs'" class="img-responsive" src="{% static 'img/car-icon.png' %}" alt="">
             <img ng-if="course_type == 'Samaritains'" class="img-responsive" src="{% static 'img/medicine-box-icon.png' %}" alt="">
