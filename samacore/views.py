@@ -29,7 +29,7 @@ def courses(request):
     if request.user.is_anonymous():
         return render(request, 'samacore/courses.html', context)
     else:
-        return render(request, 'samacore/courses.html', context)
+        return render(request, 'samacore/courses_admin.html', context)
 
 def faq(request):
     param_1 = 2
@@ -42,13 +42,15 @@ def course(request):
         coursetype = request.GET['coursetype']
 
     context = {'coursetype': coursetype}
-    return render(request, 'samacore/course.html', context)
+    if request.user.is_anonymous():
+        return render(request, 'samacore/course.html', context)
+    else:
+        return render(request, 'samacore/course_admin.html', context)
 
 def admin_login(request):
     param_1 = 2
     context = {'params': param_1}
     return render(request, 'samacore/admin_login.html', context)
-
 
 def register_course(request):
     coursetype = ''

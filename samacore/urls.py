@@ -9,6 +9,11 @@ partial_patterns = [
         name='course_info',
         ),
     url(
+        r'^courseInfoAdmin/$',
+        views.PartialGroupView.as_view(template_name='samacore/partials/courseInfoAdmin.html'),
+        name='course_info_admin',
+        ),
+    url(
         r'^courseRegistration/$',
         views.PartialGroupView.as_view(template_name='samacore/partials/courseRegistration.html'),
         name='course_registration',

@@ -3,6 +3,11 @@
     margin-top: 1em;
 }
 
+.button_new_course
+{
+    float: right;
+}
+
 img.course-img
 {
     display:inline;
