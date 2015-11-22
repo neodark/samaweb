@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.template import loader, RequestContext
 
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden, Http404
+from django.core import exceptions
 from django.conf import settings
 from django.shortcuts import render_to_response, get_object_or_404
 
@@ -46,6 +47,18 @@ def course(request):
         return render(request, 'samacore/course.html', context)
     else:
         return render(request, 'samacore/course_admin.html', context)
+
+def add_course(request):
+    coursetype = ''
+    if request.GET.has_key('coursetype'):
+        coursetype = request.GET['coursetype']
+
+    context = {'coursetype': coursetype}
+
+    if request.user.is_anonymous():
+        raise exceptions.PermissionDenied
+    else:
+        return render(request, 'samacore/course_add.html', context)
 
 def admin_login(request):
     param_1 = 2
