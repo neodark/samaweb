@@ -1,0 +1,40 @@
+{% extends "samacore/base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}Erreur{% endblock %}
+
+{% block section %}erreur{% endblock %}
+
+
+{% block content %}
+
+<!-- content -->
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="col-lg-12">
+            <div class="centering text-center error-container">
+                <div class="text-center">
+                    <h2 class="without-margin">Pas de panique. Ce n'est qu'une erreur <span class="text-warning"><big>403</big></span> .</h2>
+                    <h4 class="text-warning">Accès refusé</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- footer -->
+<div class="navbar navbar-footer navbar-fixed-bottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <footer role="contentinfo">
+                    <p>Copyright &copy; SamaMartigny 2016</p>
+                </footer>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
