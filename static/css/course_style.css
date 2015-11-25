@@ -13,3 +13,8 @@ img.course-img
     display:inline;
     max-width: 2em;
 }
+
+select.course_add
+{
+    width: 5em;
+}

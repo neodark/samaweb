@@ -2,6 +2,8 @@
 
 {% load staticfiles %}
 
+{% load samacore_extras %}
+
 {% block title %}FAQ{% endblock %}
 
 {% block section %}faq{% endblock %}
@@ -17,6 +19,7 @@
     <link href="{% static 'css/bootstrap-datepicker3.standalone.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/bootstrap-datepicker.min.css' %}" rel="stylesheet">
     <link href="{% static 'css/bootstrap-datepicker.standalone.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/course_style.css' %}" rel="stylesheet">
 
     <!-- Bootstrap Datepicker libs -->
     <script src="{% static 'js/bootstrap-datepicker.js' %}"></script>
@@ -69,7 +72,23 @@
             <h3 class="panel-title">Configuration du cours</h3>
           </div>
           <div class="panel-body">
-            Panel content
+            <i>Configurer les divers paramètres du cours</i>
+                <br><br>
+                Nombre maximum de participants:
+                {% mkrange 1 17 1 as num_participant %}
+                <select class="form-control course_add">
+                  {% for i in num_participant %}
+                    {% if i == 12 %}
+                        <option selected>{{i}}</option>
+                        <!-- to be used in case of conditional course maximum>
+                        <option ng-if="course_type == 'Sauveteurs'" selected>{{i}}</option>
+                        <option ng-if="course_type != 'Sauveteurs'">{{i}}</option>
+                        <-->
+                    {% else %}
+                    <option>{{i}}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
           </div>
         </div>
 
