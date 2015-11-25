@@ -26,6 +26,9 @@
     <script src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
     <script src="{% static 'js/locales/bootstrap-datepicker.fr-CH.min.js' %}"></script>
 
+    <!-- App libs -->
+    <script src="{% static 'samaweb/app/directives/courseView.js' %}" type="text/javascript" charset="utf-8"></script>
+
     <!-- Page Content -->
     <div class="container" ng-init="initCourse('{{ coursetype }}', '{% url 'course_list' %}')">
 
@@ -40,6 +43,9 @@
         </div>
         <div class="row">
             <div class="col-lg-12">
+                <a id="btn_course_save" class="btn btn-success button_actions_course" ng-if="authState.user" buttonsavecourse>
+                    <i class="fa fa-upload fa-2x"></i> Sauver
+                </a>
                 <h1 class="page-header">{{ coursetype }}
                 <img ng-if="course_type == 'Sauveteurs'" class="img-responsive course-img" src="{% static 'img/car-icon.png' %}" alt="">
                 <img ng-if="course_type == 'Samaritains'" class="img-responsive course-img" src="{% static 'img/medicine-box-icon.png' %}" alt="">
@@ -59,7 +65,7 @@
             </a>-->
             <i>Cliquer sur les dates du cours</i>
             <div class="input-group date">
-                <input type="text" class="form-control datepicker_course">
+                <input ng-model="new_course_dates" type="text" class="form-control datepicker_course" >
                     <span class="input-group-addon">
                         <i class="glyphicon glyphicon-th"></i>
                     </span>
@@ -76,7 +82,7 @@
                 <br><br>
                 Nombre maximum de participants:
                 {% mkrange 1 17 1 as num_participant %}
-                <select class="form-control course_add">
+                <select class="form-control course_add" ng-model="new_course_maximum_participants">
                   {% for i in num_participant %}
                     {% if i == 12 %}
                         <option selected>{{i}}</option>
@@ -99,8 +105,7 @@
           <div class="panel-body">
             <i>Spécifier le lieu du cours</i>
             <div class="input-group">
-                <input type="text" class="form-control location_course"
-                value="Martigny - Rue de Rossetan - sous la salle de gymnastique">
+                <input ng-model="new_course_address" type="text" class="form-control location_course">
                     <span class="input-group-addon">
                         <i class="glyphicon glyphicon-th"></i>
                     </span>

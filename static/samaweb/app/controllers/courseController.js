@@ -14,6 +14,9 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
    $scope.birthdate_day = [];
    $scope.gender_type = ["M.", "Mme."];
    $scope.gender = [];
+   $scope.new_course_address = "Martigny - Rue de Rossetan - sous la salle de gymnastique";
+   $scope.new_course_dates = "";
+   $scope.new_course_maximum_participants = 12;
 
    var currentTime = new Date();
    var year = currentTime.getFullYear();
@@ -151,28 +154,28 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
            });
    }
 
-   $scope.login = function(username, password)
-   {
-       authFactory.login(username, password)
-           .success(function (loginData) {
-               $scope.status = 'Successfully logged in user: ' + loginData;
-               $scope.user = loginData.username;
-           })
-           .error(function (error) {
-               $scope.status = 'Unable to login user: ' + error.message;
-           });
-   }
+   //$scope.login = function(username, password)
+   //{
+   //    authFactory.login(username, password)
+   //        .success(function (loginData) {
+   //            $scope.status = 'Successfully logged in user: ' + loginData;
+   //            $scope.user = loginData.username;
+   //        })
+   //        .error(function (error) {
+   //            $scope.status = 'Unable to login user: ' + error.message;
+   //        });
+   //}
 
-   $scope.logout = function()
-   {
-       authFactory.logout()
-           .success(function (loginData) {
-               $scope.status = 'Successfully logged out user: ' + loginData;
-               $scope.user = undefined;
-           })
-           .error(function (error) {
-               $scope.status = 'Unable to logout user: ' + error.message;
-           });
-   }
+   //$scope.logout = function()
+   //{
+   //    authFactory.logout()
+   //        .success(function (loginData) {
+   //            $scope.status = 'Successfully logged out user: ' + loginData;
+   //            $scope.user = undefined;
+   //        })
+   //        .error(function (error) {
+   //            $scope.status = 'Unable to logout user: ' + error.message;
+   //        });
+   //}
 
 }]);
