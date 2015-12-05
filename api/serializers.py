@@ -330,10 +330,18 @@ class CourseNewVersionCreationSerializer(serializers.ModelSerializer):
         instance.additional_information = validated_data.get('additional_information', instance.additional_information)
         instance.save()
 
+        if validated_data.has_key('status'):
+            if len(self.data["participantsnew"]) > 0:
+                for participant_id in self.data["participantsnew"]:
+                    participant = ParticipantNew.objects.get(id=participant_id)
+                    if instance.status == CourseNewVersion.CLOSED:
+                        participant.status = ParticipantNew.CERTIFIED
+                    else:
+                        participant.status = ParticipantNew.STUDENT
+                    participant.save()
+
         return instance
 
-        #if validated_data.has_key('course_dates'):
-        #    instance.course_dates = validated_data.get('course_dates', instance.course_dates)
 
     def validate_status(self, value):
         return value
@@ -361,7 +369,7 @@ class CourseNewVersionCreationSerializer(serializers.ModelSerializer):
 class CourseUpdateSerializer(CourseNewVersionCreationSerializer):
 
     class Meta(CourseNewVersionCreationSerializer.Meta):
-        fields = ['status', 'course_type', 'inscription_counter', 'max_inscription_counter', 'additional_information']
+        fields = ['status', 'course_type', 'inscription_counter', 'max_inscription_counter', 'additional_information', 'participantsnew']
 
     #def to_representation(self, obj):
     #    serializer = CourseUpdateSerializer(obj)
