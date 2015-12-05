@@ -194,16 +194,16 @@ class ParticipantCreationSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
 
         instance.status = validated_data.get('status', instance.status)
-        instance.first_name = validated_data.get('status', instance.first_name)
-        instance.last_name = validated_data.get('status', instance.last_name)
-        instance.birth_date = validated_data.get('status', instance.birth_date)
-        instance.gender = validated_data.get('status', instance.gender)
-        instance.email = validated_data.get('status', instance.email)
-        instance.address = validated_data.get('status', instance.address)
-        instance.npa = validated_data.get('status', instance.npa)
-        instance.city = validated_data.get('status', instance.city)
-        instance.phone = validated_data.get('status', instance.phone)
-        instance.course = validated_data.get('status', instance.course)
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.birth_date = validated_data.get('birth_date', instance.birth_date)
+        instance.gender = validated_data.get('gender', instance.gender)
+        instance.email = validated_data.get('email', instance.email)
+        instance.address = validated_data.get('address', instance.address)
+        instance.npa = validated_data.get('npa', instance.npa)
+        instance.city = validated_data.get('city', instance.city)
+        instance.phone = validated_data.get('phone', instance.phone)
+        instance.course = validated_data.get('course', instance.course)
         instance.save()
 
         return instance

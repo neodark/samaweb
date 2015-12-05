@@ -347,7 +347,7 @@ class ParticipantDetailView(RetrieveUpdateDestroyAPIView):
         if self.kwargs.has_key('pk'):
             participant = self.get_queryset(self.kwargs.get('pk'))
 
-            serializer = self.writing_serializer_class(course, data=request.data, partial=True)
+            serializer = self.writing_serializer_class(participant, data=request.data, partial=True)
             if not(serializer.is_valid()):
                 return BadRequestResponse(serializer.errors)
 
