@@ -187,6 +187,17 @@ class CourseCreationNewView(ListCreateAPIView):
 
     def list(self, request):
         queryset = CourseNewVersion.objects.all()
+
+        #self.request.QUERY_PARAMS.has_key('coursetype')
+        coursetype = self.request.QUERY_PARAMS.get('coursetype', None)
+
+        #Filter course by course type if requested
+        if coursetype is not None:
+            for key, value in CourseNewVersion.COURSE_TYPE:
+                if value == coursetype:
+                    queryset = queryset.filter(course_type=key)
+                    break
+
         serializer = BasicCourseSerializer(queryset, many=True, context={'request': request})
 
         return Response(serializer.data)
