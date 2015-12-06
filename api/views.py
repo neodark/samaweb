@@ -33,6 +33,7 @@ from .permissions import IsStaffOrTargetUser
 
 from . import authentication, serializers  # see previous post[1] for user serializer.
 
+import simplejson as json
 # Create your views here.
 
 # Class based views
@@ -197,6 +198,25 @@ class CourseCreationNewView(ListCreateAPIView):
                 if value == coursetype:
                     queryset = queryset.filter(course_type=key)
                     break
+
+        #In progress: work on sorting queryset course by date ---
+        print queryset
+        for item in queryset:
+            print item.additional_information
+            dates = json.loads(item.additional_information)['dates']
+            print dates
+            print len(dates.split(' '))
+            if len(dates.split(' ')) > 1:
+                for date in dates.split(' '):
+                    print date
+
+        tempqueryset = []
+        tempqueryset.append(queryset[0])
+        tempqueryset.append(queryset[2])
+        tempqueryset.append(queryset[1])
+        queryset = tempqueryset
+        print queryset
+        #In progress ---
 
         serializer = BasicCourseSerializer(queryset, many=True, context={'request': request})
 
