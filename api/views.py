@@ -330,6 +330,10 @@ class ParticipantNewCreationView(ListCreateAPIView):
         serializer.is_valid(raise_exception=True)
         try:
             participant = serializer.save()
+
+            course = CourseNewVersion.objects.get(id=participant.course.id)
+            course.inscription_counter = course.participantsnew.count()
+            course.save()
         except ParticipantCreationFailedException:
             pass
 
@@ -370,7 +374,14 @@ class ParticipantDetailView(RetrieveUpdateDestroyAPIView):
     def delete(self, request, *args, **kwargs):
         if self.kwargs.has_key('pk'):
             participant = self.get_queryset(self.kwargs.get('pk'))
+
+            course = CourseNewVersion.objects.get(id=participant.course.id)
+
             participant.delete()
+
+            course.inscription_counter = course.participantsnew.count()
+            course.save()
+
             return Response(status=status.HTTP_204_NO_CONTENT)
 
     def update(self, request, *args, **kwargs):
