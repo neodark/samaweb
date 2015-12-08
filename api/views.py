@@ -230,6 +230,12 @@ class CourseCreationNewView(ListCreateAPIView):
         return Response(serializer.data)
 
     def post(self, request):
+        if request.data["course_type"] is not None:
+            for key, value in CourseNewVersion.COURSE_TYPE:
+                if value == request.data["course_type"]:
+                    request.data["course_type"] = key
+                    break
+
         serializer = self.get_serializer(data=request.data, context={'request': request}, partial=True)
         serializer.is_valid(raise_exception=True)
         try:

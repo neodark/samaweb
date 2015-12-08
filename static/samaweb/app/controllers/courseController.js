@@ -154,6 +154,35 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
            });
    }
 
+   $scope.save_course = function(course_type, course_dates, course_address, maximum_participants)
+   {
+        var new_course_data = {};
+        var additional_information = {};
+
+        //replace dates dd/mm/yyyy by dd-mm-yyyy
+        var find = '/';
+        var re = new RegExp(find, 'g');
+        var course_dates_list = course_dates.replace(re, '-');
+
+        //create json data to upload
+        additional_information["location"] = course_address;
+        additional_information["dates"] = course_dates_list;
+        new_course_data["status"] = 'O';
+        new_course_data["course_type"] = course_type;
+        new_course_data["max_inscription_counter"] = maximum_participants;
+        new_course_data["additional_information"] = additional_information;
+
+        courseFactory.addCourse(new_course_data)
+           .success(function (coursesData) {
+               //console.log(coursesData);
+               $('#modalsuccess').modal('show')
+           })
+           .error(function (error) {
+               $scope.status = 'Unable to load courses data: ' + error.message;
+               $('#modalfailure').modal('show')
+           });
+   }
+
    //$scope.login = function(username, password)
    //{
    //    authFactory.login(username, password)

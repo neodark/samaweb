@@ -8,6 +8,16 @@ app.factory('courseFactory', ['$http', function($http) {
         return $http.get(course_list_url + '?coursetype=' + course_type);
     };
 
+    courseFactory.addCourse = function (courseData)
+    {
+        return $http({
+          headers: {'Content-Type': 'application/json'},
+          url: '/api/course/',
+          method: "POST",
+          data: courseData,
+        })
+    };
+
     courseFactory.registerParticipant = function (participantData)
     {
         return $http({
