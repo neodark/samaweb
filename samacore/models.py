@@ -6,12 +6,12 @@ from django.utils.translation import ugettext_lazy as _
 # Create your models here.
 
 
-class CourseNewVersionManager(models.Manager):
+class CourseManager(models.Manager):
 
     def create_object(self, status, course_type, max_inscription_counter, inscription_counter=0, additional_information={}):
 
         #Creation of a course
-        course              = CourseNewVersion()
+        course              = Course()
         course.status       = self.model.OPEN
         course.course_type  = course_type
         #course.course_dates = course_dates
@@ -33,13 +33,13 @@ class CourseNewVersionManager(models.Manager):
         return (course, result)
 
         def open(self):
-            return self.filter(status=CourseNewVersion.OPEN)
+            return self.filter(status=Course.OPEN)
 
         def close(self):
-            return self.filter(status=CourseNewVersion.CLOSE)
+            return self.filter(status=Course.CLOSE)
 
 
-class CourseNewVersion(models.Model):
+class Course(models.Model):
 
     #_______ Constants _______
 
@@ -71,13 +71,13 @@ class CourseNewVersion(models.Model):
     inscription_counter     = models.PositiveIntegerField(_("Inscription Counter"), default=0)
     max_inscription_counter = models.PositiveIntegerField(_("Maximum Inscription Counter"), default=0)
 
-    objects = CourseNewVersionManager()
+    objects = CourseManager()
 
     def __str__(self):
         return 'Status:%s - CourseType:%s'%(self.status, self.course_type)
 
     def save(self, *args, **kwargs):
-        super(CourseNewVersion, self).save(*args, **kwargs)
+        super(Course, self).save(*args, **kwargs)
 
     #def add_dates(course_dates_list):
     #    for course_date in course_dates_list:
@@ -87,12 +87,12 @@ class CourseNewVersion(models.Model):
     #    for course_date in course_dates_list:
     #        self.course_dates.remove(course_date)
 
-class ParticipantNewManager(models.Manager):
+class ParticipantManager(models.Manager):
 
     def create_object(self, status, first_name, last_name, birth_date, gender, email, address, npa, city, phone, course):
 
         #Creation of a course
-        participant             = ParticipantNew()
+        participant             = Participant()
         participant.first_name  = self.model.STUDENT
         participant.first_name  = first_name
         participant.last_name   = last_name
@@ -113,14 +113,14 @@ class ParticipantNewManager(models.Manager):
         return (participant, result)
 
         def male(self):
-            return self.filter(gender=ParticipantNew.MALE)
+            return self.filter(gender=Participant.MALE)
 
         def female(self):
-            return self.filter(gender=ParticipantNew.FEMALE)
+            return self.filter(gender=Participant.FEMALE)
 
 
 
-class ParticipantNew(models.Model):
+class Participant(models.Model):
 
     #_______ Constants _______
 
@@ -154,10 +154,10 @@ class ParticipantNew(models.Model):
     npa                 = models.IntegerField(_("NPA"), default=0)
     city                = models.CharField(_("City"), max_length=400)
     phone               = models.CharField(_("Phone Number"), max_length=100)
-    course              = models.ForeignKey(CourseNewVersion, verbose_name=_("Course Participation"), related_name='participantsnew', blank=True, null=True)
+    course              = models.ForeignKey(Course, verbose_name=_("Course Participation"), related_name='participants', blank=True, null=True)
     uuid_field          = UUIDField()
 
-    objects = ParticipantNewManager()
+    objects = ParticipantManager()
 
     def __unicode__(self):
         return '%s %s'%(self.first_name, self.last_name)
@@ -167,4 +167,4 @@ class ParticipantNew(models.Model):
         return 'First name:%s - Last Name:%s'%(self.first_name, self.last_name)
 
     def save(self, *args, **kwargs):
-        super(ParticipantNew, self).save(*args, **kwargs)
+        super(Participant, self).save(*args, **kwargs)

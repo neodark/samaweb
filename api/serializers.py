@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from samacore.models import CourseNewVersion
-from samacore.models import ParticipantNew
+from samacore.models import Course
+from samacore.models import Participant
 from common.fields import JSONSerializerField
 
 import simplejson as json
@@ -19,23 +19,23 @@ class BasicParticipantSerializer(serializers.ModelSerializer):
     #course = serializers.SerializerMethodField()
 
     class Meta:
-        model = ParticipantNew
+        model = Participant
         fields = ['id', 'status', 'first_name', 'last_name', 'birth_date', 'gender', 'email', 'address', 'npa', 'city', 'phone', 'course']
 
     def get_status(self, obj):
-        if obj.status == ParticipantNew.STUDENT:
+        if obj.status == Participant.STUDENT:
             return 'student'
-        elif obj.status == ParticipantNew.UNCOMPLETED:
+        elif obj.status == Participant.UNCOMPLETED:
             return 'uncompleted'
-        elif obj.status == ParticipantNew.CERTIFIED:
+        elif obj.status == Participant.CERTIFIED:
             return 'certified'
         else:
             return 'student'
 
     def get_gender(self, obj):
-        if obj.gender == ParticipantNew.MALE:
+        if obj.gender == Participant.MALE:
             return 'male'
-        elif obj.gender == ParticipantNew.FEMALE:
+        elif obj.gender == Participant.FEMALE:
             return 'female'
         else:
             return 'male'
@@ -88,7 +88,7 @@ class ParticipantCreationSerializer(serializers.ModelSerializer):
     #additional_information = JSONSerializerField()
 
     class Meta:
-        model = ParticipantNew
+        model = Participant
         fields = ['status', 'first_name', 'last_name', 'birth_date', 'gender', 'email', 'address', 'npa', 'city', 'phone', 'course']
 
     def create(self, validated_data):
@@ -183,28 +183,28 @@ class BasicCourseSerializer(serializers.ModelSerializer):
     additional_information = serializers.SerializerMethodField()
     inscription_counter = serializers.SerializerMethodField()
     max_inscription_counter = serializers.SerializerMethodField()
-    participantsnew = BasicParticipantSerializer(many=True)
+    participants = BasicParticipantSerializer(many=True)
 
     class Meta:
-        model = CourseNewVersion
-        fields = ['id', 'status', 'course_type', 'additional_information', 'inscription_counter', 'max_inscription_counter', 'participantsnew']
+        model = Course
+        fields = ['id', 'status', 'course_type', 'additional_information', 'inscription_counter', 'max_inscription_counter', 'participants']
 
     def get_status(self, obj):
-        if obj.status == CourseNewVersion.OPEN:
+        if obj.status == Course.OPEN:
             return 'open'
-        elif obj.status == CourseNewVersion.CLOSED:
+        elif obj.status == Course.CLOSED:
             return 'closed'
         else:
             return 'open'
 
     def get_course_type(self, obj):
-        if obj.course_type == CourseNewVersion.SAUVETEURS:
+        if obj.course_type == Course.SAUVETEURS:
             return 'sauveteurs'
-        elif obj.course_type == CourseNewVersion.SAMARITAINS:
+        elif obj.course_type == Course.SAMARITAINS:
             return 'samaritains'
-        elif obj.course_type == CourseNewVersion.BLSAED:
+        elif obj.course_type == Course.BLSAED:
             return 'bls-aed'
-        elif obj.course_type == CourseNewVersion.UPE:
+        elif obj.course_type == Course.UPE:
             return 'upe'
         else:
             return 'sauveteurs'
@@ -233,12 +233,12 @@ class CreatedCourseSerializer(BasicCourseSerializer):
 class CourseCreationFailedException(Exception):
     pass
 
-class CourseNewVersionCreationSerializer(serializers.ModelSerializer):
+class CourseCreationSerializer(serializers.ModelSerializer):
     additional_information = JSONSerializerField()
     #course_dates = serializers.ListField(child=serializers.CharField())
 
     class Meta:
-        model = CourseNewVersion
+        model = Course
         fields = ['status', 'course_type', 'inscription_counter', 'max_inscription_counter', 'additional_information']
 
     def create(self, validated_data):
@@ -262,13 +262,13 @@ class CourseNewVersionCreationSerializer(serializers.ModelSerializer):
         instance.save()
 
         if validated_data.has_key('status'):
-            if len(self.data["participantsnew"]) > 0:
-                for participant_id in self.data["participantsnew"]:
-                    participant = ParticipantNew.objects.get(id=participant_id)
-                    if instance.status == CourseNewVersion.CLOSED:
-                        participant.status = ParticipantNew.CERTIFIED
+            if len(self.data["participants"]) > 0:
+                for participant_id in self.data["participants"]:
+                    participant = Participant.objects.get(id=participant_id)
+                    if instance.status == Course.CLOSED:
+                        participant.status = Participant.CERTIFIED
                     else:
-                        participant.status = ParticipantNew.STUDENT
+                        participant.status = Participant.STUDENT
                     participant.save()
 
         return instance
@@ -297,10 +297,10 @@ class CourseNewVersionCreationSerializer(serializers.ModelSerializer):
     #    return serializer.data
 
 
-class CourseUpdateSerializer(CourseNewVersionCreationSerializer):
+class CourseUpdateSerializer(CourseCreationSerializer):
 
-    class Meta(CourseNewVersionCreationSerializer.Meta):
-        fields = ['status', 'course_type', 'inscription_counter', 'max_inscription_counter', 'additional_information', 'participantsnew']
+    class Meta(CourseCreationSerializer.Meta):
+        fields = ['status', 'course_type', 'inscription_counter', 'max_inscription_counter', 'additional_information', 'participants']
 
     #def to_representation(self, obj):
     #    serializer = CourseUpdateSerializer(obj)

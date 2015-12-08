@@ -9,12 +9,12 @@ from rest_framework.generics import (
 
 from api.serializers import UserSerializer
 
-from samacore.models import CourseNewVersion
-from api.serializers import BasicCourseSerializer, CourseNewVersionCreationSerializer, CourseUpdateSerializer
+from samacore.models import Course
+from api.serializers import BasicCourseSerializer, CourseCreationSerializer, CourseUpdateSerializer
 
 from api.serializers import CourseCreationFailedException
 
-from samacore.models import ParticipantNew
+from samacore.models import Participant
 from api.serializers import BasicParticipantSerializer, ParticipantCreationSerializer, ParticipantUpdateSerializer
 
 from api.serializers import ParticipantCreationFailedException
@@ -40,9 +40,9 @@ class CourseCreationNewView(ListCreateAPIView):
     """
     List/Create APIView
     """
-    model = CourseNewVersion
+    model = Course
     serializer_class = BasicCourseSerializer
-    writing_serializer_class =  CourseNewVersionCreationSerializer
+    writing_serializer_class =  CourseCreationSerializer
 
     def get_serializer(self, *args, **kwargs):
         if self.request.method == 'POST':
@@ -51,14 +51,14 @@ class CourseCreationNewView(ListCreateAPIView):
         return super(CourseCreationNewView, self).get_serializer(*args, **kwargs)
 
     def list(self, request):
-        queryset = CourseNewVersion.objects.all()
+        queryset = Course.objects.all()
 
         #self.request.QUERY_PARAMS.has_key('coursetype')
         coursetype = self.request.QUERY_PARAMS.get('coursetype', None)
 
         #Filter course by course type if requested
         if coursetype is not None:
-            for key, value in CourseNewVersion.COURSE_TYPE:
+            for key, value in Course.COURSE_TYPE:
                 if value == coursetype:
                     queryset = queryset.filter(course_type=key)
                     break
@@ -95,7 +95,7 @@ class CourseCreationNewView(ListCreateAPIView):
 
     def post(self, request):
         if request.data["course_type"] is not None:
-            for key, value in CourseNewVersion.COURSE_TYPE:
+            for key, value in Course.COURSE_TYPE:
                 if value == request.data["course_type"]:
                     request.data["course_type"] = key
                     break
@@ -119,13 +119,13 @@ class CourseCreationNewView(ListCreateAPIView):
             return BadRequestResponse()
 
 class CourseDetailView(RetrieveUpdateDestroyAPIView):
-    model = CourseNewVersion
+    model = Course
     serializer_class = BasicCourseSerializer
     writing_serializer_class = CourseUpdateSerializer
 
     def get_queryset(self, object_id):
-        #queryset = CourseNewVersion.objects.all()
-        queryset = CourseNewVersion.objects.get(id=object_id)
+        #queryset = Course.objects.all()
+        queryset = Course.objects.get(id=object_id)
         return queryset
 
     def get_serializer(self, *args, **kwargs):
@@ -175,11 +175,11 @@ class CourseDetailView(RetrieveUpdateDestroyAPIView):
             #response['Location'] = result['url']
             return response
 
-class ParticipantNewCreationView(ListCreateAPIView):
+class ParticipantCreationView(ListCreateAPIView):
     """
     List/Create APIView
     """
-    model = ParticipantNew
+    model = Participant
     serializer_class = BasicParticipantSerializer
     writing_serializer_class =  ParticipantCreationSerializer
 
@@ -187,10 +187,10 @@ class ParticipantNewCreationView(ListCreateAPIView):
         if self.request.method == 'POST':
             self.serializer_class = self.writing_serializer_class
 
-        return super(ParticipantNewCreationView, self).get_serializer(*args, **kwargs)
+        return super(ParticipantCreationView, self).get_serializer(*args, **kwargs)
 
     def list(self, request):
-        queryset = ParticipantNew.objects.all()
+        queryset = Participant.objects.all()
         serializer = BasicParticipantSerializer(queryset, many=True, context={'request': request})
 
         return Response(serializer.data)
@@ -201,8 +201,8 @@ class ParticipantNewCreationView(ListCreateAPIView):
         try:
             participant = serializer.save()
 
-            course = CourseNewVersion.objects.get(id=participant.course.id)
-            course.inscription_counter = course.participantsnew.count()
+            course = Course.objects.get(id=participant.course.id)
+            course.inscription_counter = course.participants.count()
             course.save()
         except ParticipantCreationFailedException:
             pass
@@ -219,12 +219,12 @@ class ParticipantNewCreationView(ListCreateAPIView):
             return BadRequestResponse()
 
 class ParticipantDetailView(RetrieveUpdateDestroyAPIView):
-    model = ParticipantNew
+    model = Participant
     serializer_class = BasicParticipantSerializer
     writing_serializer_class = ParticipantUpdateSerializer
 
     def get_queryset(self, object_id):
-        queryset = ParticipantNew.objects.get(id=object_id)
+        queryset = Participant.objects.get(id=object_id)
         return queryset
 
     def get_serializer(self, *args, **kwargs):
@@ -245,11 +245,11 @@ class ParticipantDetailView(RetrieveUpdateDestroyAPIView):
         if self.kwargs.has_key('pk'):
             participant = self.get_queryset(self.kwargs.get('pk'))
 
-            course = CourseNewVersion.objects.get(id=participant.course.id)
+            course = Course.objects.get(id=participant.course.id)
 
             participant.delete()
 
-            course.inscription_counter = course.participantsnew.count()
+            course.inscription_counter = course.participants.count()
             course.save()
 
             return Response(status=status.HTTP_204_NO_CONTENT)
