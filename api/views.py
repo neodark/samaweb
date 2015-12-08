@@ -218,9 +218,20 @@ class ParticipantCreationView(ListCreateAPIView):
 
         if details['success']:
             result = {
-                'coursename' : 'ok',
-                'course' : participant.status
+                'status_api' : 'success_creation',
+                'status' : participant.status,
+                'first_name' : participant.first_name,
+                'last_name' : participant.last_name,
+                'birth_date' : participant.birth_date,
+                'gender' : participant.gender,
+                'email' : participant.email,
+                'address' : participant.address,
+                'npa' : participant.npa,
+                'city' : participant.city,
+                'phone' : participant.phone,
+                'course' : participant.course.id,
             }
+
             return Response(result, status=status.HTTP_201_CREATED)
         else:
             return BadRequestResponse()
@@ -281,7 +292,18 @@ class ParticipantDetailView(RetrieveUpdateDestroyAPIView):
             #details = serializer.details
 
             result = {
-                'update': 'updated'
+                'status_api' : 'success_update',
+                'status' : participant.status,
+                'first_name' : participant.first_name,
+                'last_name' : participant.last_name,
+                'birth_date' : participant.birth_date,
+                'gender' : participant.gender,
+                'email' : participant.email,
+                'address' : participant.address,
+                'npa' : participant.npa,
+                'city' : participant.city,
+                'phone' : participant.phone,
+                'course' : participant.course.id,
             }
 
             response = Response(result, status=status.HTTP_200_OK)
