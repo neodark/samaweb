@@ -111,8 +111,11 @@ class CourseCreationNewView(ListCreateAPIView):
 
         if details['success']:
             result = {
-                'coursename' : 'ok',
-                'course' : course.status
+                'status_api' : 'success_creation',
+                'status' : course.status,
+                'course_type' : course.course_type,
+                'max_inscription_counter' : course.max_inscription_counter,
+                'additional_information' : course.additional_information,
             }
             return Response(result, status=status.HTTP_201_CREATED)
         else:
@@ -168,7 +171,11 @@ class CourseDetailView(RetrieveUpdateDestroyAPIView):
             #details = serializer.details
 
             result = {
-                'update': 'updated'
+                'status_api' : 'success_update',
+                'status' : course.status,
+                'course_type' : course.course_type,
+                'max_inscription_counter' : course.max_inscription_counter,
+                'additional_information' : course.additional_information,
             }
 
             response = Response(result, status=status.HTTP_200_OK)
