@@ -93,7 +93,7 @@ class ParticipantManager(models.Manager):
 
         #Creation of a course
         participant             = Participant()
-        participant.first_name  = self.model.STUDENT
+        participant.status      = self.model.STUDENT
         participant.first_name  = first_name
         participant.last_name   = last_name
         participant.birth_date  = birth_date
