@@ -8,6 +8,10 @@ app.factory('courseFactory', ['$http', function($http) {
         return $http.get(course_list_url + '?coursetype=' + course_type);
     };
 
+    courseFactory.getCourseInformation = function (course_id, course_list_url) {
+        return $http.get(course_list_url + course_id);
+    };
+
     courseFactory.addCourse = function (courseData)
     {
         return $http({

@@ -3,7 +3,53 @@
 <div class="" id="wrap">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
+            <!-- Modal -->
+            <div class="modal fade" id="modalparticipantsuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Confirmation Inscription</h4>
+                  </div>
+                  <div class="modal-body">
+                    Merci pour votre inscription au cours <b>{$ coursetype $}</b>!
+                    <p>Dernier rappel des informations concernant le cours:</p>
+                    <p><b>Dates du cours:</b><br>
+                    <i>{$ singleCourse.additional_information.dates $}</i>
+                    </p>
+                    <p><b>Horaires du cours:</b><br>
+                    <i>{$ singleCourse.additional_information.time $}</i>
+                    </p>
+                    <p><b>Lieu du cours:</b><br>
+                    <i>{$ singleCourse.additional_information.location $}</i>
+                    </p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onClick="location.href='{{URL_PREFIX}}/cours/'">OK</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal fade" id="modalparticipantfailure" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Inscription non confirmé</h4>
+                  </div>
+                  <div class="modal-body">
+                    Erreur dans votre inscription au cours</b>.
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <form name="signup_form" no-validate ng-submit="signupForm()">
+                    <legend>Inscription au cours <i>{$ course_type $}</i><br> Dates: <i>{$ singleCourse.additional_information.dates $}</i></legend>
                     <legend>Coordonnées du participant au cours</legend>
                     <h4>Vous êtes priés de rentrer chaque champ afin de pouvoir valider votre inscription au cours.</h4>
                     <label>Vos informations: </label>
@@ -148,7 +194,7 @@
                         class="form-control input-lg"
                         placeholder="Votre Adresse (Rue)"
                         ng-model="signup.address"
-                        ng-minlength=3 ng-maxlength=20 required ng-focus/>
+                        ng-minlength=3 required ng-focus/>
                         <div class="error-container"
                              ng-show="signup_form.address.$dirty && signup_form.address.$invalid && !signup_form.address.$focused">
                           <small class="error"
@@ -162,10 +208,6 @@
                           <small class="error"
                                  ng-show="signup_form.address.$error.address && !signup_form.address.$focused">
                                  Ceci n'est pas une adresse valide. Merci d'insérér une adresse valide.
-                          </small>
-                          <small class="error"
-                                 ng-show="signup_form.address.$error.maxlength && !signup_form.address.$focused">
-                                  Votre adresse ne peut pas être supérieur à 20 caractères
                           </small>
                         </div>
                     <div class="row">

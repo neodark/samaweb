@@ -1,4 +1,4 @@
-//This controller retrieves data from the courseFactory through the REST API and associates it with the $scope
+//this controller retrieves data from the courseFactory through the REST API and associates it with the $scope
 //The $scope is ultimately bound to the course view
 app.controller('courseController',['$scope', 'courseFactory', 'authState', 'authFactory', function ($scope, courseFactory, authState, authFactory) {
 
@@ -7,6 +7,7 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
    $scope.courses;
    $scope.course_type;
    $scope.course_list_url;
+   $scope.singleCourse;
    $scope.birthdate_year = [];
    $scope.birthdate_month = [];
    $scope.birthdate_month_name = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet",
@@ -14,6 +15,7 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
    $scope.birthdate_day = [];
    $scope.gender_type = ["M.", "Mme."];
    $scope.gender_db_selection = ["M", "F"];
+   $scope.current_course_type;
    $scope.gender = [];
    $scope.new_course_address = "Martigny - Rue de Rossetan - sous la salle de gymnastique";
    $scope.new_course_time = "Les cours ont lieu de 19h à 22h";
@@ -61,8 +63,7 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
        if ($scope.signup_form.$valid)
        {
            // Submit as normal
-           console.log("submit as normal");
-           console.log($scope.signup_form);
+           //console.log("submit as normal");
 
            var data_participant = {};
            data_participant["status"] = 'S';
@@ -79,13 +80,21 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
            data_participant["email"] = $scope.signup_form.email.$modelValue;
            data_participant["course"] = location.search.split('courseid=')[1];
 
-           courseFactory.registerParticipant(data_participant);
+           $scope.current_course_type = location.search.split('coursetype=')[1].split('&')[0];
+           courseFactory.registerParticipant(data_participant)
+           .success(function (coursesData) {
+               //console.log(coursesData);
+               $('#modalparticipantsuccess').modal('show')
+           })
+           .error(function (error) {
+               $scope.status = 'Unable to load courses data: ' + error.message;
+               $('#modalparticipantfailure').modal('show')
+           });
+
        }
        else
        {
-           console.log("submit error");
-           console.log($scope.signup_form);
-           console.log($scope.signup_form.lastname.$valid);
+           //console.log("submit error");
            if(! $scope.signup_form.gender_type_select.$valid)
            {
                bootbox.alert("Merci d'indiquer M. ou Mme. dans le menu au dessus de votre prénom", function()
@@ -152,7 +161,14 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
        $scope.course_list_url = course_list_url;
        getCourseData($scope.course_type, $scope.course_list_url);
    }
- 
+
+    $scope.initCourseRegistration = function(course_type, course_id, course_list_url)
+   {
+       $scope.course_type     = course_type;
+       $scope.course_list_url = course_list_url;
+       getSingleCourseData(course_id, $scope.course_list_url);
+   }
+
    function getCourseData(course_type, course_list_url)
    {
        courseFactory.getCoursesInformation(course_type, course_list_url)
@@ -161,6 +177,17 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
            })
            .error(function (error) {
                $scope.status = 'Unable to load courses data: ' + error.message;
+           });
+   }
+
+   function getSingleCourseData(course_id, course_list_url)
+   {
+       courseFactory.getCourseInformation(course_id, course_list_url)
+           .success(function (coursesData) {
+               $scope.singleCourse = coursesData;
+           })
+           .error(function (error) {
+               $scope.status = 'Unable to load course data: ' + error.message;
            });
    }
 
