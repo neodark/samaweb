@@ -93,7 +93,7 @@
         <!-- /.row -->
         <div class="panel panel-info">
           <div class="panel-heading">
-            <h3 class="panel-title">Dates de cours</h3>
+            <h3 class="panel-title">Dates et horaires de cours</h3>
           </div>
           <div class="panel-body">
             <!--<a id="btn_add_new_date" class="btn btn-warning button_new_course_date" ng-if="authState.user">
@@ -106,7 +106,14 @@
                         <i class="glyphicon glyphicon-th"></i>
                     </span>
             </div>
-          </div>
+            <i>Insérer les informations concernant les horaires du cours</i>
+            <div class="input-group">
+                <input ng-model="new_course_time" type="text" class="form-control time_course" >
+                    <span class="input-group-addon">
+                        <i class="glyphicon glyphicon-th"></i>
+                    </span>
+            </div>
+            </div>
         </div>
 
         <div class="panel panel-success">

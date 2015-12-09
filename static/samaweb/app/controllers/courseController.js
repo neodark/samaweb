@@ -13,8 +13,10 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
    "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
    $scope.birthdate_day = [];
    $scope.gender_type = ["M.", "Mme."];
+   $scope.gender_db_selection = ["M", "F"];
    $scope.gender = [];
    $scope.new_course_address = "Martigny - Rue de Rossetan - sous la salle de gymnastique";
+   $scope.new_course_time = "Les cours ont lieu de 19h à 22h";
    $scope.new_course_dates = "";
    $scope.new_course_maximum_participants = 12;
 
@@ -63,17 +65,19 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
            console.log($scope.signup_form);
 
            var data_participant = {};
-           data_participant["sex"] = $scope.signup_form.gender_type_select.$modelValue;
+           data_participant["status"] = 'S';
+           data_participant["gender"] = $scope.gender_db_selection[$scope.signup_form.gender_type_select.$modelValue];
            data_participant["first_name"] = $scope.signup_form.firstname.$modelValue;
            data_participant["last_name"] = $scope.signup_form.lastname.$modelValue;
-           data_participant["birth_date"] = '2015-01-25';
+           data_participant["birth_date"] = $scope.signup_form.year_select.$modelValue + "-" +
+                                            $scope.signup_form.month_select.$modelValue + "-" +
+                                            $scope.signup_form.day_select.$modelValue;
            data_participant["address"] = $scope.signup_form.address.$modelValue;
            data_participant["npa"] = $scope.signup_form.npa.$modelValue;
            data_participant["city"] = $scope.signup_form.city.$modelValue;
            data_participant["phone"] = $scope.signup_form.phone.$modelValue;
            data_participant["email"] = $scope.signup_form.email.$modelValue;
-           data_participant["course"] = 1;
-           data_participant["last_course_date"] = '2015-02-11';
+           data_participant["course"] = location.search.split('courseid=')[1];
 
            courseFactory.registerParticipant(data_participant);
        }
@@ -97,6 +101,12 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
            if(! $scope.signup_form.lastname.$valid)
            {
                bootbox.alert("Votre nom n'est pas valide", function()
+               {
+               });
+           }
+           if(! $scope.signup_form.year_select.$valid || ! $scope.signup_form.month_select.$valid || ! $scope.signup_form.day_select.$valid)
+           {
+               bootbox.alert("Merci d'indiquer votre date de naissance", function()
                {
                });
            }
@@ -154,7 +164,7 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
            });
    }
 
-   $scope.save_course = function(course_type, course_dates, course_address, maximum_participants)
+   $scope.save_course = function(course_type, course_dates, course_time, course_address, maximum_participants)
    {
         var new_course_data = {};
         var additional_information = {};
@@ -167,6 +177,7 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
         //create json data to upload
         additional_information["location"] = course_address;
         additional_information["dates"] = course_dates_list;
+        additional_information["time"] = course_time;
         new_course_data["status"] = 'O';
         new_course_data["course_type"] = course_type;
         new_course_data["max_inscription_counter"] = maximum_participants;

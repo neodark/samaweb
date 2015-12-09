@@ -9,7 +9,7 @@ app.directive("buttonsavecourse", function($compile)
         //login button click
 		element.bind("click", function()
         {
-            scope.save_course(scope.course_type, scope.new_course_dates, scope.new_course_address, scope.new_course_maximum_participants);
+            scope.save_course(scope.course_type, scope.new_course_dates, scope.new_course_time, scope.new_course_address, scope.new_course_maximum_participants);
 		});
     }
 });

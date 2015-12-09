@@ -22,7 +22,7 @@ app.factory('courseFactory', ['$http', function($http) {
     {
         return $http({
           headers: {'Content-Type': 'application/json'},
-          url: '/api/participants/',
+          url: '/api/participant/',
           method: "POST",
           data: participantData,
         })

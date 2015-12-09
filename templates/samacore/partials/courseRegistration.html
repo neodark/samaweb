@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
             <form name="signup_form" no-validate ng-submit="signupForm()">
-                    <legend>Coordonnées du participant au cours</legend>
+                    <legend>Coordonnées du participant au cours {{ coursetype }}</legend> {{courseid}} {{coursetype}}
                     <h4>Vous êtes priés de rentrer chaque champ afin de pouvoir valider votre inscription au cours.</h4>
                     <label>Vos informations: </label>
                     <div class="row">
@@ -78,19 +78,64 @@
                     <label>Date de naissance:</label>
                     <div class="row">
                         <div class="col-xs-4 col-md-4">
-                            <select name="day" class = "form-control input-lg">
+                            <select name="day_select"
+                                    class="form-control input-lg"
+                                    ng-model="signup.day_select"
+                                    required>
                             <option ng-repeat="day in birthdate_day" value="{$ day.identifier $}">{$ day.name $}</option>
+                            <option value="">---</option>
                             </select>
+                            <div class="error-container"
+                                 ng-show="signup_form.day_select.$dirty && signup_form.day_select.$invalid && !signup_form.day_select.$focused">
+                              <small class="error"
+                                     ng-show="signup_form.day_select.$error.required && !signup_form.day_select.$focused">
+                                     Merci de spécifier votre jour de naissance.
+                              </small>
+                              <small class="error"
+                                     ng-show="signup_form.day_select.$error.minlength && !signup_form.day_select.$focused">
+                                      Ce champ ne peut pas être vide
+                              </small>
+                            </div>
                         </div>
                         <div class="col-xs-4 col-md-4">
-                            <select name="month" class = "form-control input-lg">
+                            <select name="month_select"
+                                    class="form-control input-lg"
+                                    ng-model="signup.month_select"
+                                    required>
                             <option ng-repeat="month in birthdate_month" value="{$ month.identifier $}">{$ month.name $}</option>
+                            <option value="">---</option>
                             </select>
+                            <div class="error-container"
+                                 ng-show="signup_form.month_select.$dirty && signup_form.month_select.$invalid && !signup_form.month_select.$focused">
+                              <small class="error"
+                                     ng-show="signup_form.month_select.$error.required && !signup_form.month_select.$focused">
+                                     Merci de spécifier votre mois de naissance.
+                              </small>
+                              <small class="error"
+                                     ng-show="signup_form.month_select.$error.minlength && !signup_form.month_select.$focused">
+                                      Ce champ ne peut pas être vide
+                              </small>
+                            </div>
                         </div>
                         <div class="col-xs-4 col-md-4">
-                            <select name="year" class = "form-control input-lg">
+                            <select name="year_select"
+                                    class="form-control input-lg"
+                                    ng-model="signup.year_select"
+                                    required>
                             <option ng-repeat="year in birthdate_year" value="{$ year.identifier $}">{$ year.name $}</option>
+                            <option value="">---</option>
                             </select>
+                            <div class="error-container"
+                                 ng-show="signup_form.year_select.$dirty && signup_form.year_select.$invalid && !signup_form.year_select.$focused">
+                              <small class="error"
+                                     ng-show="signup_form.year_select.$error.required && !signup_form.year_select.$focused">
+                                     Merci de spécifier votre année de naissance.
+                              </small>
+                              <small class="error"
+                                     ng-show="signup_form.year_select.$error.minlength && !signup_form.year_select.$focused">
+                                      Ce champ ne peut pas être vide
+                              </small>
+                            </div>
                         </div>
                     </div>
                     <br />
