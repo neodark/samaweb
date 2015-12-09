@@ -153,19 +153,19 @@
                              ng-show="signup_form.address.$dirty && signup_form.address.$invalid && !signup_form.address.$focused">
                           <small class="error"
                                  ng-show="signup_form.address.$error.required && !signup_form.address.$focused">
-                                 Votre adresse email est requise.
+                                 Votre adresse est requise.
                           </small>
                           <small class="error"
                                  ng-show="signup_form.address.$error.minlength && !signup_form.address.$focused">
-                                  Votre adresse email doit être supérieur à 3 caractères
+                                  Votre adresse doit être supérieur à 3 caractères
                           </small>
                           <small class="error"
                                  ng-show="signup_form.address.$error.address && !signup_form.address.$focused">
-                                 Ceci n'est pas une adresse email valide. Merci d'insérér une adresse email valide.
+                                 Ceci n'est pas une adresse valide. Merci d'insérér une adresse valide.
                           </small>
                           <small class="error"
                                  ng-show="signup_form.address.$error.maxlength && !signup_form.address.$focused">
-                                  Votre adresse email ne peut pas être supérieur à 20 caractères
+                                  Votre adresse ne peut pas être supérieur à 20 caractères
                           </small>
                         </div>
                     <div class="row">
@@ -182,11 +182,11 @@
                                  ng-show="signup_form.npa.$dirty && signup_form.npa.$invalid && !signup_form.npa.$focused">
                               <small class="error"
                                      ng-show="signup_form.npa.$error.required && !signup_form.npa.$focused">
-                                     Votre prénom est requis.
+                                     Votre NPA (code de la ville) est requis.
                               </small>
                               <small class="error"
                                      ng-show="signup_form.npa.$error.minlength && !signup_form.npa.$focused">
-                                      Votre prénom ne contient pas assez de caractères
+                                      Votre NPA (code de la ville) ne contient pas assez de caractères
                               </small>
                             </div>
                         </div>
@@ -202,11 +202,11 @@
                                  ng-show="signup_form.city.$dirty && signup_form.city.$invalid && !signup_form.city.$focused">
                               <small class="error"
                                      ng-show="signup_form.city.$error.required && !signup_form.city.$focused">
-                                     Votre nom de famille est requis.
+                                     Votre ville est requis.
                               </small>
                               <small class="error"
                                      ng-show="signup_form.city.$error.minlength && !signup_form.city.$focused">
-                                      Votre nom de famille ne contient pas assez de caractères
+                                      Votre ville ne contient pas assez de caractères
                               </small>
                             </div>
                         </div>
