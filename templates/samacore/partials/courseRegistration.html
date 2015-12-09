@@ -15,13 +15,13 @@
                     Merci pour votre inscription au cours <b>{$ coursetype $}</b>!
                     <p>Dernier rappel des informations concernant le cours:</p>
                     <p><b>Dates du cours:</b><br>
-                    <i>{$ singleCourse.additional_information.dates $}</i>
+                    <i>{$ single_course_dates $}</i>
                     </p>
                     <p><b>Horaires du cours:</b><br>
-                    <i>{$ singleCourse.additional_information.time $}</i>
+                    <i>{$ single_course_time $}</i>
                     </p>
                     <p><b>Lieu du cours:</b><br>
-                    <i>{$ singleCourse.additional_information.location $}</i>
+                    <i>{$ single_course_location $}</i>
                     </p>
                   </div>
                   <div class="modal-footer">
@@ -49,7 +49,7 @@
             </div>
 
             <form name="signup_form" no-validate ng-submit="signupForm()">
-                    <legend>Inscription au cours <i>{$ course_type $}</i><br> Dates: <i>{$ singleCourse.additional_information.dates $}</i></legend>
+                    <legend>Inscription au cours <i>{$ course_type $}</i><br> Dates: <i>{$ single_course_dates $}</i></legend>
                     <legend>Coordonnées du participant au cours</legend>
                     <h4>Vous êtes priés de rentrer chaque champ afin de pouvoir valider votre inscription au cours.</h4>
                     <label>Vos informations: </label>

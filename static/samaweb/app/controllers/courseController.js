@@ -7,7 +7,9 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
    $scope.courses;
    $scope.course_type;
    $scope.course_list_url;
-   $scope.singleCourse;
+   $scope.single_course_dates;
+   $scope.single_course_time;
+   $scope.single_course_location;
    $scope.birthdate_year = [];
    $scope.birthdate_month = [];
    $scope.birthdate_month_name = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet",
@@ -162,11 +164,13 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
        getCourseData($scope.course_type, $scope.course_list_url);
    }
 
-    $scope.initCourseRegistration = function(course_type, course_id, course_list_url)
+    $scope.initCourseRegistration = function(course_type, course_dates, course_time, course_location, course_list_url)
    {
        $scope.course_type     = course_type;
        $scope.course_list_url = course_list_url;
-       getSingleCourseData(course_id, $scope.course_list_url);
+       $scope.single_course_dates = course_dates;
+       $scope.single_course_time = course_time;
+       $scope.single_course_location = course_location;
    }
 
    function getCourseData(course_type, course_list_url)

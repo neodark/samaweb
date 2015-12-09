@@ -8,6 +8,8 @@ from django.conf import settings
 from django.shortcuts import render_to_response, get_object_or_404
 
 from django.views.generic import TemplateView
+from samacore.models import Course
+import simplejson as json
 # Create your views here.
 
 #from django.http import HttpResponse
@@ -68,13 +70,26 @@ def admin_login(request):
 def register_course(request):
     coursetype = ''
     courseid = ''
+    coursedates = ''
+    coursetime = ''
+    courselocation = ''
     if request.GET.has_key('coursetype'):
         coursetype = request.GET['coursetype']
     if request.GET.has_key('courseid'):
         courseid = request.GET['courseid']
+        course = Course.objects.get(id=courseid)
+        courseinformation = course.additional_information
+        jsoncourse = json.loads(courseinformation)
+        coursedates     = jsoncourse['dates']
+        coursetime      = jsoncourse['time']
+        courselocation  = jsoncourse['location']
+
 
     context = {'coursetype': coursetype,
-               'courseid': courseid}
+               'courseid': courseid,
+               'coursedates': coursedates,
+               'coursetime': coursetime,
+               'courselocation': courselocation}
     return render(request, 'samacore/register_course.html', context)
 
 #------------------------------------------------
