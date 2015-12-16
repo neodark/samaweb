@@ -21,7 +21,8 @@ class SamaTestCase(APITestCase):
                      'max_inscription_counter':12,\
                      'additional_information':{\
                         'dates':'10-02-2015 10-03-2015',\
-                        'location':'Geneva'}\
+                        'location':'Geneva',\
+                        'time':'Le cours a lieu de 19h00 a 22h30'}\
                      }
 
         self.json_data_course_post_api_reply = {\
@@ -29,7 +30,7 @@ class SamaTestCase(APITestCase):
                      'status':'O',\
                      'course_type':'B',\
                      'max_inscription_counter':12,\
-                     'additional_information':"{\"dates\": \"10-02-2015 10-03-2015\", \"location\": \"Geneva\"}"\
+                     'additional_information':"{\"dates\": \"10-02-2015 10-03-2015\", \"location\": \"Geneva\", \"time\": \"Le cours a lieu de 19h00 a 22h30\"}"\
                      }
 
         self.json_data_course_post_get_verification = {\
@@ -41,7 +42,8 @@ class SamaTestCase(APITestCase):
                      'participants':[],\
                      'additional_information':{\
                         'dates':'10-02-2015 10-03-2015',\
-                        'location':'Geneva'}\
+                        'location':'Geneva',\
+                        'time':'Le cours a lieu de 19h00 a 22h30'}\
                      }
 
         #PUT
@@ -51,7 +53,8 @@ class SamaTestCase(APITestCase):
                      'max_inscription_counter':14,\
                      'additional_information':{\
                         'dates':'09-03-2016 07-05-2016',\
-                        'location':'Lausanne'}\
+                        'location':'Lausanne',\
+                        'time':'Le cours a lieu de 15h00 a 16h45'}\
                      }
 
         self.json_data_course_put_api_reply = {\
@@ -59,7 +62,7 @@ class SamaTestCase(APITestCase):
                      'status':'C',\
                      'course_type':'D',\
                      'max_inscription_counter':14,\
-                     'additional_information':"{\"dates\": \"09-03-2016 07-05-2016\", \"location\": \"Lausanne\"}"\
+                     'additional_information':"{\"dates\": \"09-03-2016 07-05-2016\", \"location\": \"Lausanne\", \"time\": \"Le cours a lieu de 15h00 a 16h45\"}"\
                      }
 
         self.json_data_course_put_get_verification = {\
@@ -71,7 +74,8 @@ class SamaTestCase(APITestCase):
                      'participants':[],\
                      'additional_information':{\
                         'dates':'09-03-2016 07-05-2016',\
-                        'location':'Lausanne'}\
+                        'location':'Lausanne',\
+                        'time':'Le cours a lieu de 15h00 a 16h45'}\
                      }
 
         #PARTICIPANT
@@ -129,7 +133,8 @@ class SamaTestCase(APITestCase):
                      'participants':[self.json_data_participant_post_get_verification],\
                      'additional_information':{\
                         'dates':'10-02-2015 10-03-2015',\
-                        'location':'Geneva'}\
+                        'location':'Geneva',\
+                        'time':'Le cours a lieu de 19h00 a 22h30'}\
                      }
 
         #PUT
@@ -186,7 +191,8 @@ class SamaTestCase(APITestCase):
                      'participants':[self.json_data_participant_put_get_verification],\
                      'additional_information':{\
                         'dates':'10-02-2015 10-03-2015',\
-                        'location':'Geneva'}\
+                        'location':'Geneva',\
+                        'time':'Le cours a lieu de 19h00 a 22h30'}\
                      }
 
     def date_handler(self, obj):
