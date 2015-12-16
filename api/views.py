@@ -21,6 +21,7 @@ from api.serializers import ParticipantCreationFailedException
 
 from rest_framework.views import APIView
 
+
 #For UserView and AuthView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -32,6 +33,14 @@ from .permissions import IsStaffOrTargetUser
 from . import authentication, serializers
 
 import simplejson as json
+
+#For email confirmation
+#from common.models import EmailMultiRelated
+from django.core.mail import EmailMessage
+from django.conf import settings
+from django.conf.urls.static import static
+
+
 # Create your views here.
 
 # Class based views
@@ -214,7 +223,65 @@ class ParticipantCreationView(ListCreateAPIView):
         except ParticipantCreationFailedException:
             pass
 
+
         details = serializer.details
+
+        f = open(settings.STATICFILES_DIRS[0] + '/data/email_message.txt', 'r')
+        data_email=f.readlines()
+        f.close()
+
+        logo = open(settings.STATICFILES_DIRS[0] + '/data/logo_martigny_small.png', 'r')
+        logo_data = logo.read()
+
+        logo_data_base_64 = logo_data.encode("base64")
+        logo.close()
+
+        additional_information = json.loads(course.additional_information)
+
+        mydict = {}
+
+        mydict["__TAG_LOGO__"] = '<div><img src="data:image/png;base64,' + logo_data_base_64 + '">'
+
+        first_name = participant.first_name
+        last_name = participant.last_name
+        first_name_decoded = first_name.encode('utf-8')
+        last_name_decoded = last_name.encode('utf-8')
+
+        if participant.gender == 'F':
+            mydict["__TAG_PERSON__"] = "Mme. " + first_name_decoded + " " + last_name_decoded
+        else:
+            mydict["__TAG_PERSON__"] = "M. " + first_name_decoded + " " + last_name_decoded
+
+        for key, value in Course.COURSE_TYPE:
+            if key == course.course_type:
+                mydict["__TAG_COURSE_TYPE__"] = "%s"%value
+                break
+
+        mydict["__TAG_COURSE_DATES__"] = "%s"%additional_information["dates"].encode('utf-8')
+        mydict["__TAG_COURSE_TIME__"] = "%s"%additional_information["time"].encode('utf-8')
+        mydict["__TAG_COURSE_LOCATION__"] = "%s"%additional_information["location"].encode('utf-8')
+        tags = ["__TAG_LOGO__", "__TAG_PERSON__", "__TAG_COURSE_TYPE__", "__TAG_COURSE_DATES__",
+                "__TAG_COURSE_TIME__", "__TAG_COURSE_LOCATION__"]
+
+        final_text = ""
+        final_list = []
+        for text in data_email:
+            text_decoded = text.decode('utf-8').encode('utf-8')
+            if any(s in text_decoded for s in tags):
+                for tag in tags:
+                    if tag in text_decoded:
+                        replaced_text = text_decoded.replace(tag, mydict[tag])
+                        replaced_text_decoded = text_decoded.replace(tag, mydict[tag]).decode('utf-8').encode('utf-8')
+                        final_list.append(replaced_text_decoded)
+            else:
+                final_list.append(text_decoded)
+
+        for item_email in final_list:
+            final_text += item_email
+
+        msg = EmailMessage("Confirmation inscription au cours", final_text, to=[participant.email])
+        msg.content_subtype = 'html'
+        msg.send()
 
         if details['success']:
             result = {
