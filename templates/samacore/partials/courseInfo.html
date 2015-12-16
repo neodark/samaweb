@@ -26,10 +26,11 @@
                 <b>{$ course.additional_information.time $}</b></p>
                 <p><i>Lieu du cours</i><br>
                 <b>{$ course.additional_information.location $}</b></p>
-                <p><i>Nombre de places restantes</i><br>
+                <p ng-if="course.inscription_counter < course.max_inscription_counter"><i>Nombre de places restantes</i><br>
                 <b>{$ course.max_inscription_counter - course.inscription_counter $}/{$ course.max_inscription_counter $}</b></p>
 
-                <a id="sauveteurs" href="{{ URL_PREFIX }}/register_cours/?coursetype={$ course_type $}&courseid={$ course.id $}" class="btn btn-primary btn-course">Inscription</a>
+                <a ng-if="course.inscription_counter < course.max_inscription_counter" id="sauveteurs" href="{{ URL_PREFIX }}/register_cours/?coursetype={$ course_type $}&courseid={$ course.id $}" class="btn btn-primary btn-course">Inscription</a>
+                <p ng-if="course.inscription_counter >= course.max_inscription_counter"><strong><font size="3" color="red">Désolé le cours est complet</font></strong></p>
             </div>
         </div>
     </div>
