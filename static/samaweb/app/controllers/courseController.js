@@ -164,7 +164,14 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
        getCourseData($scope.course_type, $scope.course_list_url);
    }
 
-    $scope.initCourseRegistration = function(course_type, course_dates, course_time, course_location, course_list_url)
+   $scope.initSingleCourse = function(course_type, course_list_url, course_id)
+   {
+       $scope.course_type     = course_type;
+       $scope.course_list_url = course_list_url;
+       getSingleCourseData(course_id, $scope.course_list_url);
+   }
+
+   $scope.initCourseRegistration = function(course_type, course_dates, course_time, course_location, course_list_url)
    {
        $scope.course_type     = course_type;
        $scope.course_list_url = course_list_url;
@@ -189,6 +196,32 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
        courseFactory.getCourseInformation(course_id, course_list_url)
            .success(function (coursesData) {
                $scope.singleCourse = coursesData;
+
+               //set dates in course edition ui
+               $scope.new_course_dates = $scope.singleCourse.additional_information.dates;
+
+               var splitted_dates = $scope.new_course_dates.split(" ");
+
+               $(".datepicker_course").datepicker({
+                   format: "dd/mm/yyyy",
+                   language: "fr-CH",
+                   multidate: true,
+                   multidateSeparator: " "
+               });
+
+               var all_dates = [];
+               for(var i=0; i<splitted_dates.length; i++)
+               {
+                    var single_date_split = splitted_dates[i].split("-");
+                    var singledate = new Date(single_date_split[1] + "/" + single_date_split[0] + "/" + single_date_split[2]);
+                    all_dates.push(singledate);
+
+               }
+
+               $(".datepicker_course").datepicker("setDates", all_dates);
+               $(".datepicker_course").datepicker('update');
+               $scope.new_course_dates = $scope.singleCourse.additional_information.dates;
+
            })
            .error(function (error) {
                $scope.status = 'Unable to load course data: ' + error.message;
