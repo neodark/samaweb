@@ -35,6 +35,7 @@ urlpatterns = [
     url(r'^specific_cours/$', views.course, name='course'),
     url(r'^register_cours/$', views.register_course, name='register_course'),
     url(r'^add_cours/$', views.add_course, name='add_course'),
+    url(r'^edit_cours/$', views.edit_course, name='edit_course'),
     url(r'^faq/$', views.faq, name='faq'),
     url(r'^admin_login/$', views.admin_login, name='admin_login'),
 ]

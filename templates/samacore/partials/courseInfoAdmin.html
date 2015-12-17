@@ -29,6 +29,9 @@
                 <p><i>Nombre de places restantes</i><br>
                 <b>{$ course.max_inscription_counter - course.inscription_counter $}/{$ course.max_inscription_counter $}</b></p>
                 <div class="btn-group" role="group" aria-label="...">
+                  <a id="btn_course_add" href="{{URL_PREFIX}}/edit_cours/?coursetype={$ course_type $}&courseid={$ course.id $}" class="btn btn-success button_actions_course" ng-if="authState.user">
+                      <i class="fa fa-pencil fa-2x"></i> Editer le cours
+                  </a>
                   <button type="button" class="btn btn-success">
                     <i class="fa fa-pencil fa-2x"></i> Editer le cours
                   </button>
