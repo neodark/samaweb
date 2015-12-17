@@ -281,7 +281,10 @@ class ParticipantCreationView(ListCreateAPIView):
 
         msg = EmailMessage("Confirmation inscription au cours", final_text, to=[participant.email])
         msg.content_subtype = 'html'
-        msg.send()
+        try:
+            msg.send()
+        except:
+            pass
 
         if details['success']:
             result = {
