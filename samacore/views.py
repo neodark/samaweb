@@ -78,6 +78,21 @@ def edit_course(request):
     else:
         return render(request, 'samacore/course_edit.html', context)
 
+def archive_course(request):
+    coursetype = ''
+    if request.GET.has_key('coursetype'):
+        coursetype = request.GET['coursetype']
+
+    if request.GET.has_key('courseid'):
+        courseid = request.GET['courseid']
+
+    context = {'coursetype': coursetype,
+               'courseid': courseid}
+
+    if request.user.is_anonymous():
+        raise exceptions.PermissionDenied
+    else:
+        return render(request, 'samacore/course_archive.html', context)
 
 def admin_login(request):
     param_1 = 2

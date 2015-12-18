@@ -268,7 +268,7 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
            });
    }
 
-   $scope.update_course = function(course_id, course_type, course_dates, course_time, course_address, maximum_participants)
+   $scope.update_course = function(course_id, course_type, course_dates, course_time, course_address, maximum_participants, perform_action)
    {
         var update_course_data = {};
         var additional_information = {};
@@ -286,6 +286,11 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
         update_course_data["course_type"] = course_type;
         update_course_data["max_inscription_counter"] = maximum_participants;
         update_course_data["additional_information"] = additional_information;
+
+        if(perform_action == 'archive')
+        {
+            update_course_data["status"] = 'C';
+        }
 
         courseFactory.updateCourse(course_id, update_course_data)
            .success(function (coursesData) {

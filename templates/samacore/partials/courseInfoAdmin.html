@@ -29,7 +29,7 @@
                 <p><i>Nombre de places restantes</i><br>
                 <b>{$ course.max_inscription_counter - course.inscription_counter $}/{$ course.max_inscription_counter $}</b></p>
                 <div class="btn-group" role="group" aria-label="...">
-                  <a id="btn_course_add" href="{{URL_PREFIX}}/edit_cours/?coursetype={$ course_type $}&courseid={$ course.id $}" class="btn btn-success button_actions_course" ng-if="authState.user">
+                  <a id="btn_course_edit" href="{{URL_PREFIX}}/edit_cours/?coursetype={$ course_type $}&courseid={$ course.id $}" class="btn btn-success button_actions_course" ng-if="authState.user">
                       <i class="fa fa-pencil fa-2x"></i> Editer le cours
                   </a>
                   <button type="button" class="btn btn-primary">
@@ -39,9 +39,9 @@
                     <i class="fa fa-minus-circle"></i>
                     Participant
                   </button>
-                  <button type="button" class="btn btn-danger">
-                    <i class="fa fa-archive fa-2x"></i> Archiver le cours
-                  </button>
+                  <a id="btn_course_archive" href="{{URL_PREFIX}}/archive_cours/?coursetype={$ course_type $}&courseid={$ course.id $}" class="btn btn-danger button_actions_course" ng-if="authState.user">
+                      <i class="fa fa-archive fa-2x"></i> Archiver le cours
+                  </a>
                 </div>
             </div>
         </div>
