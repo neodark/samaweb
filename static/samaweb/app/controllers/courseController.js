@@ -222,6 +222,16 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
                $(".datepicker_course").datepicker('update');
                $scope.new_course_dates = $scope.singleCourse.additional_information.dates;
 
+               //set time in course edition ui
+               $scope.new_course_time = $scope.singleCourse.additional_information.time;
+
+               //set location in course edition ui
+               $scope.new_course_address = $scope.singleCourse.additional_information.location;
+
+               //set maximum participants in course edition ui
+               $scope.new_course_maximum_participants = $scope.singleCourse.max_inscription_counter;
+
+
            })
            .error(function (error) {
                $scope.status = 'Unable to load course data: ' + error.message;
@@ -257,6 +267,37 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
                $('#modalfailure').modal('show')
            });
    }
+
+   $scope.update_course = function(course_id, course_type, course_dates, course_time, course_address, maximum_participants)
+   {
+        var update_course_data = {};
+        var additional_information = {};
+
+        //replace dates dd/mm/yyyy by dd-mm-yyyy
+        var find = '/';
+        var re = new RegExp(find, 'g');
+        var course_dates_list = course_dates.replace(re, '-');
+
+        //create json data to upload
+        additional_information["location"] = course_address;
+        additional_information["dates"] = course_dates_list;
+        additional_information["time"] = course_time;
+        //update_course_data["status"] = 'O';
+        update_course_data["course_type"] = course_type;
+        update_course_data["max_inscription_counter"] = maximum_participants;
+        update_course_data["additional_information"] = additional_information;
+
+        courseFactory.updateCourse(course_id, update_course_data)
+           .success(function (coursesData) {
+               //console.log(coursesData);
+               $('#modalsuccess').modal('show')
+           })
+           .error(function (error) {
+               $scope.status = 'Unable to load courses data: ' + error.message;
+               $('#modalfailure').modal('show')
+           });
+   }
+
 
    //$scope.login = function(username, password)
    //{

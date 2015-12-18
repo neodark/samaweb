@@ -22,6 +22,16 @@ app.factory('courseFactory', ['$http', function($http) {
         })
     };
 
+    courseFactory.updateCourse = function (course_id, courseData)
+    {
+        return $http({
+          headers: {'Content-Type': 'application/json'},
+          url: '/api/course/' + course_id,
+          method: "PUT",
+          data: courseData,
+        })
+    };
+
     courseFactory.registerParticipant = function (participantData)
     {
         return $http({

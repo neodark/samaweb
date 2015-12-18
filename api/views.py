@@ -34,6 +34,8 @@ from . import authentication, serializers
 
 import simplejson as json
 
+from common.responses import BadRequestResponse, ForbiddenResponse
+
 #For email confirmation
 #from common.models import EmailMultiRelated
 from django.core.mail import EmailMessage
@@ -168,6 +170,12 @@ class CourseDetailView(RetrieveUpdateDestroyAPIView):
             # Available fields (not returned by default):
             #    - html_description
             fields_to_return = []
+
+        if request.data["course_type"] is not None:
+            for key, value in Course.COURSE_TYPE:
+                if value == request.data["course_type"]:
+                    request.data["course_type"] = key
+                    break
 
         if self.kwargs.has_key('pk'):
             course = self.get_queryset(self.kwargs.get('pk'))
