@@ -79,7 +79,9 @@
 
         <div class="row">
             <div class="col-lg-12">
-
+                <a id="btn_course_add_participant" class="btn btn-warning button_actions_course" ng-if="authState.user" buttonaddparticipant>
+                    <i class="fa fa-plus-circle fa-2x"></i> Ajouter un participant
+                </a>
                 <h1 class="page-header">{{ coursetype }}
                 <img ng-if="course_type == 'Sauveteurs'" class="img-responsive course-img" src="{% static 'img/car-icon.png' %}" alt="">
                 <img ng-if="course_type == 'Samaritains'" class="img-responsive course-img" src="{% static 'img/medicine-box-icon.png' %}" alt="">
@@ -102,16 +104,16 @@
                 <table class="table table-hover table-striped table-condensed">
                   <thead>
                     <tr>
-                      <td> Genre </td>
-                      <td> Prénom </td>
-                      <td> Nom </td>
-                      <td> Date de naissance </td>
-                      <td> Adresse </td>
-                      <td> NPA </td>
-                      <td> Ville </td>
-                      <td> Téléphone </td>
-                      <td> email </td>
-                      <td> actions </td>
+                      <td><b> Genre </b></td>
+                      <td><b> Prénom </b></td>
+                      <td><b> Nom </b></td>
+                      <td><b> Date de naissance </b></td>
+                      <td><b> Adresse </b></td>
+                      <td><b> NPA </b></td>
+                      <td><b> Ville </b></td>
+                      <td><b> Téléphone </b></td>
+                      <td><b> email </b></td>
+                      <td><b> actions </b></td>
                       </th>
                     </tr>
                   </thead>
@@ -128,11 +130,11 @@
                     <td> {$ participant_val.phone $} </td>
                     <td> {$ participant_val.email $} </td>
                     <td>
-                        <a id="btn_course_participant_edit" href="{{URL_PREFIX}}/participant_cours_edit/?coursetype={$ course_type $}&courseid={$ course.id $}" class="btn btn-success button_actions_course" ng-if="authState.user">
-                            <i class="fa fa-pencil"></i>
-                        </a>
                         <a id="btn_course_participant_delete" href="{{URL_PREFIX}}/participant_cours_delete/?coursetype={$ course_type $}&courseid={$ course.id $}" class="btn btn-danger button_actions_course" ng-if="authState.user">
                             <i class="fa fa-minus-circle"></i>
+                        </a>
+                        <a id="btn_course_participant_edit" href="{{URL_PREFIX}}/participant_cours_edit/?coursetype={$ course_type $}&courseid={$ course.id $}" class="btn btn-success button_actions_course" ng-if="authState.user">
+                            <i class="fa fa-pencil"></i>
                         </a>
                     </td>
                     </tr>
