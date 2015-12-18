@@ -66,12 +66,20 @@ class CourseCreationNewView(ListCreateAPIView):
 
         #self.request.QUERY_PARAMS.has_key('coursetype')
         coursetype = self.request.QUERY_PARAMS.get('coursetype', None)
+        coursestatus = self.request.QUERY_PARAMS.get('coursestatus', None)
 
         #Filter course by course type if requested
         if coursetype is not None:
             for key, value in Course.COURSE_TYPE:
                 if value == coursetype:
                     queryset = queryset.filter(course_type=key)
+                    break
+
+        #Filter course by course status if requested
+        if coursestatus is not None:
+            for key, value in Course.COURSE_STATUS:
+                if value == coursestatus:
+                    queryset = queryset.filter(status=key)
                     break
 
         #sorting queryset course by date

@@ -41,10 +41,15 @@ def faq(request):
 
 def course(request):
     coursetype = ''
+    coursestatus = ''
     if request.GET.has_key('coursetype'):
         coursetype = request.GET['coursetype']
 
-    context = {'coursetype': coursetype}
+    if request.GET.has_key('coursestatus'):
+        coursestatus = request.GET['coursestatus']
+
+    context = {'coursetype': coursetype,
+               'coursestatus': coursestatus}
     if request.user.is_anonymous():
         return render(request, 'samacore/course.html', context)
     else:

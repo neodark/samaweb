@@ -5,7 +5,7 @@ app.factory('courseFactory', ['$http', function($http) {
     var courseFactory = {};
 
     courseFactory.getCoursesInformation = function (course_type, course_list_url) {
-        return $http.get(course_list_url + '?coursetype=' + course_type);
+        return $http.get(course_list_url + '?coursetype=' + course_type + '&coursestatus=Open');
     };
 
     courseFactory.getCourseInformation = function (course_id, course_list_url) {
