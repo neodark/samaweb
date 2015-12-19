@@ -79,7 +79,7 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <a id="btn_course_add_participant" class="btn btn-warning button_actions_course" ng-if="authState.user" buttonaddparticipant>
+                <a id="btn_course_add_participant" class="btn btn-warning button_actions_course" ng-if="authState.user" href="{{ URL_PREFIX }}/register_cours/?coursetype={{ coursetype }}&courseid={{ courseid }}">
                     <i class="fa fa-plus-circle fa-2x"></i> Ajouter un participant
                 </a>
                 <h1 class="page-header">{{ coursetype }}
