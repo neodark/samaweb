@@ -18,6 +18,11 @@ partial_patterns = [
         views.PartialGroupView.as_view(template_name='samacore/partials/courseRegistration.html'),
         name='course_registration',
         ),
+    url(
+        r'^courseEditParticipant/$',
+        views.PartialGroupView.as_view(template_name='samacore/partials/courseEditParticipant.html'),
+        name='course_participant_edition',
+        ),
     url(r'^(?P<template_name>[a-zA-Z_]+\.html)$', views.PartialGroupView.as_view()),
 ]
 
@@ -38,6 +43,7 @@ urlpatterns = [
     url(r'^edit_cours/$', views.edit_course, name='edit_course'),
     url(r'^archive_cours/$', views.archive_course, name='archive_course'),
     url(r'^participants_cours/$', views.participants_course, name='participants_course'),
+    url(r'^participant_cours_edit/$', views.participant_course_edit, name='participant_course_edit'),
     url(r'^faq/$', views.faq, name='faq'),
     url(r'^admin_login/$', views.admin_login, name='admin_login'),
 ]

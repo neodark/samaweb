@@ -42,5 +42,10 @@ app.factory('courseFactory', ['$http', function($http) {
         })
     };
 
+    courseFactory.getParticipantInformation = function (participant_detail_url) {
+        return $http.get(participant_detail_url);
+    };
+
+
     return courseFactory;
 }]);

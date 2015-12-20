@@ -8,7 +8,7 @@ from django.conf import settings
 from django.shortcuts import render_to_response, get_object_or_404
 
 from django.views.generic import TemplateView
-from samacore.models import Course
+from samacore.models import Course, Participant
 import simplejson as json
 # Create your views here.
 
@@ -114,6 +114,39 @@ def participants_course(request):
         raise exceptions.PermissionDenied
     else:
         return render(request, 'samacore/course_participants.html', context)
+
+def participant_course_edit(request):
+    coursetype = ''
+    courseid = ''
+    coursedates = ''
+    coursetime = ''
+    courselocation = ''
+    participantid = ''
+    if request.GET.has_key('coursetype'):
+        coursetype = request.GET['coursetype']
+    if request.GET.has_key('courseid'):
+        courseid = request.GET['courseid']
+        course = Course.objects.get(id=courseid)
+        courseinformation = course.additional_information
+        jsoncourse = json.loads(courseinformation)
+        coursedates     = jsoncourse['dates']
+        coursetime      = jsoncourse['time']
+        courselocation  = jsoncourse['location']
+    if request.GET.has_key('participantid'):
+        participantid = request.GET['participantid']
+        participant = Participant.objects.get(id=participantid)
+
+    context = {'coursetype': coursetype,
+               'courseid': courseid,
+               'coursedates': coursedates,
+               'coursetime': coursetime,
+               'courselocation': courselocation,
+               'participantid': participantid,
+               'participant': participant}
+    if request.user.is_anonymous():
+        raise exceptions.PermissionDenied
+    else:
+        return render(request, 'samacore/participant_course.html', context)
 
 def admin_login(request):
     param_1 = 2

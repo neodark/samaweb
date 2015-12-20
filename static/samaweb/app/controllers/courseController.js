@@ -10,6 +10,8 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
    $scope.single_course_dates;
    $scope.single_course_time;
    $scope.single_course_location;
+   $scope.participant_to_update;
+   $scope.participant_detail_url;
    $scope.birthdate_year = [];
    $scope.birthdate_month = [];
    $scope.birthdate_month_name = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet",
@@ -23,6 +25,11 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
    $scope.new_course_time = "Les cours ont lieu de 19h à 22h";
    $scope.new_course_dates = "";
    $scope.new_course_maximum_participants = 12;
+   $scope.signup = {};
+   $scope.signup_gender_selected;
+   $scope.signup_birthdate_selected;
+   $scope.signup_birthdate_month_selected;
+   $scope.myform;
 
    var currentTime = new Date();
    var year = currentTime.getFullYear();
@@ -60,8 +67,9 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
    }
 
    //$scope.submitted = false;
-   $scope.signupForm = function()
+   $scope.signupForm = function(selected_action)
    {
+       console.log($scope.signup_form);
        if ($scope.signup_form.$valid)
        {
            // Submit as normal
@@ -83,20 +91,36 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
            data_participant["course"] = location.search.split('courseid=')[1];
 
            $scope.current_course_type = location.search.split('coursetype=')[1].split('&')[0];
-           courseFactory.registerParticipant(data_participant)
-           .success(function (coursesData) {
-               //console.log(coursesData);
-               $('#modalparticipantsuccess').modal('show')
-           })
-           .error(function (error) {
-               $scope.status = 'Unable to load courses data: ' + error.message;
-               $('#modalparticipantfailure').modal('show')
-           });
-
+           if(selected_action == 'add_participant')
+           {
+                courseFactory.registerParticipant(data_participant)
+                .success(function (coursesData) {
+                    //console.log(coursesData);
+                    $('#modalparticipantsuccess').modal('show')
+                })
+                .error(function (error) {
+                    $scope.status = 'Unable to load courses data: ' + error.message;
+                    $('#modalparticipantfailure').modal('show')
+                });
+           }
+           else if(selected_action == 'edit_participant')
+           {
+                courseFactory.editParticipant(data_participant)
+                .success(function (coursesData) {
+                    //console.log(coursesData);
+                    $('#modalparticipantsuccess').modal('show')
+                })
+                .error(function (error) {
+                    $scope.status = 'Unable to load courses data: ' + error.message;
+                    $('#modalparticipantfailure').modal('show')
+                });
+           }
        }
        else
        {
            //console.log("submit error");
+           console.log($scope.signup_form);
+           console.log($scope.signup_form.gender_type_select);
            if(! $scope.signup_form.gender_type_select.$valid)
            {
                bootbox.alert("Merci d'indiquer M. ou Mme. dans le menu au dessus de votre prénom", function()
@@ -178,6 +202,47 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
        $scope.single_course_dates = course_dates;
        $scope.single_course_time = course_time;
        $scope.single_course_location = course_location;
+   }
+
+   $scope.initParticipantEdition = function(course_type, course_dates, course_time, course_location, course_list_url, participant_detail_url, participant_id)
+   {
+       $scope.course_type     = course_type;
+       $scope.course_list_url = course_list_url;
+       $scope.single_course_dates = course_dates;
+       $scope.single_course_time = course_time;
+       $scope.single_course_location = course_location;
+       $scope.participant_detail_url = participant_detail_url;
+       getSingleParticipantData($scope.participant_detail_url);
+   }
+
+   function getSingleParticipantData(participant_detail_url)
+   {
+       courseFactory.getParticipantInformation(participant_detail_url)
+           .success(function (participantData) {
+               $scope.participant_to_update = participantData;
+               if(participantData.gender == 'F')
+               {
+                    $scope.signup_gender_selected = $scope.gender_type[1];
+               }
+               else
+               {
+                    $scope.signup_gender_selected = $scope.gender_type[0];
+               }
+               $scope.signup_birthdate_selected = participantData.birth_date;
+               $scope.signup_birthdate_month_selected = $scope.birthdate_month_name[parseInt(participantData.birth_date.split("-")[1]-1)];
+               $scope.signup.firstname = participantData.first_name;
+               $scope.signup.lastname = participantData.last_name;
+               $scope.signup.address = participantData.address;
+               $scope.signup.npa = participantData.npa;
+               $scope.signup.city = participantData.city;
+               $scope.signup.phone = participantData.phone;
+               $scope.signup.email = participantData.email;
+
+
+           })
+           .error(function (error) {
+               $scope.status = 'Unable to load participant data: ' + error.message;
+           });
    }
 
    function getCourseData(course_type, course_list_url)

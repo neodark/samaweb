@@ -1,0 +1,120 @@
+{% extends "samacore/base.html" %}
+
+{% load staticfiles %}
+
+{% block title %}FAQ{% endblock %}
+
+{% block section %}faq{% endblock %}
+
+{% block content %}
+
+    <!-- Page Content -->
+    <div class="container" ng-init="initParticipantEdition('{{ coursetype }}', '{{coursedates}}', '{{coursetime}}', '{{courselocation}}', '{% url 'course_list' %}', '{% url 'participant_detail' participant.id %}', '{{participantid}}')">
+
+        <!-- Page Heading/Breadcrumbs -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">{{ coursetype }}
+                <img ng-if="course_type == 'Sauveteurs'" class="img-responsive course-img" src="{% static 'img/car-icon.png' %}" alt="">
+                <img ng-if="course_type == 'Samaritains'" class="img-responsive course-img" src="{% static 'img/medicine-box-icon.png' %}" alt="">
+                <img ng-if="course_type == 'BLS-AED'" class="img-responsive course-img" src="{% static 'img/heart-beat-icon.png' %}" alt="">
+                <img ng-if="course_type == 'UPE'" class="img-responsive course-img" src="{% static 'img/medical-cap-icon.png' %}" alt="">
+
+                    <small>Diverses dates de cours proposés</small>
+                </h1>
+                <ol class="breadcrumb">
+                <h2>Mise à jour du participant à un cours</h2>
+                <p>Afin de pouvoir mettre à jour ce participant au cours <b>{{ coursetype }}</b></p>
+                <p>Merci de bien vouloir rentrer <b>toutes ses coordonnées correctement</b> et cliquez sur <b>Mettre à jour</b></p>
+               </ol>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!-- Courses -->
+
+       <div ui-view="courseEditParticipant"></div>
+        <!-- /.row -->
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; SamaMartigny 2016</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+    <script type='text/javascript'>
+        $(document).ready(function() {
+            $('.collapse').on('show.bs.collapse', function() {
+                var id = $(this).attr('id');
+                $('a[href="#' + id + '"]').closest('.panel-heading').addClass('active-faq');
+                $('a[href="#' + id + '"] .panel-title span').html('<i class="glyphicon glyphicon-minus"></i>');
+            });
+            $('.collapse').on('hide.bs.collapse', function() {
+                var id = $(this).attr('id');
+                $('a[href="#' + id + '"]').closest('.panel-heading').removeClass('active-faq');
+                $('a[href="#' + id + '"] .panel-title span').html('<i class="glyphicon glyphicon-plus"></i>');
+            });
+
+            //$('#contact-form').validate({
+            //    rules: {
+            //        name: {
+            //            minlength: 2,
+            //            required: true
+            //        },
+            //        email: {
+            //            required: true,
+            //            email: true
+            //        },
+            //        subject: {
+            //            selectcheck: true
+            //        },
+            //        message: {
+            //            minlength: 2,
+            //            required: true
+            //        }
+            //    },
+            //    highlight: function (element) {
+            //        $(element).closest('.control-group').removeClass('success').addClass('error');
+            //    },
+            //    success: function (element) {
+            //        element.text('OK!').addClass('valid')
+            //            .closest('.control-group').removeClass('error').addClass('success');
+            //    }
+            //});
+            //jQuery.validator.addMethod('selectcheck', function (value) {
+            //    return (value != 'na');
+            //}, "year required");
+
+        });
+    </script>
+    <script type='text/javascript'>
+    jQuery(document).ready(function() {
+        //var url = "{% url 'course_list' %}";
+        //$.ajax({
+        //    type: "GET",
+        //    url: url,
+        //    data: {
+        //        coursetype: "{{ coursetype }}",
+        //    },
+        //    contentType: "application/json; charset=utf-8",
+        //    dataType: "json",
+
+        //    success: function(data) {
+        //        console.log(data);
+        //    },
+
+        //    error: function(jqXHR, textStatus, errorThrown) {
+        //        alert('Error: ' + errorThrown);
+        //    }
+        //});
+
+    });
+    </script>
+{% endblock %}

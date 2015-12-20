@@ -113,7 +113,7 @@
                       <td><b> Ville </b></td>
                       <td><b> Téléphone </b></td>
                       <td><b> email </b></td>
-                      <td><b> actions </b></td>
+                      <td><b> Actions </b></td>
                       </th>
                     </tr>
                   </thead>
@@ -130,12 +130,14 @@
                     <td> {$ participant_val.phone $} </td>
                     <td> {$ participant_val.email $} </td>
                     <td>
-                        <a id="btn_course_participant_delete" href="{{URL_PREFIX}}/participant_cours_delete/?coursetype={$ course_type $}&courseid={$ course.id $}" class="btn btn-danger button_actions_course" ng-if="authState.user">
-                            <i class="fa fa-minus-circle"></i>
-                        </a>
-                        <a id="btn_course_participant_edit" href="{{URL_PREFIX}}/participant_cours_edit/?coursetype={$ course_type $}&courseid={$ course.id $}" class="btn btn-success button_actions_course" ng-if="authState.user">
-                            <i class="fa fa-pencil"></i>
-                        </a>
+                        <div class="btn-group" role="group" aria-label="...">
+                            <a id="btn_course_participant_edit" href="{{URL_PREFIX}}/participant_cours_edit/?coursetype={{ coursetype }}&courseid={{ courseid }}&participantid={$ participant_val.id $}" class="btn btn-success button_actions_course" ng-if="authState.user">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                            <a id="btn_course_participant_delete" href="{{URL_PREFIX}}/participant_cours_delete/?coursetype={$ course_type $}&courseid={$ course.id $}" class="btn btn-danger button_actions_course" ng-if="authState.user">
+                                <i class="fa fa-minus-circle"></i>
+                            </a>
+                        </div>
                     </td>
                     </tr>
                   </tbody>
