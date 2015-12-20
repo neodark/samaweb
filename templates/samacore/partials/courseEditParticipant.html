@@ -55,11 +55,11 @@
                     <div class="row">
                         <div class="col-xs-4 col-md-4">
                             <select
+                            id="select_gender_id"
                             name="gender_type_select"
                             class="form-control input-lg"
                             ng-model="signup.gender_type_select"
-                            value=""
-                            required>
+                            value="">
                             <option ng-repeat="gender_type in gender" value="{$ gender_type.identifier $}" ng-selected="{$ gender_type.name == $parent.signup_gender_selected $}">{$ gender_type.name $}</option>
                             </select>
                             <div class="error-container"
@@ -124,9 +124,9 @@
                     <div class="row">
                         <div class="col-xs-4 col-md-4">
                             <select name="day_select"
+                                    id="select_day_id"
                                     class="form-control input-lg"
-                                    ng-model="signup.day_select"
-                                    required>
+                                    ng-model="signup.day_select">
                             <option ng-repeat="day in birthdate_day" value="{$ day.identifier $}" ng-selected="{$ day.name == $parent.signup_birthdate_selected.split('-')[2] $}">{$ day.name $}</option>
                             <option value="">---</option>
                             </select>
@@ -144,9 +144,9 @@
                         </div>
                         <div class="col-xs-4 col-md-4">
                             <select name="month_select"
+                                    id="select_month_id"
                                     class="form-control input-lg"
-                                    ng-model="signup.month_select"
-                                    required>
+                                    ng-model="signup.month_select">
                             <option ng-repeat="month in birthdate_month" value="{$ month.identifier $}" ng-selected="{$ month.name == $parent.signup_birthdate_month_selected $}">{$ month.name $}</option>
                             <option value="">---</option>
                             </select>
@@ -164,9 +164,9 @@
                         </div>
                         <div class="col-xs-4 col-md-4">
                             <select name="year_select"
+                                    id="select_year_id"
                                     class="form-control input-lg"
-                                    ng-model="signup.year_select"
-                                    required>
+                                    ng-model="signup.year_select">
                             <option ng-repeat="year in birthdate_year" value="{$ year.identifier $}" ng-selected="{$ year.name == $parent.signup_birthdate_selected.split('-')[0] $}">{$ year.name $}</option>
                             <option value="">---</option>
                             </select>

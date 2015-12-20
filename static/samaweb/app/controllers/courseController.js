@@ -69,7 +69,6 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
    //$scope.submitted = false;
    $scope.signupForm = function(selected_action)
    {
-       console.log($scope.signup_form);
        if ($scope.signup_form.$valid)
        {
            // Submit as normal
@@ -105,6 +104,12 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
            }
            else if(selected_action == 'edit_participant')
            {
+                data_participant["gender"] = $scope.gender_db_selection[$("#select_gender_id").val()];
+                data_participant["birth_date"] = $("#select_year_id").val() + "-" +
+                                                 $("#select_month_id").val() + "-" +
+                                                 $("#select_day_id").val();
+
+                console.log(data_participant);
                 courseFactory.editParticipant(data_participant)
                 .success(function (coursesData) {
                     //console.log(coursesData);
@@ -237,6 +242,7 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
                $scope.signup.city = participantData.city;
                $scope.signup.phone = participantData.phone;
                $scope.signup.email = participantData.email;
+               $scope.signup.gender_type_select = $scope.signup_gender_selected;
 
 
            })
