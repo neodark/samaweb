@@ -25,7 +25,7 @@
                     </p>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" onClick="location.href='{{URL_PREFIX}}/cours/'">OK</button>
+<a href="{{ URL_PREFIX }}/participants_cours/?coursetype={$ course_type $}&courseid={$ course_id $}" class="btn btn-default">OK</a>
                   </div>
                 </div>
               </div>
@@ -47,6 +47,7 @@
                 </div>
               </div>
             </div>
+
             <form name="signup_form" no-validate ng-submit="signupForm('edit_participant')">
                     <legend>Mise à jour d'un participant au cours <i>{$ course_type $}</i><br> Dates: <i>{$ single_course_dates $}</i></legend>
                     <legend>Coordonnées du participant au cours</legend>
@@ -58,9 +59,9 @@
                             id="select_gender_id"
                             name="gender_type_select"
                             class="form-control input-lg"
-                            ng-model="signup.gender_type_select"
-                            value="">
-                            <option ng-repeat="gender_type in gender" value="{$ gender_type.identifier $}" ng-selected="{$ gender_type.name == $parent.signup_gender_selected $}">{$ gender_type.name $}</option>
+                            ng-options="single_gender for single_gender in gender_type"
+                            ng-model="signup_gender_selected"
+                            required>
                             </select>
                             <div class="error-container"
                                  ng-show="signup_form.gender_type_select.$dirty && signup_form.gender_type_select.$invalid && !signup_form.gender_type_select.$focused">
@@ -126,10 +127,11 @@
                             <select name="day_select"
                                     id="select_day_id"
                                     class="form-control input-lg"
-                                    ng-model="signup.day_select">
-                            <option ng-repeat="day in birthdate_day" value="{$ day.identifier $}" ng-selected="{$ day.name == $parent.signup_birthdate_selected.split('-')[2] $}">{$ day.name $}</option>
-                            <option value="">---</option>
+                                    ng-options="single_day for single_day in birthdate_day_simple"
+                                    ng-model="signup_bd_day_selected"
+                                    required>
                             </select>
+
                             <div class="error-container"
                                  ng-show="signup_form.day_select.$dirty && signup_form.day_select.$invalid && !signup_form.day_select.$focused">
                               <small class="error"
@@ -146,9 +148,9 @@
                             <select name="month_select"
                                     id="select_month_id"
                                     class="form-control input-lg"
-                                    ng-model="signup.month_select">
-                            <option ng-repeat="month in birthdate_month" value="{$ month.identifier $}" ng-selected="{$ month.name == $parent.signup_birthdate_month_selected $}">{$ month.name $}</option>
-                            <option value="">---</option>
+                                    ng-options="single_month for single_month in birthdate_month_name"
+                                    ng-model="signup_birthdate_month_selected"
+                                    required>
                             </select>
                             <div class="error-container"
                                  ng-show="signup_form.month_select.$dirty && signup_form.month_select.$invalid && !signup_form.month_select.$focused">
@@ -166,9 +168,9 @@
                             <select name="year_select"
                                     id="select_year_id"
                                     class="form-control input-lg"
-                                    ng-model="signup.year_select">
-                            <option ng-repeat="year in birthdate_year" value="{$ year.identifier $}" ng-selected="{$ year.name == $parent.signup_birthdate_selected.split('-')[0] $}">{$ year.name $}</option>
-                            <option value="">---</option>
+                                    ng-options="single_year for single_year in birthdate_year_simple"
+                                    ng-model="signup_bd_year_selected"
+                                    required>
                             </select>
                             <div class="error-container"
                                  ng-show="signup_form.year_select.$dirty && signup_form.year_select.$invalid && !signup_form.year_select.$focused">

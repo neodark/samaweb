@@ -6,6 +6,7 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
 
    $scope.courses;
    $scope.course_type;
+   $scope.course_id;
    $scope.course_list_url;
    $scope.single_course_dates;
    $scope.single_course_time;
@@ -17,6 +18,8 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
    $scope.birthdate_month_name = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet",
    "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
    $scope.birthdate_day = [];
+   $scope.birthdate_day_simple = [];
+   $scope.birthdate_year_simple = [];
    $scope.gender_type = ["M.", "Mme."];
    $scope.gender_db_selection = ["M", "F"];
    $scope.current_course_type;
@@ -29,6 +32,8 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
    $scope.signup_gender_selected;
    $scope.signup_birthdate_selected;
    $scope.signup_birthdate_month_selected;
+   $scope.signup_bd_day_selected;
+   $scope.signup_bd_year_selected;
    $scope.myform;
 
    var currentTime = new Date();
@@ -48,6 +53,7 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
         item_dict["identifier"] = i;
         item_dict["name"] = i;
         $scope.birthdate_year.push(item_dict);
+        $scope.birthdate_year_simple.push(i);
    }
 
    for (var i = 1; i < 13; i++)
@@ -64,6 +70,7 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
         item_dict["identifier"] = i;
         item_dict["name"] = i;
         $scope.birthdate_day.push(item_dict);
+        $scope.birthdate_day_simple.push(i);
    }
 
    //$scope.submitted = false;
@@ -76,22 +83,23 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
 
            var data_participant = {};
            data_participant["status"] = 'S';
-           data_participant["gender"] = $scope.gender_db_selection[$scope.signup_form.gender_type_select.$modelValue];
            data_participant["first_name"] = $scope.signup_form.firstname.$modelValue;
            data_participant["last_name"] = $scope.signup_form.lastname.$modelValue;
-           data_participant["birth_date"] = $scope.signup_form.year_select.$modelValue + "-" +
-                                            $scope.signup_form.month_select.$modelValue + "-" +
-                                            $scope.signup_form.day_select.$modelValue;
            data_participant["address"] = $scope.signup_form.address.$modelValue;
            data_participant["npa"] = $scope.signup_form.npa.$modelValue;
            data_participant["city"] = $scope.signup_form.city.$modelValue;
            data_participant["phone"] = $scope.signup_form.phone.$modelValue;
            data_participant["email"] = $scope.signup_form.email.$modelValue;
-           data_participant["course"] = location.search.split('courseid=')[1];
 
            $scope.current_course_type = location.search.split('coursetype=')[1].split('&')[0];
            if(selected_action == 'add_participant')
            {
+               data_participant["course"] = location.search.split('courseid=')[1];
+               data_participant["gender"] = $scope.gender_db_selection[$scope.signup_form.gender_type_select.$modelValue];
+               data_participant["birth_date"] = $scope.signup_form.year_select.$modelValue + "-" +
+                                                $scope.signup_form.month_select.$modelValue + "-" +
+                                                $scope.signup_form.day_select.$modelValue;
+
                 courseFactory.registerParticipant(data_participant)
                 .success(function (coursesData) {
                     //console.log(coursesData);
@@ -104,13 +112,21 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
            }
            else if(selected_action == 'edit_participant')
            {
-                data_participant["gender"] = $scope.gender_db_selection[$("#select_gender_id").val()];
-                data_participant["birth_date"] = $("#select_year_id").val() + "-" +
-                                                 $("#select_month_id").val() + "-" +
-                                                 $("#select_day_id").val();
+                data_participant["course"] = location.search.split('courseid=')[1].split('&participantid')[0];
+                var gender_index = $scope.gender_type.indexOf($scope.signup_form.gender_type_select.$modelValue);
+                data_participant["gender"] = $scope.gender_db_selection[gender_index];
 
-                console.log(data_participant);
-                courseFactory.editParticipant(data_participant)
+                var birthdate_day = $scope.signup_form.day_select.$modelValue;
+                var birthdate_month = $scope.birthdate_month_name.indexOf($scope.signup_form.month_select.$modelValue) + 1;
+                var birthdate_year = $scope.signup_form.year_select.$modelValue;
+
+                data_participant["gender"] = $scope.gender_db_selection[gender_index];
+
+                data_participant["birth_date"] = birthdate_year + "-" +
+                                                 birthdate_month + "-" +
+                                                 birthdate_day;
+
+                courseFactory.updateParticipant(data_participant, $scope.participant_to_update.id)
                 .success(function (coursesData) {
                     //console.log(coursesData);
                     $('#modalparticipantsuccess').modal('show')
@@ -124,8 +140,6 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
        else
        {
            //console.log("submit error");
-           console.log($scope.signup_form);
-           console.log($scope.signup_form.gender_type_select);
            if(! $scope.signup_form.gender_type_select.$valid)
            {
                bootbox.alert("Merci d'indiquer M. ou Mme. dans le menu au dessus de votre prénom", function()
@@ -235,6 +249,8 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
                }
                $scope.signup_birthdate_selected = participantData.birth_date;
                $scope.signup_birthdate_month_selected = $scope.birthdate_month_name[parseInt(participantData.birth_date.split("-")[1]-1)];
+               $scope.signup_bd_day_selected = parseInt(participantData.birth_date.split("-")[2]) ;
+               $scope.signup_bd_year_selected = parseInt(participantData.birth_date.split("-")[0]) ;
                $scope.signup.firstname = participantData.first_name;
                $scope.signup.lastname = participantData.last_name;
                $scope.signup.address = participantData.address;
@@ -242,9 +258,8 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
                $scope.signup.city = participantData.city;
                $scope.signup.phone = participantData.phone;
                $scope.signup.email = participantData.email;
-               $scope.signup.gender_type_select = $scope.signup_gender_selected;
 
-
+               $scope.course_id = participantData.course;
            })
            .error(function (error) {
                $scope.status = 'Unable to load participant data: ' + error.message;
