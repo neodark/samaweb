@@ -9,41 +9,31 @@
 {% block content %}
 
     <!-- Page Content -->
-    <div class="container" ng-init="initCourse('{{ coursetype }}', '{% url 'course_list' %}')">
+    <div class="container" ng-init="initParticipantEdition('{{ coursetype }}', '{{coursedates}}', '{{coursetime}}', '{{courselocation}}', '{% url 'course_list' %}', '{% url 'participant_detail' participant.id %}', '{{participantid}}')">
 
         <!-- Page Heading/Breadcrumbs -->
-        <div class="row" ng-show="authState.user">
-            <div class="col-lg-12">
-            <div class="alert alert-danger alert_login" role="alert">
-                <b>Avec de grands pouvoirs, viennent de grande responsabilité!</b> N'oubliez pas que <i>vous êtes connecté</i> en tant que <b>{$ authState.user $}</b></br>
-            Cela signifie que vous souhaitez faire des modifications au contenu du site. Si ce n'est pas le cas, vous êtes priés de vous <i>déconnecter </i> depuis le menu <b>Admin</b>
-            </div>
-            </div>
-        </div>
         <div class="row">
             <div class="col-lg-12">
-                <a id="btn_course_add" href="{{URL_PREFIX}}/add_cours/?coursetype={{ coursetype }}" class="btn btn-warning button_actions_course" ng-if="authState.user">
-                    <i class="fa fa-plus-circle fa-2x"></i> Ajouter un nouveau cours
-                </a>
                 <h1 class="page-header">{{ coursetype }}
                 <img ng-if="course_type == 'Sauveteurs'" class="img-responsive course-img" src="{% static 'img/car-icon.png' %}" alt="">
                 <img ng-if="course_type == 'Samaritains'" class="img-responsive course-img" src="{% static 'img/medicine-box-icon.png' %}" alt="">
                 <img ng-if="course_type == 'BLS-AED'" class="img-responsive course-img" src="{% static 'img/heart-beat-icon.png' %}" alt="">
                 <img ng-if="course_type == 'UPE'" class="img-responsive course-img" src="{% static 'img/medical-cap-icon.png' %}" alt="">
 
-                <small>Diverses dates de cours proposés</small>
+                    <small>Diverses dates de cours proposés</small>
                 </h1>
                 <ol class="breadcrumb">
-                <h2>Inscription à un cours</h2>
-                <p>Parmi l'offre de cours <b>{{ coursetype }}</b> de l'année, choisissez le cours avec les dates qui vous conviennent, ci-dessous, et cliquez sur <b>Inscription</b></p>
-                <p>Vous serez guidez pas à pas durant le processus d'inscription. Nous vous prions déjà de bien vouloir rentrer <b>toutes vos coordonnées correctement</b></p>
+                <h2>Mise à jour du participant à un cours</h2>
+                <p>Afin de pouvoir mettre à jour ce participant au cours <b>{{ coursetype }}</b></p>
+                <p>Merci de bien vouloir rentrer <b>toutes ses coordonnées correctement</b> et cliquez sur <b>Mettre à jour</b></p>
                </ol>
             </div>
         </div>
         <!-- /.row -->
 
         <!-- Courses -->
-       <div ng-show="authState.user" ui-view="courseInfoAdmin"></div>
+
+       <div ui-view="courseEditParticipant"></div>
         <!-- /.row -->
 
         <hr>
@@ -71,6 +61,37 @@
                 $('a[href="#' + id + '"]').closest('.panel-heading').removeClass('active-faq');
                 $('a[href="#' + id + '"] .panel-title span').html('<i class="glyphicon glyphicon-plus"></i>');
             });
+
+            //$('#contact-form').validate({
+            //    rules: {
+            //        name: {
+            //            minlength: 2,
+            //            required: true
+            //        },
+            //        email: {
+            //            required: true,
+            //            email: true
+            //        },
+            //        subject: {
+            //            selectcheck: true
+            //        },
+            //        message: {
+            //            minlength: 2,
+            //            required: true
+            //        }
+            //    },
+            //    highlight: function (element) {
+            //        $(element).closest('.control-group').removeClass('success').addClass('error');
+            //    },
+            //    success: function (element) {
+            //        element.text('OK!').addClass('valid')
+            //            .closest('.control-group').removeClass('error').addClass('success');
+            //    }
+            //});
+            //jQuery.validator.addMethod('selectcheck', function (value) {
+            //    return (value != 'na');
+            //}, "year required");
+
         });
     </script>
     <script type='text/javascript'>

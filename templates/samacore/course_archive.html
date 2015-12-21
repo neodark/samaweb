@@ -30,7 +30,7 @@
     <script src="{% static 'samaweb/app/directives/courseView.js' %}" type="text/javascript" charset="utf-8"></script>
 
     <!-- Page Content -->
-    <div class="container" ng-init="initCourse('{{ coursetype }}', '{% url 'course_list' %}')">
+    <div class="container" ng-init="initSingleCourse('{{ coursetype }}', '{% url 'course_list' %}', '{{ courseid }}')">
 
         <!-- Page Heading/Breadcrumbs -->
         <div class="row" ng-show="authState.user">
@@ -51,7 +51,7 @@
                 <h4 class="modal-title" id="myModalLabel">Nouveau cours</h4>
               </div>
               <div class="modal-body">
-                Nouveau cours <b> {{coursetype}} </b> ajouté avec succès!
+                Ce cours <b> {{coursetype}} </b> a été archivé avec succès!
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" onClick="location.href='{{URL_PREFIX}}/specific_cours/?coursetype={{coursetype}}'">OK</button>
@@ -79,8 +79,8 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <a id="btn_course_save" class="btn btn-success button_actions_course" ng-if="authState.user" buttonsavecourse>
-                    <i class="fa fa-upload fa-2x"></i> Sauver
+                <a id="btn_course_archive" class="btn btn-danger button_actions_course" ng-if="authState.user" buttonupdatecourse>
+                    <i class="fa fa-archive fa-2x"></i> Archiver
                 </a>
                 <h1 class="page-header">{{ coursetype }}
                 <img ng-if="course_type == 'Sauveteurs'" class="img-responsive course-img" src="{% static 'img/car-icon.png' %}" alt="">
@@ -91,6 +91,22 @@
         </div>
 
         <!-- /.row -->
+       <div class="panel panel-danger">
+          <div class="panel-heading">
+            <h3 class="panel-title">Récapitulatif important avant archivage</h3>
+          </div>
+          <div class="panel-body">
+            <i><b>Etes-vous sûr de vouloir archiver ce cours? Avant de cliquer sur le bouton "Archiver", vérifier que les points suivants sont respectés</b></i>
+            <p>
+            <ul>
+            <li><b>Le cours est terminé</b></li>
+            <li><b>Tout les participants enregistrés au cours l'ont bien suivis</b></li>
+            <li><b>Une fois archivé, ce cours ne sera plus visible dans l'interface du site web</b></li>
+            </ul>
+            </p>
+          </div>
+        </div>
+
         <div class="panel panel-info">
           <div class="panel-heading">
             <h3 class="panel-title">Dates et horaires de cours</h3>
@@ -101,14 +117,14 @@
             </a>-->
             <i>Cliquer sur les dates du cours</i>
             <div class="input-group date">
-                <input ng-model="new_course_dates" type="text" class="form-control datepicker_course" >
+                <input ng-model="new_course_dates" type="text" class="form-control datepicker_course" disabled>
                     <span class="input-group-addon">
                         <i class="glyphicon glyphicon-th"></i>
                     </span>
             </div>
             <i>Insérer les informations concernant les horaires du cours</i>
             <div class="input-group">
-                <input ng-model="new_course_time" type="text" class="form-control time_course" >
+                <input ng-model="new_course_time" type="text" class="form-control time_course" disabled>
                     <span class="input-group-addon">
                         <i class="glyphicon glyphicon-th"></i>
                     </span>
@@ -125,7 +141,7 @@
                 <br><br>
                 Nombre maximum de participants:
                 {% mkrange 1 17 1 as num_participant %}
-                <select class="form-control course_add" ng-model="new_course_maximum_participants">
+                <select class="form-control course_add" ng-model="new_course_maximum_participants" disabled>
                   {% for i in num_participant %}
                     {% if i == 12 %}
                         <option selected>{{i}}</option>
@@ -148,7 +164,7 @@
           <div class="panel-body">
             <i>Spécifier le lieu du cours</i>
             <div class="input-group">
-                <input ng-model="new_course_address" type="text" class="form-control location_course">
+                <input ng-model="new_course_address" type="text" class="form-control location_course" disabled>
                     <span class="input-group-addon">
                         <i class="glyphicon glyphicon-th"></i>
                     </span>
@@ -183,40 +199,15 @@
     </script>
     <script type='text/javascript'>
     jQuery(document).ready(function() {
-        //var url = "{% url 'course_list' %}";
-        //$.ajax({
-        //    type: "GET",
-        //    url: url,
-        //    data: {
-        //        coursetype: "{{ coursetype }}",
-        //    },
-        //    contentType: "application/json; charset=utf-8",
-        //    dataType: "json",
 
-        //    success: function(data) {
-        //        console.log(data);
-        //    },
-
-        //    error: function(jqXHR, textStatus, errorThrown) {
-        //        alert('Error: ' + errorThrown);
-        //    }
-        //});
-    //$("#btn_add_new_date").click(function(){
-    //    console.log("clicked");
-    //    //$('#space_for_dates').append('<br>a datepicker <input class="datepicker_recurring_start"/>');
-    //   $('#space_for_dates').append('<div class="input-group date"><input type="text" class="form-control datepicker_recurring_start"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span></div>');
-
-    //});
-
-    $('body').on('focus',".datepicker_course", function(){
-        $(this).datepicker({
-            format: "dd/mm/yyyy",
-            language: "fr-CH",
-            multidate: true,
-            multidateSeparator: " "
+        $('body').on('focus',".datepicker_course", function(){
+            $(this).datepicker({
+                format: "dd/mm/yyyy",
+                language: "fr-CH",
+                multidate: true,
+                multidateSeparator: " "
+            });
         });
-    });
-
     });
     </script>
 {% endblock %}

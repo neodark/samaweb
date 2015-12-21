@@ -1,0 +1,27 @@
+<div>
+<b>Ce message est généré automatiquement par le système, merci de ne pas y répondre</b>
+<br>
+<br>
+__TAG_LOGO__
+<br>
+<br>
+<br>
+Bonjour __TAG_PERSON__,
+<br>
+<br>
+Nous vous confirmons votre inscriptions pour <b>le cours __TAG_COURSE_TYPE__ </b>:
+<br>
+<br>
+    <i>Dates du cours</i>: __TAG_COURSE_DATES__
+<br>
+<br>
+    <i>Horaires du cours</i>: __TAG_COURSE_TIME__
+<br>
+<br>
+    <i>Lieu du cours</i>: __TAG_COURSE_LOCATION__
+<br>
+<br>
+La Section des Samaritains de Martigny
+<br>
+<br>
+</div>

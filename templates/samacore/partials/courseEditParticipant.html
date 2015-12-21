@@ -12,8 +12,7 @@
                     <h4 class="modal-title" id="myModalLabel">Confirmation Inscription</h4>
                   </div>
                   <div class="modal-body">
-                    Merci pour votre inscription au cours <b>{$ coursetype $}</b>!
-                    <p>Un email de confirmation vous sera envoyé dans les prochaines minutes.</p>
+                    Mise à jour inscription participant au cours <b>{$ coursetype $}</b>!
                     <p>Dernier rappel des informations concernant le cours:</p>
                     <p><b>Dates du cours:</b><br>
                     <i>{$ single_course_dates $}</i>
@@ -26,7 +25,7 @@
                     </p>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" onClick="location.href='{{URL_PREFIX}}/cours/'">OK</button>
+<a href="{{ URL_PREFIX }}/participants_cours/?coursetype={$ course_type $}&courseid={$ course_id $}" class="btn btn-default">OK</a>
                   </div>
                 </div>
               </div>
@@ -40,7 +39,7 @@
                     <h4 class="modal-title" id="myModalLabel">Inscription non confirmé</h4>
                   </div>
                   <div class="modal-body">
-                    Erreur dans votre inscription au cours</b>.
+                    Erreur dans votre mise à jour de l'inscription au cours</b>.
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
@@ -49,20 +48,20 @@
               </div>
             </div>
 
-            <form name="signup_form" no-validate ng-submit="signupForm('add_participant')">
-                    <legend>Inscription au cours <i>{$ course_type $}</i><br> Dates: <i>{$ single_course_dates $}</i></legend>
+            <form name="signup_form" no-validate ng-submit="signupForm('edit_participant')">
+                    <legend>Mise à jour d'un participant au cours <i>{$ course_type $}</i><br> Dates: <i>{$ single_course_dates $}</i></legend>
                     <legend>Coordonnées du participant au cours</legend>
                     <h4>Vous êtes priés de rentrer chaque champ afin de pouvoir valider votre inscription au cours.</h4>
                     <label>Vos informations: </label>
                     <div class="row">
                         <div class="col-xs-4 col-md-4">
                             <select
+                            id="select_gender_id"
                             name="gender_type_select"
                             class="form-control input-lg"
-                            ng-model="signup.gender_type_select"
+                            ng-options="single_gender for single_gender in gender_type"
+                            ng-model="signup_gender_selected"
                             required>
-                            <option ng-repeat="gender_type in gender" value="{$ gender_type.identifier $}">{$ gender_type.name $}</option>
-                             <option value="">---</option>
                             </select>
                             <div class="error-container"
                                  ng-show="signup_form.gender_type_select.$dirty && signup_form.gender_type_select.$invalid && !signup_form.gender_type_select.$focused">
@@ -86,7 +85,7 @@
                             value=""
                             class="form-control input-lg"
                             placeholder="Prénom"
-                            ng-model="signup.firstname"
+                            ng-model="$parent.signup.firstname"
                             ng-minlength=2 required ng-focus/>
                             <div class="error-container"
                                  ng-show="signup_form.firstname.$dirty && signup_form.firstname.$invalid && !signup_form.firstname.$focused">
@@ -106,7 +105,7 @@
                             value=""
                             class="form-control input-lg"
                             placeholder="Nom de famille"
-                            ng-model="signup.lastname"
+                            ng-model="$parent.signup.lastname"
                             ng-minlength=2 required ng-focus/>
                             <div class="error-container"
                                  ng-show="signup_form.lastname.$dirty && signup_form.lastname.$invalid && !signup_form.lastname.$focused">
@@ -126,12 +125,13 @@
                     <div class="row">
                         <div class="col-xs-4 col-md-4">
                             <select name="day_select"
+                                    id="select_day_id"
                                     class="form-control input-lg"
-                                    ng-model="signup.day_select"
+                                    ng-options="single_day for single_day in birthdate_day_simple"
+                                    ng-model="signup_bd_day_selected"
                                     required>
-                            <option ng-repeat="day in birthdate_day" value="{$ day.identifier $}">{$ day.name $}</option>
-                            <option value="">---</option>
                             </select>
+
                             <div class="error-container"
                                  ng-show="signup_form.day_select.$dirty && signup_form.day_select.$invalid && !signup_form.day_select.$focused">
                               <small class="error"
@@ -146,11 +146,11 @@
                         </div>
                         <div class="col-xs-4 col-md-4">
                             <select name="month_select"
+                                    id="select_month_id"
                                     class="form-control input-lg"
-                                    ng-model="signup.month_select"
+                                    ng-options="single_month for single_month in birthdate_month_name"
+                                    ng-model="signup_birthdate_month_selected"
                                     required>
-                            <option ng-repeat="month in birthdate_month" value="{$ month.identifier $}">{$ month.name $}</option>
-                            <option value="">---</option>
                             </select>
                             <div class="error-container"
                                  ng-show="signup_form.month_select.$dirty && signup_form.month_select.$invalid && !signup_form.month_select.$focused">
@@ -166,11 +166,11 @@
                         </div>
                         <div class="col-xs-4 col-md-4">
                             <select name="year_select"
+                                    id="select_year_id"
                                     class="form-control input-lg"
-                                    ng-model="signup.year_select"
+                                    ng-options="single_year for single_year in birthdate_year_simple"
+                                    ng-model="signup_bd_year_selected"
                                     required>
-                            <option ng-repeat="year in birthdate_year" value="{$ year.identifier $}">{$ year.name $}</option>
-                            <option value="">---</option>
                             </select>
                             <div class="error-container"
                                  ng-show="signup_form.year_select.$dirty && signup_form.year_select.$invalid && !signup_form.year_select.$focused">
@@ -194,7 +194,7 @@
                         value=""
                         class="form-control input-lg"
                         placeholder="Votre Adresse (Rue)"
-                        ng-model="signup.address"
+                        ng-model="$parent.signup.address"
                         ng-minlength=3 required ng-focus/>
                         <div class="error-container"
                              ng-show="signup_form.address.$dirty && signup_form.address.$invalid && !signup_form.address.$focused">
@@ -219,7 +219,7 @@
                             value=""
                             class="form-control input-lg"
                             placeholder="NPA (Code ville)"
-                            ng-model="signup.npa"
+                            ng-model="$parent.signup.npa"
                             ng-minlength=2 required ng-focus/>
                             <div class="error-container"
                                  ng-show="signup_form.npa.$dirty && signup_form.npa.$invalid && !signup_form.npa.$focused">
@@ -239,7 +239,7 @@
                             value=""
                             class="form-control input-lg"
                             placeholder="Ville"
-                            ng-model="signup.city"
+                            ng-model="$parent.signup.city"
                             ng-minlength=2 required ng-focus/>
                             <div class="error-container"
                                  ng-show="signup_form.city.$dirty && signup_form.city.$invalid && !signup_form.city.$focused">
@@ -263,7 +263,7 @@
                         value=""
                         class="form-control input-lg"
                         placeholder="Votre numéro de téléphone"
-                        ng-model="signup.phone"
+                        ng-model="$parent.signup.phone"
                         ng-minlength=3 ng-maxlength=20 required ng-focus/>
                         <div class="error-container"
                              ng-show="signup_form.phone.$dirty && signup_form.phone.$invalid && !signup_form.phone.$focused">
@@ -291,7 +291,7 @@
                         value=""
                         class="form-control input-lg"
                         placeholder="Votre Adresse Email"
-                        ng-model="signup.email"
+                        ng-model="$parent.signup.email"
                         ng-minlength=3 required ng-focus/>
                         <div class="error-container"
                              ng-show="signup_form.email.$dirty && signup_form.email.$invalid && !signup_form.email.$focused">
@@ -310,9 +310,9 @@
                         </div>
 
                     <br />
-              <span class="help-block">En cliquant sur "Je m'inscris au cours", vous vous engager à avoir fournis vos informations correctement et à ne pas nuire au bon fonctionnement du site par de faux enregistrements.</span>
+              <span class="help-block">En cliquant sur "Mettre à jour", vous vous engager à avoir fournis les informations correctement et à ne pas nuire au bon fonctionnement du site par de faux enregistrements.</span>
                     <button class="btn btn-lg btn-primary btn-block signup-btn" type="submit">
-                        Je m'inscris au cours</button>
+                        Mettre à jour</button>
                     <br />
             </form>
         </div>

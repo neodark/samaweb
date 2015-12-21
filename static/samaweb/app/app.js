@@ -23,7 +23,13 @@ app.config(function ($stateProvider, $urlRouterProvider){
                     templateUrl: '/partials/courseRegistration/',
                     //templateUrl: '/reports/partials/reportGeneralInfo.html',
                     controller: 'courseController',
+                },
+                'courseEditParticipant': {
+                    templateUrl: '/partials/courseEditParticipant/',
+                    //templateUrl: '/reports/partials/reportGeneralInfo.html',
+                    controller: 'courseController',
                 }
+
             }
         })
 });

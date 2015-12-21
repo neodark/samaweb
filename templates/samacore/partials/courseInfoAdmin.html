@@ -20,26 +20,29 @@
                         et de l'utilisation du défibrillateur.</p>
                 <p ng-if="course_type == 'UPE'">Enseignement des techniques de premiers secours en cas d'Urgence
                         pour la Petite Enfance.</p>
-                <p ng-repeat="(course_key, course_val) in course.course_dates" item="exp_key"><b>{$ course_val.date.split("T")[0].split("-")[2] $}-{$ course_val.date.split("T")[0].split("-")[1] $}-{$ course_val.date.split("T")[0].split("-")[0] $}</b>
-                <i>{$ course_val.date.split("T")[1].split(":")[0] $}:{$ course_val.date.split("T")[1].split(":")[1] $}:{$ course_val.date.split("T")[1].split("Z")[0].split(":")[2] $} - {$ course_val.end_time $}</i></p>
+                <p><i>Dates du cours:</i><br>
+                <b>{$ course.additional_information.dates $}</b></p>
+                <p><i>Horaires du cours:</i><br>
+                <b>{$ course.additional_information.time $}</b></p>
+                <p><i>Lieu du cours</i><br>
+                <b>{$ course.additional_information.location $}</b></p>
+                <p><i>Nombre de places restantes</i><br>
+                <b>{$ course.max_inscription_counter - course.inscription_counter $}/{$ course.max_inscription_counter $}</b></p>
                 <div class="btn-group" role="group" aria-label="...">
-                  <button type="button" class="btn btn-success">
-                    <i class="fa fa-pencil fa-2x"></i> Editer le cours
-                  </button>
-                  <button type="button" class="btn btn-primary">
-                    <i class="fa fa-user fa-2x"></i>
-                    <i class="fa fa-pencil"></i>
-                    <i class="fa fa-plus-circle"></i>
-                    <i class="fa fa-minus-circle"></i>
-                    Participant
-                  </button>
-                  <button type="button" class="btn btn-danger">
-                    <i class="fa fa-archive fa-2x"></i> Archiver le cours
-                  </button>
+                  <a id="btn_course_edit" href="{{URL_PREFIX}}/edit_cours/?coursetype={$ course_type $}&courseid={$ course.id $}" class="btn btn-success button_actions_course" ng-if="authState.user">
+                      <i class="fa fa-pencil fa-2x"></i> Editer le cours
+                  </a>
+                  <a id="btn_course_participants" href="{{URL_PREFIX}}/participants_cours/?coursetype={$ course_type $}&courseid={$ course.id $}" class="btn btn-primary button_actions_course" ng-if="authState.user">
+                      <i class="fa fa-user fa-2x"></i>
+                      <i class="fa fa-pencil"></i>
+                      <i class="fa fa-plus-circle"></i>
+                      <i class="fa fa-minus-circle"></i>
+                      Participant
+                  </a>
+                  <a id="btn_course_archive" href="{{URL_PREFIX}}/archive_cours/?coursetype={$ course_type $}&courseid={$ course.id $}" class="btn btn-danger button_actions_course" ng-if="authState.user">
+                      <i class="fa fa-archive fa-2x"></i> Archiver le cours
+                  </a>
                 </div>
-                <!--
-                    <a id="sauveteurs" href="{{ URL_PREFIX }}/register_cours/?coursetype={$ course_type $}&courseid={$ course.id $}" class="btn btn-primary btn-course">Inscription</a>
-                -->
             </div>
         </div>
     </div>

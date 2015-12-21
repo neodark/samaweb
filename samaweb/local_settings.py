@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     # Applications and API
     'samacore',
     'api',
+    'common',
 )
 
 MIDDLEWARE_CLASSES = (

@@ -20,9 +20,17 @@
                         et de l'utilisation du défibrillateur.</p>
                 <p ng-if="course_type == 'UPE'">Enseignement des techniques de premiers secours en cas d'Urgence
                         pour la Petite Enfance.</p>
-                <p ng-repeat="(course_key, course_val) in course.course_dates" item="exp_key"><b>{$ course_val.date.split("T")[0].split("-")[2] $}-{$ course_val.date.split("T")[0].split("-")[1] $}-{$ course_val.date.split("T")[0].split("-")[0] $}</b>
-                <i>{$ course_val.date.split("T")[1].split(":")[0] $}:{$ course_val.date.split("T")[1].split(":")[1] $}:{$ course_val.date.split("T")[1].split("Z")[0].split(":")[2] $} - {$ course_val.end_time $}</i></p>
-                <a id="sauveteurs" href="{{ URL_PREFIX }}/register_cours/?coursetype={$ course_type $}&courseid={$ course.id $}" class="btn btn-primary btn-course">Inscription</a>
+                <p><i>Dates du cours:</i><br>
+                <b>{$ course.additional_information.dates $}</b></p>
+                <p><i>Horaires du cours:</i><br>
+                <b>{$ course.additional_information.time $}</b></p>
+                <p><i>Lieu du cours</i><br>
+                <b>{$ course.additional_information.location $}</b></p>
+                <p ng-if="course.inscription_counter < course.max_inscription_counter"><i>Nombre de places restantes</i><br>
+                <b>{$ course.max_inscription_counter - course.inscription_counter $}/{$ course.max_inscription_counter $}</b></p>
+
+                <a ng-if="course.inscription_counter < course.max_inscription_counter" id="sauveteurs" href="{{ URL_PREFIX }}/register_cours/?coursetype={$ course_type $}&courseid={$ course.id $}" class="btn btn-primary btn-course">Inscription</a>
+                <p ng-if="course.inscription_counter >= course.max_inscription_counter"><strong><font size="3" color="red">Désolé le cours est complet</font></strong></p>
             </div>
         </div>
     </div>
