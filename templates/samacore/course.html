@@ -12,23 +12,18 @@
     <div class="container" ng-init="initCourse('{{ coursetype }}', '{% url 'course_list' %}')">
 
         <!-- Page Heading/Breadcrumbs -->
-        <div class="row" ng-show="authState.user">
-            <div class="col-lg-12">
-            <div class="alert alert-danger alert_login" role="alert">
-                <b>Avec de grands pouvoirs, viennent de grande responsabilité!</b> N'oubliez pas que <i>vous êtes connecté</i> en tant que <b>{$ authState.user $}</b></br>
-            Cela signifie que vous souhaitez faire des modifications au contenu du site. Si ce n'est pas le cas, vous êtes priés de vous <i>déconnecter </i> depuis le menu <b>Admin</b>
-            </div>
-            </div>
-        </div>
         <div class="row">
             <div class="col-lg-12">
+                <button type="button" class="btn btn-warning button_new_course" ng-if="authState.user">
+                  <i class="fa fa-plus-circle fa-2x"></i> Ajouter un nouveau cours
+                </button>
                 <h1 class="page-header">{{ coursetype }}
                 <img ng-if="course_type == 'Sauveteurs'" class="img-responsive course-img" src="{% static 'img/car-icon.png' %}" alt="">
                 <img ng-if="course_type == 'Samaritains'" class="img-responsive course-img" src="{% static 'img/medicine-box-icon.png' %}" alt="">
                 <img ng-if="course_type == 'BLS-AED'" class="img-responsive course-img" src="{% static 'img/heart-beat-icon.png' %}" alt="">
                 <img ng-if="course_type == 'UPE'" class="img-responsive course-img" src="{% static 'img/medical-cap-icon.png' %}" alt="">
 
-                    <small>Diverses dates de cours proposés</small>
+                <small>Diverses dates de cours proposés</small>
                 </h1>
                 <ol class="breadcrumb">
                 <h2>Inscription à un cours</h2>
@@ -40,7 +35,6 @@
         <!-- /.row -->
 
         <!-- Courses -->
-
        <div ui-view="courseInfo"></div>
         <!-- /.row -->
 
@@ -50,7 +44,7 @@
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright &copy; SamaMartigny 2014</p>
+                    <p>Copyright &copy; SamaMartigny 2016</p>
                 </div>
             </div>
         </footer>

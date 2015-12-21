@@ -27,8 +27,8 @@
                             <div ng-show="authState.user">
                                 <button id="button_logout" type="button" class="btn btn-success" buttonlogout>
                                     <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout
+                                    {$ authState.user $}
                                 </button>
-                                {$ user $}
                             </div>
                             <div ng-hide="authState.user">
                             <fieldset>

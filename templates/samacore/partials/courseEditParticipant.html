@@ -1,0 +1,335 @@
+{% load staticfiles %}
+
+<div class="" id="wrap">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <!-- Modal -->
+            <div class="modal fade" id="modalparticipantsuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Confirmation Inscription</h4>
+                  </div>
+                  <div class="modal-body">
+                    Mise à jour inscription participant au cours <b>{$ coursetype $}</b>!
+                    <p>Dernier rappel des informations concernant le cours:</p>
+                    <p><b>Dates du cours:</b><br>
+                    <i>{$ single_course_dates $}</i>
+                    </p>
+                    <p><b>Horaires du cours:</b><br>
+                    <i>{$ single_course_time $}</i>
+                    </p>
+                    <p><b>Lieu du cours:</b><br>
+                    <i>{$ single_course_location $}</i>
+                    </p>
+                  </div>
+                  <div class="modal-footer">
+<a href="{{ URL_PREFIX }}/participants_cours/?coursetype={$ course_type $}&courseid={$ course_id $}" class="btn btn-default">OK</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal fade" id="modalparticipantfailure" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Inscription non confirmé</h4>
+                  </div>
+                  <div class="modal-body">
+                    Erreur dans votre mise à jour de l'inscription au cours</b>.
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <form name="signup_form" no-validate ng-submit="signupForm('edit_participant')">
+                    <legend>Mise à jour d'un participant au cours <i>{$ course_type $}</i><br> Dates: <i>{$ single_course_dates $}</i></legend>
+                    <legend>Coordonnées du participant au cours</legend>
+                    <h4>Vous êtes priés de rentrer chaque champ afin de pouvoir valider votre inscription au cours.</h4>
+                    <label>Vos informations: </label>
+                    <div class="row">
+                        <div class="col-xs-4 col-md-4">
+                            <select
+                            id="select_gender_id"
+                            name="gender_type_select"
+                            class="form-control input-lg"
+                            ng-options="single_gender for single_gender in gender_type"
+                            ng-model="signup_gender_selected"
+                            required>
+                            </select>
+                            <div class="error-container"
+                                 ng-show="signup_form.gender_type_select.$dirty && signup_form.gender_type_select.$invalid && !signup_form.gender_type_select.$focused">
+                              <small class="error"
+                                     ng-show="signup_form.gender_type_select.$error.required && !signup_form.gender_type_select.$focused">
+                                     Merci de spécifier votre sexe.
+                              </small>
+                              <small class="error"
+                                     ng-show="signup_form.gender_type_select.$error.minlength && !signup_form.gender_type_select.$focused">
+                                      Ce champ ne peut pas être vide
+                              </small>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-xs-6 col-md-6">
+                            <input
+                            type="text"
+                            name="firstname"
+                            value=""
+                            class="form-control input-lg"
+                            placeholder="Prénom"
+                            ng-model="$parent.signup.firstname"
+                            ng-minlength=2 required ng-focus/>
+                            <div class="error-container"
+                                 ng-show="signup_form.firstname.$dirty && signup_form.firstname.$invalid && !signup_form.firstname.$focused">
+                              <small class="error"
+                                     ng-show="signup_form.firstname.$error.required && !signup_form.firstname.$focused">
+                                     Votre prénom est requis.
+                              </small>
+                              <small class="error"
+                                     ng-show="signup_form.firstname.$error.minlength && !signup_form.firstname.$focused">
+                                      Votre prénom ne contient pas assez de caractères
+                              </small>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-6">
+                            <input type="text"
+                            name="lastname"
+                            value=""
+                            class="form-control input-lg"
+                            placeholder="Nom de famille"
+                            ng-model="$parent.signup.lastname"
+                            ng-minlength=2 required ng-focus/>
+                            <div class="error-container"
+                                 ng-show="signup_form.lastname.$dirty && signup_form.lastname.$invalid && !signup_form.lastname.$focused">
+                              <small class="error"
+                                     ng-show="signup_form.lastname.$error.required && !signup_form.lastname.$focused">
+                                     Votre nom de famille est requis.
+                              </small>
+                              <small class="error"
+                                     ng-show="signup_form.lastname.$error.minlength && !signup_form.lastname.$focused">
+                                      Votre nom de famille ne contient pas assez de caractères
+                              </small>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <label>Date de naissance:</label>
+                    <div class="row">
+                        <div class="col-xs-4 col-md-4">
+                            <select name="day_select"
+                                    id="select_day_id"
+                                    class="form-control input-lg"
+                                    ng-options="single_day for single_day in birthdate_day_simple"
+                                    ng-model="signup_bd_day_selected"
+                                    required>
+                            </select>
+
+                            <div class="error-container"
+                                 ng-show="signup_form.day_select.$dirty && signup_form.day_select.$invalid && !signup_form.day_select.$focused">
+                              <small class="error"
+                                     ng-show="signup_form.day_select.$error.required && !signup_form.day_select.$focused">
+                                     Merci de spécifier votre jour de naissance.
+                              </small>
+                              <small class="error"
+                                     ng-show="signup_form.day_select.$error.minlength && !signup_form.day_select.$focused">
+                                      Ce champ ne peut pas être vide
+                              </small>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-md-4">
+                            <select name="month_select"
+                                    id="select_month_id"
+                                    class="form-control input-lg"
+                                    ng-options="single_month for single_month in birthdate_month_name"
+                                    ng-model="signup_birthdate_month_selected"
+                                    required>
+                            </select>
+                            <div class="error-container"
+                                 ng-show="signup_form.month_select.$dirty && signup_form.month_select.$invalid && !signup_form.month_select.$focused">
+                              <small class="error"
+                                     ng-show="signup_form.month_select.$error.required && !signup_form.month_select.$focused">
+                                     Merci de spécifier votre mois de naissance.
+                              </small>
+                              <small class="error"
+                                     ng-show="signup_form.month_select.$error.minlength && !signup_form.month_select.$focused">
+                                      Ce champ ne peut pas être vide
+                              </small>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 col-md-4">
+                            <select name="year_select"
+                                    id="select_year_id"
+                                    class="form-control input-lg"
+                                    ng-options="single_year for single_year in birthdate_year_simple"
+                                    ng-model="signup_bd_year_selected"
+                                    required>
+                            </select>
+                            <div class="error-container"
+                                 ng-show="signup_form.year_select.$dirty && signup_form.year_select.$invalid && !signup_form.year_select.$focused">
+                              <small class="error"
+                                     ng-show="signup_form.year_select.$error.required && !signup_form.year_select.$focused">
+                                     Merci de spécifier votre année de naissance.
+                              </small>
+                              <small class="error"
+                                     ng-show="signup_form.year_select.$error.minlength && !signup_form.year_select.$focused">
+                                      Ce champ ne peut pas être vide
+                              </small>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <label>Adresse:</label>
+                    <input
+                        ng-class="{error: signup_form.address.$dirty && signup_form.address.$invalid}"
+                        type="address"
+                        name="address"
+                        value=""
+                        class="form-control input-lg"
+                        placeholder="Votre Adresse (Rue)"
+                        ng-model="$parent.signup.address"
+                        ng-minlength=3 required ng-focus/>
+                        <div class="error-container"
+                             ng-show="signup_form.address.$dirty && signup_form.address.$invalid && !signup_form.address.$focused">
+                          <small class="error"
+                                 ng-show="signup_form.address.$error.required && !signup_form.address.$focused">
+                                 Votre adresse est requise.
+                          </small>
+                          <small class="error"
+                                 ng-show="signup_form.address.$error.minlength && !signup_form.address.$focused">
+                                  Votre adresse doit être supérieur à 3 caractères
+                          </small>
+                          <small class="error"
+                                 ng-show="signup_form.address.$error.address && !signup_form.address.$focused">
+                                 Ceci n'est pas une adresse valide. Merci d'insérér une adresse valide.
+                          </small>
+                        </div>
+                    <div class="row">
+                        <div class="col-xs-4 col-md-4">
+                            <input
+                            type="text"
+                            name="npa"
+                            value=""
+                            class="form-control input-lg"
+                            placeholder="NPA (Code ville)"
+                            ng-model="$parent.signup.npa"
+                            ng-minlength=2 required ng-focus/>
+                            <div class="error-container"
+                                 ng-show="signup_form.npa.$dirty && signup_form.npa.$invalid && !signup_form.npa.$focused">
+                              <small class="error"
+                                     ng-show="signup_form.npa.$error.required && !signup_form.npa.$focused">
+                                     Votre NPA (code de la ville) est requis.
+                              </small>
+                              <small class="error"
+                                     ng-show="signup_form.npa.$error.minlength && !signup_form.npa.$focused">
+                                      Votre NPA (code de la ville) ne contient pas assez de caractères
+                              </small>
+                            </div>
+                        </div>
+                        <div class="col-xs-8 col-md-8">
+                            <input type="text"
+                            name="city"
+                            value=""
+                            class="form-control input-lg"
+                            placeholder="Ville"
+                            ng-model="$parent.signup.city"
+                            ng-minlength=2 required ng-focus/>
+                            <div class="error-container"
+                                 ng-show="signup_form.city.$dirty && signup_form.city.$invalid && !signup_form.city.$focused">
+                              <small class="error"
+                                     ng-show="signup_form.city.$error.required && !signup_form.city.$focused">
+                                     Votre ville est requis.
+                              </small>
+                              <small class="error"
+                                     ng-show="signup_form.city.$error.minlength && !signup_form.city.$focused">
+                                      Votre ville ne contient pas assez de caractères
+                              </small>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <label>Informations de contact:</label>
+                    <input
+                        ng-class="{error: signup_form.phone.$dirty && signup_form.phone.$invalid}"
+                        type="phone"
+                        name="phone"
+                        value=""
+                        class="form-control input-lg"
+                        placeholder="Votre numéro de téléphone"
+                        ng-model="$parent.signup.phone"
+                        ng-minlength=3 ng-maxlength=20 required ng-focus/>
+                        <div class="error-container"
+                             ng-show="signup_form.phone.$dirty && signup_form.phone.$invalid && !signup_form.phone.$focused">
+                          <small class="error"
+                                 ng-show="signup_form.phone.$error.required && !signup_form.phone.$focused">
+                                 Votre numéro de téléphone est requis.
+                          </small>
+                          <small class="error"
+                                 ng-show="signup_form.phone.$error.minlength && !signup_form.phone.$focused">
+                                  Votre numéro de téléphone doit être complet
+                          </small>
+                          <small class="error"
+                                 ng-show="signup_form.phone.$error.phone && !signup_form.phone.$focused">
+                                 Ceci n'est pas un numéro de téléphone valide. Merci d'insérér un numéro de téléphone valide.
+                          </small>
+                          <small class="error"
+                                 ng-show="signup_form.phone.$error.maxlength && !signup_form.phone.$focused">
+                                  Votre numéro de téléphone ne peut pas être supérieur à 20 caractères
+                          </small>
+                        </div>
+                    <input
+                        ng-class="{error: signup_form.email.$dirty && signup_form.email.$invalid}"
+                        type="email"
+                        name="email"
+                        value=""
+                        class="form-control input-lg"
+                        placeholder="Votre Adresse Email"
+                        ng-model="$parent.signup.email"
+                        ng-minlength=3 required ng-focus/>
+                        <div class="error-container"
+                             ng-show="signup_form.email.$dirty && signup_form.email.$invalid && !signup_form.email.$focused">
+                          <small class="error"
+                                 ng-show="signup_form.email.$error.required && !signup_form.email.$focused">
+                                 Votre adresse email est requise.
+                          </small>
+                          <small class="error"
+                                 ng-show="signup_form.email.$error.minlength && !signup_form.email.$focused">
+                                  Votre adresse email doit être supérieur à 3 caractères
+                          </small>
+                          <small class="error"
+                                 ng-show="signup_form.email.$error.email && !signup_form.email.$focused">
+                                 Ceci n'est pas une adresse email valide. Merci d'insérér une adresse email valide.
+                          </small>
+                        </div>
+
+                    <br />
+              <span class="help-block">En cliquant sur "Mettre à jour", vous vous engager à avoir fournis les informations correctement et à ne pas nuire au bon fonctionnement du site par de faux enregistrements.</span>
+                    <button class="btn btn-lg btn-primary btn-block signup-btn" type="submit">
+                        Mettre à jour</button>
+                    <br />
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type='text/javascript'>
+var elements = document.getElementsByTagName("INPUT");
+for (var i = 0; i < elements.length; i++) {
+    elements[i].oninvalid = function(e) {
+        e.target.setCustomValidity("");
+        if (!e.target.validity.valid) {
+            e.target.setCustomValidity("Ce champ est obligatoire et ne peut pas rester vide");
+        }
+    };
+    elements[i].oninput = function(e) {
+        e.target.setCustomValidity("");
+    };
+}
+</script>

@@ -3,8 +3,18 @@
     margin-top: 1em;
 }
 
+.button_actions_course
+{
+    float: right;
+}
+
 img.course-img
 {
     display:inline;
     max-width: 2em;
+}
+
+select.course_add
+{
+    width: 5em;
 }

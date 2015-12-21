@@ -1,0 +1,213 @@
+{% extends "samacore/base.html" %}
+
+{% load staticfiles %}
+
+{% load samacore_extras %}
+
+{% block title %}FAQ{% endblock %}
+
+{% block section %}faq{% endblock %}
+
+{% block content %}
+
+    <!-- Bootstrap Datepicker CSS -->
+    <link href="{% static 'css/bootstrap-datepicker3.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-datepicker3.standalone.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-datepicker.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-datepicker.standalone.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-datepicker3.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-datepicker3.standalone.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-datepicker.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-datepicker.standalone.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/course_style.css' %}" rel="stylesheet">
+
+    <!-- Bootstrap Datepicker libs -->
+    <script src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+    <script src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
+    <script src="{% static 'js/locales/bootstrap-datepicker.fr-CH.min.js' %}"></script>
+
+    <!-- App libs -->
+    <script src="{% static 'samaweb/app/directives/courseView.js' %}" type="text/javascript" charset="utf-8"></script>
+
+    <!-- Page Content -->
+    <div class="container" ng-init="initSingleCourse('{{ coursetype }}', '{% url 'course_list' %}', '{{ courseid }}')">
+
+        <!-- Page Heading/Breadcrumbs -->
+        <div class="row" ng-show="authState.user">
+            <div class="col-lg-12">
+            <div class="alert alert-danger alert_login" role="alert">
+                <b>Avec de grands pouvoirs, viennent de grande responsabilité!</b> N'oubliez pas que <i>vous êtes connecté</i> en tant que <b>{$ authState.user $}</b></br>
+            Cela signifie que vous souhaitez faire des modifications au contenu du site. Si ce n'est pas le cas, vous êtes priés de vous <i>déconnecter </i> depuis le menu <b>Admin</b>
+            </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalsuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Nouveau cours</h4>
+              </div>
+              <div class="modal-body">
+                Modification sur le cours <b> {{coursetype}} </b> effectué avec succès!
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onClick="location.href='{{URL_PREFIX}}/specific_cours/?coursetype={{coursetype}}'">OK</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="modalfailure" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Nouveau cours</h4>
+              </div>
+              <div class="modal-body">
+                Erreur dans l'ajout d'un cours <b> {{coursetype}} </b>.
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <a id="btn_course_add_participant" class="btn btn-warning button_actions_course" ng-if="authState.user" href="{{ URL_PREFIX }}/register_cours/?coursetype={{ coursetype }}&courseid={{ courseid }}">
+                    <i class="fa fa-plus-circle fa-2x"></i> Ajouter un participant
+                </a>
+                <h1 class="page-header">{{ coursetype }}
+                <img ng-if="course_type == 'Sauveteurs'" class="img-responsive course-img" src="{% static 'img/car-icon.png' %}" alt="">
+                <img ng-if="course_type == 'Samaritains'" class="img-responsive course-img" src="{% static 'img/medicine-box-icon.png' %}" alt="">
+                <img ng-if="course_type == 'BLS-AED'" class="img-responsive course-img" src="{% static 'img/heart-beat-icon.png' %}" alt="">
+                <img ng-if="course_type == 'UPE'" class="img-responsive course-img" src="{% static 'img/medical-cap-icon.png' %}" alt="">
+            </div>
+        </div>
+
+        <!-- /.row -->
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">Participants au cours</h3>
+          </div>
+          <div class="panel-body">
+            <!--<a id="btn_add_new_date" class="btn btn-warning button_new_course_date" ng-if="authState.user">
+                <i class="fa fa-plus-circle fa-2x"></i> Ajouter une nouvelle date de cours
+            </a>-->
+            <div class="row table-responsive">
+              <div class="col-sm-12">
+                <table class="table table-hover table-striped table-condensed">
+                  <thead>
+                    <tr>
+                      <td><b> Genre </b></td>
+                      <td><b> Prénom </b></td>
+                      <td><b> Nom </b></td>
+                      <td><b> Date de naissance </b></td>
+                      <td><b> Adresse </b></td>
+                      <td><b> NPA </b></td>
+                      <td><b> Ville </b></td>
+                      <td><b> Téléphone </b></td>
+                      <td><b> email </b></td>
+                      <td><b> Actions </b></td>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="(participant_key, participant_val) in singleCourse.participants" item="participant_key">
+                    <td ng-if="participant_val.gender == 'M'"> M. </td>
+                    <td ng-if="participant_val.gender == 'F'"> Mme. </td>
+                    <td> {$ participant_val.first_name $} </td>
+                    <td> {$ participant_val.last_name $} </td>
+                    <td> {$ participant_val.birth_date $} </td>
+                    <td> {$ participant_val.address $} </td>
+                    <td> {$ participant_val.npa $} </td>
+                    <td> {$ participant_val.city $} </td>
+                    <td> {$ participant_val.phone $} </td>
+                    <td> {$ participant_val.email $} </td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="...">
+                            <a id="btn_course_participant_edit" href="{{URL_PREFIX}}/participant_cours_edit/?coursetype={{ coursetype }}&courseid={{ courseid }}&participantid={$ participant_val.id $}" class="btn btn-success button_actions_course" ng-if="authState.user">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                            <a id="btn_course_participant_delete" href="{{URL_PREFIX}}/participant_cours_delete/?coursetype={{ coursetype }}&courseid={{ courseid }}&participantid={$ participant_val.id $}" class="btn btn-danger button_actions_course" ng-if="authState.user">
+                                <i class="fa fa-minus-circle"></i>
+                            </a>
+                        </div>
+                    </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; SamaMartigny 2016</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+    <script type='text/javascript'>
+        $(document).ready(function() {
+            $('.collapse').on('show.bs.collapse', function() {
+                var id = $(this).attr('id');
+                $('a[href="#' + id + '"]').closest('.panel-heading').addClass('active-faq');
+                $('a[href="#' + id + '"] .panel-title span').html('<i class="glyphicon glyphicon-minus"></i>');
+            });
+            $('.collapse').on('hide.bs.collapse', function() {
+                var id = $(this).attr('id');
+                $('a[href="#' + id + '"]').closest('.panel-heading').removeClass('active-faq');
+                $('a[href="#' + id + '"] .panel-title span').html('<i class="glyphicon glyphicon-plus"></i>');
+            });
+        });
+    </script>
+    <script type='text/javascript'>
+    jQuery(document).ready(function() {
+        //var url = "{% url 'course_list' %}";
+        //$.ajax({
+        //    type: "GET",
+        //    url: url,
+        //    data: {
+        //        coursetype: "{{ coursetype }}",
+        //    },
+        //    contentType: "application/json; charset=utf-8",
+        //    dataType: "json",
+
+        //    success: function(data) {
+        //        console.log(data);
+        //    },
+
+        //    error: function(jqXHR, textStatus, errorThrown) {
+        //        alert('Error: ' + errorThrown);
+        //    }
+        //});
+    //$("#btn_add_new_date").click(function(){
+    //    console.log("clicked");
+    //    //$('#space_for_dates').append('<br>a datepicker <input class="datepicker_recurring_start"/>');
+    //   $('#space_for_dates').append('<div class="input-group date"><input type="text" class="form-control datepicker_recurring_start"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span></div>');
+
+    //});
+
+    $('body').on('focus',".datepicker_course", function(){
+        $(this).datepicker({
+            format: "dd/mm/yyyy",
+            language: "fr-CH",
+            multidate: true,
+            multidateSeparator: " "
+        });
+    });
+
+    });
+    </script>
+{% endblock %}

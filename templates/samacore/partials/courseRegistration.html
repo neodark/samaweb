@@ -3,7 +3,54 @@
 <div class="" id="wrap">
     <div class="row">
         <div class="col-md-6 col-md-offset-3">
-            <form name="signup_form" no-validate ng-submit="signupForm()">
+            <!-- Modal -->
+            <div class="modal fade" id="modalparticipantsuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Confirmation Inscription</h4>
+                  </div>
+                  <div class="modal-body">
+                    Merci pour votre inscription au cours <b>{$ coursetype $}</b>!
+                    <p>Un email de confirmation vous sera envoyé dans les prochaines minutes.</p>
+                    <p>Dernier rappel des informations concernant le cours:</p>
+                    <p><b>Dates du cours:</b><br>
+                    <i>{$ single_course_dates $}</i>
+                    </p>
+                    <p><b>Horaires du cours:</b><br>
+                    <i>{$ single_course_time $}</i>
+                    </p>
+                    <p><b>Lieu du cours:</b><br>
+                    <i>{$ single_course_location $}</i>
+                    </p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onClick="location.href='{{URL_PREFIX}}/cours/'">OK</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="modal fade" id="modalparticipantfailure" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Inscription non confirmé</h4>
+                  </div>
+                  <div class="modal-body">
+                    Erreur dans votre inscription au cours</b>.
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <form name="signup_form" no-validate ng-submit="signupForm('add_participant')">
+                    <legend>Inscription au cours <i>{$ course_type $}</i><br> Dates: <i>{$ single_course_dates $}</i></legend>
                     <legend>Coordonnées du participant au cours</legend>
                     <h4>Vous êtes priés de rentrer chaque champ afin de pouvoir valider votre inscription au cours.</h4>
                     <label>Vos informations: </label>
@@ -78,19 +125,64 @@
                     <label>Date de naissance:</label>
                     <div class="row">
                         <div class="col-xs-4 col-md-4">
-                            <select name="day" class = "form-control input-lg">
+                            <select name="day_select"
+                                    class="form-control input-lg"
+                                    ng-model="signup.day_select"
+                                    required>
                             <option ng-repeat="day in birthdate_day" value="{$ day.identifier $}">{$ day.name $}</option>
+                            <option value="">---</option>
                             </select>
+                            <div class="error-container"
+                                 ng-show="signup_form.day_select.$dirty && signup_form.day_select.$invalid && !signup_form.day_select.$focused">
+                              <small class="error"
+                                     ng-show="signup_form.day_select.$error.required && !signup_form.day_select.$focused">
+                                     Merci de spécifier votre jour de naissance.
+                              </small>
+                              <small class="error"
+                                     ng-show="signup_form.day_select.$error.minlength && !signup_form.day_select.$focused">
+                                      Ce champ ne peut pas être vide
+                              </small>
+                            </div>
                         </div>
                         <div class="col-xs-4 col-md-4">
-                            <select name="month" class = "form-control input-lg">
+                            <select name="month_select"
+                                    class="form-control input-lg"
+                                    ng-model="signup.month_select"
+                                    required>
                             <option ng-repeat="month in birthdate_month" value="{$ month.identifier $}">{$ month.name $}</option>
+                            <option value="">---</option>
                             </select>
+                            <div class="error-container"
+                                 ng-show="signup_form.month_select.$dirty && signup_form.month_select.$invalid && !signup_form.month_select.$focused">
+                              <small class="error"
+                                     ng-show="signup_form.month_select.$error.required && !signup_form.month_select.$focused">
+                                     Merci de spécifier votre mois de naissance.
+                              </small>
+                              <small class="error"
+                                     ng-show="signup_form.month_select.$error.minlength && !signup_form.month_select.$focused">
+                                      Ce champ ne peut pas être vide
+                              </small>
+                            </div>
                         </div>
                         <div class="col-xs-4 col-md-4">
-                            <select name="year" class = "form-control input-lg">
+                            <select name="year_select"
+                                    class="form-control input-lg"
+                                    ng-model="signup.year_select"
+                                    required>
                             <option ng-repeat="year in birthdate_year" value="{$ year.identifier $}">{$ year.name $}</option>
+                            <option value="">---</option>
                             </select>
+                            <div class="error-container"
+                                 ng-show="signup_form.year_select.$dirty && signup_form.year_select.$invalid && !signup_form.year_select.$focused">
+                              <small class="error"
+                                     ng-show="signup_form.year_select.$error.required && !signup_form.year_select.$focused">
+                                     Merci de spécifier votre année de naissance.
+                              </small>
+                              <small class="error"
+                                     ng-show="signup_form.year_select.$error.minlength && !signup_form.year_select.$focused">
+                                      Ce champ ne peut pas être vide
+                              </small>
+                            </div>
                         </div>
                     </div>
                     <br />
@@ -103,24 +195,20 @@
                         class="form-control input-lg"
                         placeholder="Votre Adresse (Rue)"
                         ng-model="signup.address"
-                        ng-minlength=3 ng-maxlength=20 required ng-focus/>
+                        ng-minlength=3 required ng-focus/>
                         <div class="error-container"
                              ng-show="signup_form.address.$dirty && signup_form.address.$invalid && !signup_form.address.$focused">
                           <small class="error"
                                  ng-show="signup_form.address.$error.required && !signup_form.address.$focused">
-                                 Votre adresse email est requise.
+                                 Votre adresse est requise.
                           </small>
                           <small class="error"
                                  ng-show="signup_form.address.$error.minlength && !signup_form.address.$focused">
-                                  Votre adresse email doit être supérieur à 3 caractères
+                                  Votre adresse doit être supérieur à 3 caractères
                           </small>
                           <small class="error"
                                  ng-show="signup_form.address.$error.address && !signup_form.address.$focused">
-                                 Ceci n'est pas une adresse email valide. Merci d'insérér une adresse email valide.
-                          </small>
-                          <small class="error"
-                                 ng-show="signup_form.address.$error.maxlength && !signup_form.address.$focused">
-                                  Votre adresse email ne peut pas être supérieur à 20 caractères
+                                 Ceci n'est pas une adresse valide. Merci d'insérér une adresse valide.
                           </small>
                         </div>
                     <div class="row">
@@ -137,11 +225,11 @@
                                  ng-show="signup_form.npa.$dirty && signup_form.npa.$invalid && !signup_form.npa.$focused">
                               <small class="error"
                                      ng-show="signup_form.npa.$error.required && !signup_form.npa.$focused">
-                                     Votre prénom est requis.
+                                     Votre NPA (code de la ville) est requis.
                               </small>
                               <small class="error"
                                      ng-show="signup_form.npa.$error.minlength && !signup_form.npa.$focused">
-                                      Votre prénom ne contient pas assez de caractères
+                                      Votre NPA (code de la ville) ne contient pas assez de caractères
                               </small>
                             </div>
                         </div>
@@ -157,11 +245,11 @@
                                  ng-show="signup_form.city.$dirty && signup_form.city.$invalid && !signup_form.city.$focused">
                               <small class="error"
                                      ng-show="signup_form.city.$error.required && !signup_form.city.$focused">
-                                     Votre nom de famille est requis.
+                                     Votre ville est requis.
                               </small>
                               <small class="error"
                                      ng-show="signup_form.city.$error.minlength && !signup_form.city.$focused">
-                                      Votre nom de famille ne contient pas assez de caractères
+                                      Votre ville ne contient pas assez de caractères
                               </small>
                             </div>
                         </div>
@@ -222,7 +310,7 @@
                         </div>
 
                     <br />
-              <span class="help-block">En cliquant sur "Je m'insscris au cours", vous vous engager à avoir fournis vos informations correctement et à ne pas nuire au bon fonctionnement du site par de faux enregistrements.</span>
+              <span class="help-block">En cliquant sur "Je m'inscris au cours", vous vous engager à avoir fournis vos informations correctement et à ne pas nuire au bon fonctionnement du site par de faux enregistrements.</span>
                     <button class="btn btn-lg btn-primary btn-block signup-btn" type="submit">
                         Je m'inscris au cours</button>
                     <br />

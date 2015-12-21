@@ -9,7 +9,7 @@
 {% block content %}
 
     <!-- Page Content -->
-    <div class="container" ng-controller="courseController" ng-init="init('{{ coursetype }}', '{% url 'course_list' %}')">
+    <div class="container" ng-init="initCourseRegistration('{{ coursetype }}', '{{coursedates}}', '{{coursetime}}', '{{courselocation}}', '{% url 'course_list' %}')">
 
         <!-- Page Heading/Breadcrumbs -->
         <div class="row">
@@ -42,7 +42,7 @@
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright &copy; SamaMartigny 2014</p>
+                    <p>Copyright &copy; SamaMartigny 2016</p>
                 </div>
             </div>
         </footer>
