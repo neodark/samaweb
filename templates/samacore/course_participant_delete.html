@@ -30,7 +30,8 @@
     <script src="{% static 'samaweb/app/directives/courseView.js' %}" type="text/javascript" charset="utf-8"></script>
 
     <!-- Page Content -->
-    <div class="container" ng-init="initSingleCourse('{{ coursetype }}', '{% url 'course_list' %}', '{{ courseid }}')">
+    <div class="container" ng-init="initParticipantEdition('{{ coursetype }}', '{{coursedates}}', '{{coursetime}}', '{{courselocation}}', '{% url 'course_list' %}', '{% url 'participant_detail' participant.id %}', '{{participantid}}')">
+
 
         <!-- Page Heading/Breadcrumbs -->
         <div class="row" ng-show="authState.user">
@@ -51,10 +52,10 @@
                 <h4 class="modal-title" id="myModalLabel">Nouveau cours</h4>
               </div>
               <div class="modal-body">
-                Modification sur le cours <b> {{coursetype}} </b> effectué avec succès!
+                Participant du course <b> {{coursetype}} </b> supprimé avec succès!
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal" onClick="location.href='{{URL_PREFIX}}/specific_cours/?coursetype={{coursetype}}'">OK</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" onClick="location.href='{{URL_PREFIX}}/participants_cours/?coursetype={{coursetype}}&courseid={{courseid}}'">OK</button>
               </div>
             </div>
           </div>
@@ -68,7 +69,7 @@
                 <h4 class="modal-title" id="myModalLabel">Nouveau cours</h4>
               </div>
               <div class="modal-body">
-                Erreur dans l'ajout d'un cours <b> {{coursetype}} </b>.
+                Erreur dans la suppression du participant au cours <b> {{coursetype}} </b>.
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
@@ -79,8 +80,8 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <a id="btn_course_add_participant" class="btn btn-warning button_actions_course" ng-if="authState.user" href="{{ URL_PREFIX }}/register_cours/?coursetype={{ coursetype }}&courseid={{ courseid }}">
-                    <i class="fa fa-plus-circle fa-2x"></i> Ajouter un participant
+                <a id="btn_participant_delete" class="btn btn-danger button_actions_course" ng-if="authState.user" buttondeleteparticipant>
+                    <i class="fa fa-minus-circle fa-2x"></i> Supprimer participant
                 </a>
                 <h1 class="page-header">{{ coursetype }}
                 <img ng-if="course_type == 'Sauveteurs'" class="img-responsive course-img" src="{% static 'img/car-icon.png' %}" alt="">
@@ -91,6 +92,22 @@
         </div>
 
         <!-- /.row -->
+       <div class="panel panel-danger">
+          <div class="panel-heading">
+            <h3 class="panel-title">Récapitulatif important avant suppression</h3>
+          </div>
+          <div class="panel-body">
+            <i><b>Etes-vous sûr de vouloir supprimer ce participant? Avant de cliquer sur le bouton "Supprimer", vérifier que les points suivants sont respectés</b></i>
+            <p>
+            <ul>
+            <li><b>Le participant sera définitivement supprimé</b></li>
+            <li><b>Le cours disposera d'une place vide supplémentaire</b></li>
+            <li><b>Une fois supprimé, ce participant ne sera plus visible dans l'interface du site web</b></li>
+            </ul>
+            </p>
+          </div>
+        </div>
+
         <div class="panel panel-info">
           <div class="panel-heading">
             <h3 class="panel-title">Participants au cours</h3>
@@ -113,33 +130,21 @@
                       <td><b> Ville </b></td>
                       <td><b> Téléphone </b></td>
                       <td><b> email </b></td>
-                      <td><b> Actions </b></td>
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr ng-repeat="(participant_key, participant_val) in singleCourse.participants" item="participant_key">
-                    <td ng-if="participant_val.gender == 'M'"> M. </td>
-                    <td ng-if="participant_val.gender == 'F'"> Mme. </td>
-                    <td> {$ participant_val.first_name $} </td>
-                    <td> {$ participant_val.last_name $} </td>
-                    <td> {$ participant_val.birth_date $} </td>
-                    <td> {$ participant_val.address $} </td>
-                    <td> {$ participant_val.npa $} </td>
-                    <td> {$ participant_val.city $} </td>
-                    <td> {$ participant_val.phone $} </td>
-                    <td> {$ participant_val.email $} </td>
+                    <td ng-if="participant_to_update.gender == 'M'"> M. </td>
+                    <td ng-if="participant_to_update.gender == 'F'"> Mme. </td>
+                    <td> {$ participant_to_update.first_name $} </td>
+                    <td> {$ participant_to_update.last_name $} </td>
+                    <td> {$ participant_to_update.birth_date $} </td>
+                    <td> {$ participant_to_update.address $} </td>
+                    <td> {$ participant_to_update.npa $} </td>
+                    <td> {$ participant_to_update.city $} </td>
+                    <td> {$ participant_to_update.phone $} </td>
+                    <td> {$ participant_to_update.email $} </td>
                     <td>
-                        <div class="btn-group" role="group" aria-label="...">
-                            <a id="btn_course_participant_edit" href="{{URL_PREFIX}}/participant_cours_edit/?coursetype={{ coursetype }}&courseid={{ courseid }}&participantid={$ participant_val.id $}" class="btn btn-success button_actions_course" ng-if="authState.user">
-                                <i class="fa fa-pencil"></i>
-                            </a>
-                            <a id="btn_course_participant_delete" href="{{URL_PREFIX}}/participant_cours_delete/?coursetype={{ coursetype }}&courseid={{ courseid }}&participantid={$ participant_val.id $}" class="btn btn-danger button_actions_course" ng-if="authState.user">
-                                <i class="fa fa-minus-circle"></i>
-                            </a>
-                        </div>
-                    </td>
-                    </tr>
                   </tbody>
                 </table>
               </div>

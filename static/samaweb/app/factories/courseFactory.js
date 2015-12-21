@@ -52,6 +52,15 @@ app.factory('courseFactory', ['$http', function($http) {
         })
     };
 
+    courseFactory.deleteParticipant = function (participantId)
+    {
+        return $http({
+          headers: {'Content-Type': 'application/json'},
+          url: '/api/participant/' + participantId,
+          method: "DELETE",
+        })
+    };
+
 
     courseFactory.getParticipantInformation = function (participant_detail_url) {
         return $http.get(participant_detail_url);

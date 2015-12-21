@@ -389,6 +389,21 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
            });
    }
 
+   $scope.delete_participant = function(course_id, course_type, participant_id, perform_action)
+   {
+
+        courseFactory.deleteParticipant(participant_id)
+           .success(function (participantData) {
+               //console.log(coursesData);
+               $('#modalsuccess').modal('show')
+           })
+           .error(function (error) {
+               $scope.status = 'Unable to load courses data: ' + error.message;
+               $('#modalfailure').modal('show')
+           });
+   }
+
+
 
    //$scope.login = function(username, password)
    //{

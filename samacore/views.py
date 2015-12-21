@@ -148,6 +148,40 @@ def participant_course_edit(request):
     else:
         return render(request, 'samacore/participant_course.html', context)
 
+def participant_course_delete(request):
+    coursetype = ''
+    courseid = ''
+    coursedates = ''
+    coursetime = ''
+    courselocation = ''
+    participantid = ''
+    if request.GET.has_key('coursetype'):
+        coursetype = request.GET['coursetype']
+    if request.GET.has_key('courseid'):
+        courseid = request.GET['courseid']
+        course = Course.objects.get(id=courseid)
+        courseinformation = course.additional_information
+        jsoncourse = json.loads(courseinformation)
+        coursedates     = jsoncourse['dates']
+        coursetime      = jsoncourse['time']
+        courselocation  = jsoncourse['location']
+    if request.GET.has_key('participantid'):
+        participantid = request.GET['participantid']
+        participant = Participant.objects.get(id=participantid)
+
+    context = {'coursetype': coursetype,
+               'courseid': courseid,
+               'coursedates': coursedates,
+               'coursetime': coursetime,
+               'courselocation': courselocation,
+               'participantid': participantid,
+               'participant': participant}
+    if request.user.is_anonymous():
+        raise exceptions.PermissionDenied
+    else:
+        return render(request, 'samacore/course_participant_delete.html', context)
+
+
 def admin_login(request):
     param_1 = 2
     context = {'params': param_1}

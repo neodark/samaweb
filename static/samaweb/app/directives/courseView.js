@@ -27,3 +27,17 @@ app.directive("buttonupdatecourse", function($compile)
 		});
     }
 });
+
+//Directive to delete participant on button click
+app.directive("buttondeleteparticipant", function($compile)
+{
+	return function(scope, element, attrs)
+    {
+        //login button click
+		element.bind("click", function()
+        {
+            var action = attrs.id.split("btn_participant_")[1];
+            scope.delete_participant(scope.course_id, scope.course_type, scope.participant_to_update.id, action);
+		});
+    }
+});
