@@ -69,7 +69,7 @@
                         <p>Bien que la section délivre des certificats de secourisme, il n'y a pas d'âge pour devenir secouriste.
                           L'aide à son prochain doit être un <b>devoir humain et nécessaire</b>.</p>
                         <p>Toi aussi <b>rejoins-nous et deviens samaritain!</b></p>
-                        <a href="#" class="btn btn-default">La section</a>
+                        <a href="{% url 'section' %}" class="btn btn-default">La section</a>
                     </div>
                 </div>
             </div>
@@ -83,7 +83,7 @@
                         Le particulier peut quant à lui s'inscrire à un cours sauveteurs (obligatoires pour le permis de conduire) ou d'autres cours. L'entreprise a la possibilité
                         d'avoir un cours privé pour ses employés.</p>
                         <p>N'hésite pas à nous contacter...</p>
-                        <a href="#" class="btn btn-default">Cours</a>
+                        <a href="{% url 'courses' %}" class="btn btn-default">Cours</a>
                     </div>
                 </div>
             </div>
@@ -97,77 +97,11 @@
                         Le label "Fiesta" par exemple exige la présence obligatoire de samaritains. N'hésite pas à nous contacter
                         pour de plus amples informations ou pour un devis.</p>
                         <p>Pour assurer notre présence, prendre contact avec nous <b>au plus tôt</b>.</p>
-                        <a href="#" class="btn btn-default">Plus d'informations</a>
+                        <a href="{% url 'faq' %}" class="btn btn-default">Plus d'informations</a>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- /.row -->
-
-        <!-- Portfolio Section -->
-        <!--
-        <div class="row">
-            <div class="col-lg-12">
-                <h2 class="page-header">Portfolio Heading</h2>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <a href="portfolio-item.html">
-                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
-                </a>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <a href="portfolio-item.html">
-                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
-                </a>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <a href="portfolio-item.html">
-                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
-                </a>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <a href="portfolio-item.html">
-                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
-                </a>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <a href="portfolio-item.html">
-                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
-                </a>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <a href="portfolio-item.html">
-                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
-                </a>
-            </div>
-        </div>
-        -->
-        <!-- /.row -->
-
-        <!-- Features Section -->
-        <!--
-        <div class="row">
-            <div class="col-lg-12">
-                <h2 class="page-header">Modern Business Features</h2>
-            </div>
-            <div class="col-md-6">
-                <p>The Modern Business template by Start Bootstrap includes:</p>
-                <ul>
-                    <li><strong>Bootstrap v3.2.0</strong>
-                    </li>
-                    <li>jQuery v1.11.0</li>
-                    <li>Font Awesome v4.1.0</li>
-                    <li>Working PHP contact form with validation</li>
-                    <li>Unstyled page elements for easy customization</li>
-                    <li>17 HTML pages</li>
-                </ul>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, omnis doloremque non cum id reprehenderit, quisquam totam aspernatur tempora minima unde aliquid ea culpa sunt. Reiciendis quia dolorum ducimus unde.</p>
-            </div>
-            <div class="col-md-6">
-                <img class="img-responsive" src="http://placehold.it/700x450" alt="">
-            </div>
-        </div>
-        -->
         <!-- /.row -->
 
         <hr>
@@ -179,7 +113,7 @@
                     <p>La section des samaritains de Martigny est ouverte à toute personne désireuse de faire partie de la section et d'oeuvrer comme secouriste volontaire. Le bénévolat et son expérience humaine fait partie du principe fondateur des samaritains de toute la Suisse. Intéressé à nous rejoindre?</p>
                 </div>
                 <div class="col-md-4">
-                    <a class="btn btn-lg btn-default btn-block" href="#">Rejoindre la cause samaritaine</a>
+                    <a class="btn btn-lg btn-default btn-block" href="{% url 'section' %}">Rejoindre la cause samaritaine</a>
                 </div>
             </div>
         </div>
