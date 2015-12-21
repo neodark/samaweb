@@ -79,9 +79,14 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <a id="btn_course_add_participant" class="btn btn-warning button_actions_course" ng-if="authState.user" href="{{ URL_PREFIX }}/register_cours/?coursetype={{ coursetype }}&courseid={{ courseid }}">
-                    <i class="fa fa-plus-circle fa-2x"></i> Ajouter un participant
-                </a>
+                <div class="btn-group button_actions_course" role="group" aria-label="...">
+                    <a id="btn_course_add_participant" class="btn btn-warning button_actions_course" ng-if="authState.user" href="{{ URL_PREFIX }}/register_cours/?coursetype={{ coursetype }}&courseid={{ courseid }}">
+                        <i class="fa fa-plus-circle fa-2x"></i> Ajouter un participant
+                    </a>
+                    <a id="btn_course_download_course_participants" class="btn btn-success button_actions_course" ng-if="authState.user" buttondownloadparticipants>
+                        <i class="fa fa-download fa-2x"></i> Télécharger liste participants
+                    </a>
+                </div>
                 <h1 class="page-header">{{ coursetype }}
                 <img ng-if="course_type == 'Sauveteurs'" class="img-responsive course-img" src="{% static 'img/car-icon.png' %}" alt="">
                 <img ng-if="course_type == 'Samaritains'" class="img-responsive course-img" src="{% static 'img/medicine-box-icon.png' %}" alt="">

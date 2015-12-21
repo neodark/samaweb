@@ -41,3 +41,16 @@ app.directive("buttondeleteparticipant", function($compile)
 		});
     }
 });
+
+//Directive to delete participant on button click
+app.directive("buttondownloadparticipants", function($compile)
+{
+	return function(scope, element, attrs)
+    {
+        //login button click
+		element.bind("click", function()
+        {
+            scope.download_pdf_participants(scope.course_id, scope.course_type);
+		});
+    }
+});
