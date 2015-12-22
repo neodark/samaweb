@@ -128,7 +128,7 @@
                     <td ng-if="participant_val.gender == 'F'"> Mme. </td>
                     <td> {$ participant_val.first_name $} </td>
                     <td> {$ participant_val.last_name $} </td>
-                    <td> {$ participant_val.birth_date $} </td>
+                    <td> {$ participant_val.birth_date.split("-")[2] $}-{$ participant_val.birth_date.split("-")[1] $}-{$ participant_val.birth_date.split("-")[0] $}</td>
                     <td> {$ participant_val.address $} </td>
                     <td> {$ participant_val.npa $} </td>
                     <td> {$ participant_val.city $} </td>
