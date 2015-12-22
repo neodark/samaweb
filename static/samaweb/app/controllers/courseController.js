@@ -405,28 +405,80 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
 
    $scope.download_pdf_participants = function(course_id, course_type)
    {
-         var docDefinition = {
-            content: 'This is an sample PDF printed with pdfMake',
-            content: [
-              {
-                table: {
-                  // headers are automatically repeated if the table spans over multiple pages
-                  // you can declare how many rows should be treated as headers
-                  headerRows: 1,
-                  widths: [ '*', 'auto', 100, '*' ],
 
-                  body: [
-                    [ 'First', 'Second', 'Third', 'The last one' ],
-                    [ 'Value 1', 'Value 2', 'Value 3', 'Value 4' ],
-                    [ { text: 'Bold value', bold: true }, 'Val 2', 'Val 3', 'Val 4' ]
-                  ]
-                }
+         var the_body = [];
+
+         var headers = [{ text: 'M./Mme.', style: 'tableHeader' }, { text: 'Nom', style: 'tableHeader'}, { text: 'Prénom', style: 'tableHeader' }, { text: 'Naissance', style: 'tableHeader' }, { text: 'Adresse', style: 'tableHeader' }, { text: 'NPA', style: 'tableHeader' }, { text: 'Ville', style: 'tableHeader' }, { text: 'Téléphone', style: 'tableHeader' }, { text: 'Email', style: 'tableHeader' }];
+         the_body.push(headers);
+
+         for(var i = 0; i < $scope.singleCourse.participants.length; i++)
+         {
+            var single_participant = [];
+            if($scope.singleCourse.participants[i].gender == 'F')
+            {
+                single_participant.push("Mme.");
+            }
+            else
+            {
+                single_participant.push("M.");
+            }
+            single_participant.push($scope.singleCourse.participants[i].last_name);
+            single_participant.push($scope.singleCourse.participants[i].first_name);
+            single_participant.push($scope.singleCourse.participants[i].birth_date.split("-")[2]+ "-" +
+                                    $scope.singleCourse.participants[i].birth_date.split("-")[1]+ "-" +
+                                    $scope.singleCourse.participants[i].birth_date.split("-")[0]);
+            single_participant.push($scope.singleCourse.participants[i].address);
+            single_participant.push($scope.singleCourse.participants[i].npa.toString());
+            single_participant.push($scope.singleCourse.participants[i].city);
+            single_participant.push($scope.singleCourse.participants[i].phone);
+            single_participant.push($scope.singleCourse.participants[i].email);
+            the_body.push(single_participant);
+         }
+
+         var docDefinition = {
+
+            // by default we use portrait, you can change it to landscape if you wish
+            pageOrientation: 'landscape',
+
+            content: [
+              { text: 'Samaritains de Martigny', fontSize: 24, bold: true, margin: [0, 20, 0, 8] },
+              { text: 'Informations sur le cours:', fontSize: 14, bold: true, margin: [0, 20, 0, 8] },
+              { text: 'Type: ' + course_type, fontSize: 12, bold: false },
+              { text: 'Dates: ' + $scope.singleCourse.additional_information['dates'], fontSize: 12, bold: false },
+              { text: 'Heures: ' + $scope.singleCourse.additional_information['time'], fontSize: 12, bold: false },
+              { text: 'Lieu: ' + $scope.singleCourse.additional_information['location'], fontSize: 12, bold: false },
+              { text: 'Participants:', fontSize: 14, bold: true, margin: [0, 20, 0, 8] },
+              {
+                      style: 'tableBody',
+                      table: {
+                              headerRows: 1,
+                              body: the_body                      },
+                      layout: 'lightHorizontalLines'
               },
 
-            ]
+
+            ],
+
+            styles: {
+                tableBody: {
+                    margin: [0, 5, 0, 15]
+                },
+                tableHeader: {
+                    bold: true,
+                    fontSize: 13,
+                    color: 'black'
+                }
+            },
+        defaultStyle: {
+            // alignment: 'justify'
+        }
+
          };
-         // open the PDF in a new window
-         pdfMake.createPdf(docDefinition).open();
+
+        // download the PDF (temporarily Chrome-only)a
+        var name_download = "Cours_" + course_type + ".pdf";
+        pdfMake.createPdf(docDefinition).download(name_download);
+
    }
 
 
