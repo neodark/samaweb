@@ -5,6 +5,42 @@ from django.utils.translation import ugettext_lazy as _
 
 # Create your models here.
 
+class SectionManager(models.Manager):
+
+    def create_object(self, section_program={}):
+
+        #Creation of a course
+        section             = Section()
+
+        if isinstance(section_program, dict):
+            section.section_program = json.dumps(section_program, indent=4)
+        else:
+            section.section_program = section_program
+
+        ##Adding dates to a course
+        #result = course.add_dates(course_dates)
+        section.save()
+
+        result = {"success": "all_ok"}
+
+        return (section, result)
+
+
+class Section(models.Model):
+
+    #_______ Constants _______
+
+    #_______ Fields _______
+    section_program         = models.TextField(default='{}', blank=True)
+
+    objects = SectionManager()
+
+    def __str__(self):
+        return 'Program:%s'%(self.section_program)
+
+    def save(self, *args, **kwargs):
+        super(Section, self).save(*args, **kwargs)
+
 
 class CourseManager(models.Manager):
 
@@ -87,6 +123,7 @@ class Course(models.Model):
     #    for course_date in course_dates_list:
     #        self.course_dates.remove(course_date)
 
+
 class ParticipantManager(models.Manager):
 
     def create_object(self, status, first_name, last_name, birth_date, gender, email, address, npa, city, phone, course):
@@ -117,7 +154,6 @@ class ParticipantManager(models.Manager):
 
         def female(self):
             return self.filter(gender=Participant.FEMALE)
-
 
 
 class Participant(models.Model):

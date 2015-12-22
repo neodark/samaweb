@@ -1,9 +1,61 @@
 from rest_framework import serializers
 from samacore.models import Course
 from samacore.models import Participant
+from samacore.models import Section
 from common.fields import JSONSerializerField
 
 import simplejson as json
+
+class BasicSectionSerializer(serializers.ModelSerializer):
+    section_program = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Section
+        fields = ['id', 'section_program']
+
+    def get_section_program(self, obj):
+        return json.loads(obj.section_program)
+
+class CreatedSectionSerializer(BasicSectionSerializer):
+    class Meta(BasicSectionSerializer.Meta):
+        fields = ['section_program']
+
+
+class SectionCreationFailedException(Exception):
+    pass
+
+class SectionCreationSerializer(serializers.ModelSerializer):
+    section_program = JSONSerializerField()
+
+    class Meta:
+        model = Section
+        fields = ['section_program']
+
+    def create(self, validated_data):
+        section = None
+
+        (section, self.details) = self.Meta.model.objects.create_object(**validated_data)
+        if section is None:
+            raise SectionCreationFailedException()
+
+        return section
+
+    def update(self, instance, validated_data):
+
+        instance.section_program = validated_data.get('section_program', instance.section_program)
+        instance.save()
+
+        return instance
+
+    def validate_section_program(self, value):
+        return json.dumps(value)
+
+
+class SectionUpdateSerializer(SectionCreationSerializer):
+
+    class Meta(SectionCreationSerializer.Meta):
+        fields = ['section_program']
+
 
 class BasicParticipantSerializer(serializers.ModelSerializer):
     status  = serializers.SerializerMethodField()

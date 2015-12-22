@@ -13,6 +13,49 @@ class SamaTestCase(APITestCase):
     def setUp(self):
         self.client = APIClient()
 
+        #SECTION
+        #POST
+        self.json_data_section_post = {\
+                     'section_program':{\
+                        'dates':'10-02-2015 10-03-2015',\
+                        'location':'Geneva',\
+                        'time':'Le cours a lieu de 19h00 a 22h30'}\
+                     }
+
+        self.json_data_section_post_api_reply = {\
+                     'status_api':'success_creation',\
+                     'section_program':"{\"dates\": \"10-02-2015 10-03-2015\", \"location\": \"Geneva\", \"time\": \"Le cours a lieu de 19h00 a 22h30\"}"\
+                     }
+
+        self.json_data_section_post_get_verification = {\
+                     'id':1,\
+                     'section_program':{\
+                        'dates':'10-02-2015 10-03-2015',\
+                        'location':'Geneva',\
+                        'time':'Le cours a lieu de 19h00 a 22h30'}\
+                     }
+
+        #PUT
+        self.json_data_section_put = {\
+                     'section_program':{\
+                        'dates':'09-03-2016 07-05-2016',\
+                        'location':'Lausanne',\
+                        'time':'Le cours a lieu de 15h00 a 16h45'}\
+                     }
+
+        self.json_data_section_put_api_reply = {\
+                     'status_api':'success_update',\
+                     'section_program':"{\"dates\": \"09-03-2016 07-05-2016\", \"location\": \"Lausanne\", \"time\": \"Le cours a lieu de 15h00 a 16h45\"}"\
+                     }
+
+        self.json_data_section_put_get_verification = {\
+                     'id':1,\
+                     'section_program':{\
+                        'dates':'09-03-2016 07-05-2016',\
+                        'location':'Lausanne',\
+                        'time':'Le cours a lieu de 15h00 a 16h45'}\
+                     }
+
         #COURSE
         #POST
         self.json_data_course_post = {\
@@ -197,6 +240,107 @@ class SamaTestCase(APITestCase):
 
     def date_handler(self, obj):
         return obj.isoformat() if hasattr(obj, 'isoformat') else obj
+
+
+#----------------------------------------------------------
+
+
+class SamaTestSection(SamaTestCase):
+    #urls = 'api.tests.test_testing'
+
+    def setUp(self):
+        super(SamaTestSection, self).setUp()
+
+    def test_simple_test(self):
+        """
+        Simple test
+        """
+        self.assertEqual(2,2)
+
+    def test_get_empty_db(self):
+        """
+        Testing GET on an empty database
+        """
+        request = self.client.get('/api/section/', {}, format='json')
+        self.assertEqual(request.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(json.loads(request.content)), 0)
+
+    def test_post_db(self):
+        """
+        Testing a POST and GET on a database
+        """
+
+        request = self.client.post('/api/section/', self.json_data_section_post, format='json')
+        self.assertEqual(request.status_code, status.HTTP_201_CREATED)
+
+        self.assertEqual(json.dumps(request.data, sort_keys=True), json.dumps(OrderedDict(self.json_data_section_post_api_reply), sort_keys=True))
+        self.assertEqual(json.dumps(json.loads(request.content), sort_keys=True), json.dumps(self.json_data_section_post_api_reply, sort_keys=True))
+
+        request = self.client.get('/api/section/', format='json')
+        self.assertEqual(request.status_code, status.HTTP_200_OK)
+        json_get = ""
+        for key in json.loads(request.content):
+            json_get = json.dumps(key, sort_keys=True)
+
+        self.assertEqual(json_get, json.dumps(self.json_data_section_post_get_verification, sort_keys=True))
+
+    def test_put_db(self):
+        """
+        Testing a POST and GET followed by a PUT and GET on a database
+        """
+
+        request = self.client.post('/api/section/', self.json_data_section_post, format='json')
+        self.assertEqual(request.status_code, status.HTTP_201_CREATED)
+
+        self.assertEqual(json.dumps(request.data, sort_keys=True), json.dumps(OrderedDict(self.json_data_section_post_api_reply), sort_keys=True))
+        self.assertEqual(json.dumps(json.loads(request.content), sort_keys=True), json.dumps(self.json_data_section_post_api_reply, sort_keys=True))
+
+        request = self.client.get('/api/section/', format='json')
+        self.assertEqual(request.status_code, status.HTTP_200_OK)
+        json_get = ""
+        for key in json.loads(request.content):
+            json_get = json.dumps(key, sort_keys=True)
+
+        self.assertEqual(json_get, json.dumps(self.json_data_section_post_get_verification, sort_keys=True))
+
+        request = self.client.put('/api/section/1', self.json_data_section_put, format='json')
+        self.assertEqual(request.status_code, status.HTTP_200_OK)
+
+        self.assertEqual(json.dumps(request.data, sort_keys=True), json.dumps(OrderedDict(self.json_data_section_put_api_reply), sort_keys=True))
+        self.assertEqual(json.dumps(json.loads(request.content), sort_keys=True), json.dumps(self.json_data_section_put_api_reply, sort_keys=True))
+
+        request = self.client.get('/api/section/', format='json')
+        self.assertEqual(request.status_code, status.HTTP_200_OK)
+        json_get = ""
+        for key in json.loads(request.content):
+            json_get = json.dumps(key, sort_keys=True)
+
+        self.assertEqual(json_get, json.dumps(self.json_data_section_put_get_verification, sort_keys=True))
+
+    def test_delete_db(self):
+        """
+        Testing a POST and GET followed by a DELETE and GET on a database
+        """
+        request = self.client.post('/api/section/', self.json_data_section_post, format='json')
+        self.assertEqual(request.status_code, status.HTTP_201_CREATED)
+
+        self.assertEqual(json.dumps(request.data, sort_keys=True), json.dumps(OrderedDict(self.json_data_section_post_api_reply), sort_keys=True))
+        self.assertEqual(json.dumps(json.loads(request.content), sort_keys=True), json.dumps(self.json_data_section_post_api_reply, sort_keys=True))
+
+        request = self.client.get('/api/section/', format='json')
+        self.assertEqual(request.status_code, status.HTTP_200_OK)
+        json_get = ""
+        for key in json.loads(request.content):
+            json_get = json.dumps(key, sort_keys=True)
+
+        self.assertEqual(json_get, json.dumps(self.json_data_section_post_get_verification, sort_keys=True))
+
+        request = self.client.delete('/api/section/1', format='json')
+        self.assertEqual(request.status_code, status.HTTP_204_NO_CONTENT)
+
+        request = self.client.get('/api/section/', format='json')
+        self.assertEqual(request.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(json.loads(request.content)), 0)
 
 
 #----------------------------------------------------------
