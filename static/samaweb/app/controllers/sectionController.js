@@ -85,7 +85,10 @@ app.controller('sectionController',['$scope', 'sectionFactory', 'authState', 'au
            .success(function (sectionsData) {
                $scope.sections = sectionsData;
                $scope.section = sectionsData[0];
-               $scope.section_id = sectionsData[0].id;
+               if(sectionsData[0] != undefined)
+               {
+                    $scope.section_id = sectionsData[0].id;
+               }
            })
            .error(function (error) {
                $scope.status = 'Unable to load sections data: ' + error.message;
