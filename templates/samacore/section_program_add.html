@@ -1,0 +1,684 @@
+{% extends "samacore/base.html" %}
+
+{% load staticfiles %}
+
+{% load samacore_extras %}
+
+{% block title %}FAQ{% endblock %}
+
+{% block section %}faq{% endblock %}
+
+{% block content %}
+
+    <!-- Bootstrap Datepicker CSS -->
+    <link href="{% static 'css/bootstrap-datepicker3.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-datepicker3.standalone.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-datepicker.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-datepicker.standalone.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-datepicker3.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-datepicker3.standalone.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-datepicker.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-datepicker.standalone.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/course_style.css' %}" rel="stylesheet">
+
+    <!-- Bootstrap Datepicker libs -->
+    <script src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+    <script src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
+    <script src="{% static 'js/locales/bootstrap-datepicker.fr-CH.min.js' %}"></script>
+
+    <!-- App libs -->
+    <script src="{% static 'samaweb/app/directives/sectionView.js' %}" type="text/javascript" charset="utf-8"></script>
+
+    <!-- Page Content -->
+    <div ng-controller="sectionController" class="container" ng-init="initSection('{% url 'section_list' %}', '{{ sectionid }}')">
+
+        <!-- Page Heading/Breadcrumbs -->
+        <div class="row" ng-show="authState.user">
+            <div class="col-lg-12">
+            <div class="alert alert-danger alert_login" role="alert">
+                <b>Avec de grands pouvoirs, viennent de grande responsabilité!</b> N'oubliez pas que <i>vous êtes connecté</i> en tant que <b>{$ authState.user $}</b></br>
+            Cela signifie que vous souhaitez faire des modifications au contenu du site. Si ce n'est pas le cas, vous êtes priés de vous <i>déconnecter </i> depuis le menu <b>Admin</b>
+            </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalsuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Nouveau cours</h4>
+              </div>
+              <div class="modal-body">
+                Nouveau programme de section ajouté avec succès!
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onClick="location.href='{{URL_PREFIX}}/membres/'">OK</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="modalfailure" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Nouveau cours</h4>
+              </div>
+              <div class="modal-body">
+                Erreur dans l'ajout du programme de section.
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <a id="btn_section_program_save" class="btn btn-success button_actions_course" ng-if="authState.user" buttonsaveupdateprogram>
+                    <i class="fa fa-upload fa-2x"></i> Sauver
+                </a>
+                <h1 class="page-header">Programme
+                <img class="img-responsive logo-img-program" src="{% static 'img/sama_logo.png' %}" alt="">
+            </div>
+        </div>
+
+        <!-- /.row -->
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">Dates et horaires et lieux des cours</h3>
+          </div>
+          <div class="panel-body">
+            <div class="panel panel-warning">
+              <div class="panel-heading">
+                <h3 class="panel-title">Janvier</h3>
+              </div>
+
+              <div class="panel-body">
+                <i>Cliquer sur les dates du cours</i>
+                <div class="input-group date">
+                    <input ng-model="new_course_dates_january" type="text" class="form-control datepicker_course_january" >
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Insérer les informations concernant les horaires du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_time_january" type="text" class="form-control time_course" >
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Spécifier le lieu du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_address_january" type="text" class="form-control location_course">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Spécifier le sujet du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_topic_january" type="text" class="form-control location_course">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-warning">
+              <div class="panel-heading">
+                <h3 class="panel-title">Février</h3>
+              </div>
+
+              <div class="panel-body">
+                <i>Cliquer sur les dates du cours</i>
+                <div class="input-group date">
+                    <input ng-model="new_course_dates_february" type="text" class="form-control datepicker_course_february" >
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Insérer les informations concernant les horaires du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_time_february" type="text" class="form-control time_course" >
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Spécifier le lieu du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_address_february" type="text" class="form-control location_course">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Spécifier le sujet du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_topic_february" type="text" class="form-control location_course">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-warning">
+              <div class="panel-heading">
+                <h3 class="panel-title">Mars</h3>
+              </div>
+
+              <div class="panel-body">
+                <i>Cliquer sur les dates du cours</i>
+                <div class="input-group date">
+                    <input ng-model="new_course_dates_march" type="text" class="form-control datepicker_course_march" >
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Insérer les informations concernant les horaires du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_time_march" type="text" class="form-control time_course" >
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Spécifier le lieu du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_address_march" type="text" class="form-control location_course">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Spécifier le sujet du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_topic_march" type="text" class="form-control location_course">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-warning">
+              <div class="panel-heading">
+                <h3 class="panel-title">Avril</h3>
+              </div>
+
+              <div class="panel-body">
+                <i>Cliquer sur les dates du cours</i>
+                <div class="input-group date">
+                    <input ng-model="new_course_dates_april" type="text" class="form-control datepicker_course_april" >
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Insérer les informations concernant les horaires du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_time_april" type="text" class="form-control time_course" >
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Spécifier le lieu du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_address_april" type="text" class="form-control location_course">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Spécifier le sujet du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_topic_april" type="text" class="form-control location_course">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-warning">
+              <div class="panel-heading">
+                <h3 class="panel-title">Mai</h3>
+              </div>
+
+              <div class="panel-body">
+                <i>Cliquer sur les dates du cours</i>
+                <div class="input-group date">
+                    <input ng-model="new_course_dates_may" type="text" class="form-control datepicker_course_may" >
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Insérer les informations concernant les horaires du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_time_may" type="text" class="form-control time_course" >
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Spécifier le lieu du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_address_may" type="text" class="form-control location_course">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Spécifier le sujet du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_topic_may" type="text" class="form-control location_course">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-warning">
+              <div class="panel-heading">
+                <h3 class="panel-title">Juin</h3>
+              </div>
+
+              <div class="panel-body">
+                <i>Cliquer sur les dates du cours</i>
+                <div class="input-group date">
+                    <input ng-model="new_course_dates_june" type="text" class="form-control datepicker_course_june" >
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Insérer les informations concernant les horaires du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_time_june" type="text" class="form-control time_course" >
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Spécifier le lieu du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_address_june" type="text" class="form-control location_course">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Spécifier le sujet du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_topic_june" type="text" class="form-control location_course">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-warning">
+              <div class="panel-heading">
+                <h3 class="panel-title">Juillet</h3>
+              </div>
+
+              <div class="panel-body">
+                <i>Cliquer sur les dates du cours</i>
+                <div class="input-group date">
+                    <input ng-model="new_course_dates_july" type="text" class="form-control datepicker_course_july" >
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Insérer les informations concernant les horaires du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_time_july" type="text" class="form-control time_course" >
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Spécifier le lieu du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_address_july" type="text" class="form-control location_course">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Spécifier le sujet du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_topic_july" type="text" class="form-control location_course">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-warning">
+              <div class="panel-heading">
+                <h3 class="panel-title">Août</h3>
+              </div>
+
+              <div class="panel-body">
+                <i>Cliquer sur les dates du cours</i>
+                <div class="input-group date">
+                    <input ng-model="new_course_dates_august" type="text" class="form-control datepicker_course_august" >
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Insérer les informations concernant les horaires du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_time_august" type="text" class="form-control time_course" >
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Spécifier le lieu du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_address_august" type="text" class="form-control location_course">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Spécifier le sujet du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_topic_august" type="text" class="form-control location_course">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-warning">
+              <div class="panel-heading">
+                <h3 class="panel-title">Septembre</h3>
+              </div>
+
+              <div class="panel-body">
+                <i>Cliquer sur les dates du cours</i>
+                <div class="input-group date">
+                    <input ng-model="new_course_dates_september" type="text" class="form-control datepicker_course_september" >
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Insérer les informations concernant les horaires du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_time_september" type="text" class="form-control time_course" >
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Spécifier le lieu du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_address_september" type="text" class="form-control location_course">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Spécifier le sujet du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_topic_september" type="text" class="form-control location_course">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-warning">
+              <div class="panel-heading">
+                <h3 class="panel-title">Octobre</h3>
+              </div>
+
+              <div class="panel-body">
+                <i>Cliquer sur les dates du cours</i>
+                <div class="input-group date">
+                    <input ng-model="new_course_dates_october" type="text" class="form-control datepicker_course_october" >
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Insérer les informations concernant les horaires du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_time_october" type="text" class="form-control time_course" >
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Spécifier le lieu du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_address_october" type="text" class="form-control location_course">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Spécifier le sujet du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_topic_october" type="text" class="form-control location_course">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-warning">
+              <div class="panel-heading">
+                <h3 class="panel-title">Novembre</h3>
+              </div>
+
+              <div class="panel-body">
+                <i>Cliquer sur les dates du cours</i>
+                <div class="input-group date">
+                    <input ng-model="new_course_dates_november" type="text" class="form-control datepicker_course_november" >
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Insérer les informations concernant les horaires du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_time_november" type="text" class="form-control time_course" >
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Spécifier le lieu du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_address_november" type="text" class="form-control location_course">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Spécifier le sujet du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_topic_november" type="text" class="form-control location_course">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+              </div>
+            </div>
+            <div class="panel panel-warning">
+              <div class="panel-heading">
+                <h3 class="panel-title">Décembre</h3>
+              </div>
+
+              <div class="panel-body">
+                <i>Cliquer sur les dates du cours</i>
+                <div class="input-group date">
+                    <input ng-model="new_course_dates_december" type="text" class="form-control datepicker_course_december" >
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Insérer les informations concernant les horaires du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_time_december" type="text" class="form-control time_course" >
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Spécifier le lieu du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_address_december" type="text" class="form-control location_course">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+                <i>Spécifier le sujet du cours</i>
+                <div class="input-group">
+                    <input ng-model="new_course_topic_december" type="text" class="form-control location_course">
+                        <span class="input-group-addon">
+                            <i class="glyphicon glyphicon-th"></i>
+                        </span>
+                </div>
+              </div>
+            </div>
+
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; SamaMartigny 2016</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+    <script type='text/javascript'>
+        $(document).ready(function() {
+            $('.collapse').on('show.bs.collapse', function() {
+                var id = $(this).attr('id');
+                $('a[href="#' + id + '"]').closest('.panel-heading').addClass('active-faq');
+                $('a[href="#' + id + '"] .panel-title span').html('<i class="glyphicon glyphicon-minus"></i>');
+            });
+            $('.collapse').on('hide.bs.collapse', function() {
+                var id = $(this).attr('id');
+                $('a[href="#' + id + '"]').closest('.panel-heading').removeClass('active-faq');
+                $('a[href="#' + id + '"] .panel-title span').html('<i class="glyphicon glyphicon-plus"></i>');
+            });
+        });
+    </script>
+    <script type='text/javascript'>
+    jQuery(document).ready(function() {
+        //var url = "{% url 'course_list' %}";
+        //$.ajax({
+        //    type: "GET",
+        //    url: url,
+        //    data: {
+        //        coursetype: "{{ coursetype }}",
+        //    },
+        //    contentType: "application/json; charset=utf-8",
+        //    dataType: "json",
+
+        //    success: function(data) {
+        //        console.log(data);
+        //    },
+
+        //    error: function(jqXHR, textStatus, errorThrown) {
+        //        alert('Error: ' + errorThrown);
+        //    }
+        //});
+    //$("#btn_add_new_date").click(function(){
+    //    console.log("clicked");
+    //    //$('#space_for_dates').append('<br>a datepicker <input class="datepicker_recurring_start"/>');
+    //   $('#space_for_dates').append('<div class="input-group date"><input type="text" class="form-control datepicker_recurring_start"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span></div>');
+
+    //});
+
+    $('body').on('focus',".datepicker_course_january", function(){
+        $(this).datepicker({
+            format: "dd/mm/yyyy",
+            language: "fr-CH",
+            multidate: true,
+            multidateSeparator: " "
+        });
+    });
+    $('body').on('focus',".datepicker_course_february", function(){
+        $(this).datepicker({
+            format: "dd/mm/yyyy",
+            language: "fr-CH",
+            multidate: true,
+            multidateSeparator: " "
+        });
+    });
+    $('body').on('focus',".datepicker_course_march", function(){
+        $(this).datepicker({
+            format: "dd/mm/yyyy",
+            language: "fr-CH",
+            multidate: true,
+            multidateSeparator: " "
+        });
+    });
+    $('body').on('focus',".datepicker_course_april", function(){
+        $(this).datepicker({
+            format: "dd/mm/yyyy",
+            language: "fr-CH",
+            multidate: true,
+            multidateSeparator: " "
+        });
+    });
+    $('body').on('focus',".datepicker_course_may", function(){
+        $(this).datepicker({
+            format: "dd/mm/yyyy",
+            language: "fr-CH",
+            multidate: true,
+            multidateSeparator: " "
+        });
+    });
+    $('body').on('focus',".datepicker_course_june", function(){
+        $(this).datepicker({
+            format: "dd/mm/yyyy",
+            language: "fr-CH",
+            multidate: true,
+            multidateSeparator: " "
+        });
+    });
+    $('body').on('focus',".datepicker_course_july", function(){
+        $(this).datepicker({
+            format: "dd/mm/yyyy",
+            language: "fr-CH",
+            multidate: true,
+            multidateSeparator: " "
+        });
+    });
+    $('body').on('focus',".datepicker_course_august", function(){
+        $(this).datepicker({
+            format: "dd/mm/yyyy",
+            language: "fr-CH",
+            multidate: true,
+            multidateSeparator: " "
+        });
+    });
+    $('body').on('focus',".datepicker_course_september", function(){
+        $(this).datepicker({
+            format: "dd/mm/yyyy",
+            language: "fr-CH",
+            multidate: true,
+            multidateSeparator: " "
+        });
+    });
+    $('body').on('focus',".datepicker_course_october", function(){
+        $(this).datepicker({
+            format: "dd/mm/yyyy",
+            language: "fr-CH",
+            multidate: true,
+            multidateSeparator: " "
+        });
+    });
+    $('body').on('focus',".datepicker_course_november", function(){
+        $(this).datepicker({
+            format: "dd/mm/yyyy",
+            language: "fr-CH",
+            multidate: true,
+            multidateSeparator: " "
+        });
+    });
+    $('body').on('focus',".datepicker_course_december", function(){
+        $(this).datepicker({
+            format: "dd/mm/yyyy",
+            language: "fr-CH",
+            multidate: true,
+            multidateSeparator: " "
+        });
+    });
+
+    });
+    </script>
+{% endblock %}

@@ -32,16 +32,6 @@
     <!-- Page Content -->
     <div class="container" ng-controller="sectionController" ng-init="initSection('{% url 'section_list' %}')">
 
-        <!-- Page Heading/Breadcrumbs -->
-        <div class="row" ng-show="authState.user">
-            <div class="col-lg-12">
-            <div class="alert alert-danger alert_login" role="alert">
-                <b>Avec de grands pouvoirs, viennent de grande responsabilité!</b> N'oubliez pas que <i>vous êtes connecté</i> en tant que <b>{$ authState.user $}</b></br>
-            Cela signifie que vous souhaitez faire des modifications au contenu du site. Si ce n'est pas le cas, vous êtes priés de vous <i>déconnecter </i> depuis le menu <b>Admin</b>
-            </div>
-            </div>
-        </div>
-
         <!-- Modal -->
         <div class="modal fade" id="modalsuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
           <div class="modal-dialog" role="document">
@@ -79,17 +69,9 @@
 
         <div class="row">
             <div class="col-lg-12">
-                <div class="btn-group button_actions_course" role="group" aria-label="...">
-                    <a ng-if="section == undefined" id="btn_section_add_program" class="btn btn-warning button_actions_course" ng-if="authState.user" href="{{ URL_PREFIX }}/add_program/">
-                        <i class="fa fa-plus-circle fa-2x"></i> Ajouter un programme
-                    </a>
-                    <a ng-if="section != undefined" id="btn_section_update_program" class="btn btn-warning button_actions_course" ng-if="authState.user" href="{{ URL_PREFIX }}/edit_program/?sectionid={$ section.id $}">
-                        <i class="fa fa-plus-circle fa-2x"></i> Mettre à jour le programme
-                    </a>
-                    <a id="btn_section_download_programme" class="btn btn-success button_actions_course" ng-if="authState.user" buttondownloadprogram>
-                        <i class="fa fa-download fa-2x"></i> Télécharger programme
-                    </a>
-                </div>
+                <a id="btn_section_download_programme" class="btn btn-success button_actions_course button_download" buttondownloadprogram>
+                    <i class="fa fa-download fa-2x"></i> Télécharger programme
+                </a>
                 <h1 class="page-header">
                 <img class="img-responsive logo-img-program" src="{% static 'img/sama_logo.png' %}" alt="">
             </div>
