@@ -70,32 +70,6 @@ class SectionCreationNewView(ListCreateAPIView):
     def list(self, request):
         queryset = Section.objects.all()
 
-        #sorting queryset course by date
-        idx_course = 0
-        course_to_sort = []
-        course_idx = {}
-        for item in queryset:
-            section_program = json.loads(item.section_program)
-            if section_program.has_key('dates'):
-                dates = section_program['dates']
-                if len(dates.split(' ')) > 1:
-                    course_list=[]
-                    for date in dates.split(' '):
-                        course_list.append(date)
-                    sorted_course_list = sorted(course_list, key=lambda d: map(int, reversed(d.split('-'))))
-                    course_to_sort.append(sorted_course_list[0])
-                    course_idx[sorted_course_list[0]] = idx_course
-                else:
-                    course_to_sort.append(dates)
-                    course_idx[dates] = idx_course
-                idx_course +=1
-
-        sorted_course_list = sorted(course_to_sort, key=lambda d: map(int, reversed(d.split('-'))))
-        tempqueryset = []
-        for course in sorted_course_list:
-            tempqueryset.append(queryset[course_idx[course]])
-        queryset = tempqueryset
-
         serializer = BasicSectionSerializer(queryset, many=True, context={'request': request})
 
         return Response(serializer.data)

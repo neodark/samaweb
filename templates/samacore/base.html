@@ -67,11 +67,9 @@
                     <li>
                         <a href="{% url 'faq' %}">FAQ</a>
                     </li>
-                    <!--
                     <li>
-                        <a href="about.html">Membres</a>
+                        <a href="{% url 'membres' %}">Membres</a>
                     </li>
-                    -->
                     <li>
                         <a href="{% url 'admin_login' %}">Admin</a>
                     </li>
@@ -168,9 +166,11 @@
     <!-- App libs -->
     <script src="{% static 'samaweb/app/app.js' %}"></script>
     <script src="{% static 'samaweb/app/app.config.js' %}"></script>
+    <script src="{% static 'samaweb/app/controllers/sectionController.js' %}" type="text/javascript" charset="utf-8"></script>
     <script src="{% static 'samaweb/app/controllers/courseController.js' %}" type="text/javascript" charset="utf-8"></script>
     <script src="{% static 'samaweb/app/controllers/authController.js' %}" type="text/javascript" charset="utf-8"></script>
     <script src="{% static 'samaweb/app/services/authStateService.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'samaweb/app/factories/sectionFactory.js' %}" type="text/javascript" charset="utf-8"></script>
     <script src="{% static 'samaweb/app/factories/courseFactory.js' %}" type="text/javascript" charset="utf-8"></script>
     <script src="{% static 'samaweb/app/factories/authFactory.js' %}" type="text/javascript" charset="utf-8"></script>
 
