@@ -1,0 +1,181 @@
+{% extends "samacore/base.html" %}
+
+{% load staticfiles %}
+
+{% load samacore_extras %}
+
+{% block title %}FAQ{% endblock %}
+
+{% block section %}faq{% endblock %}
+
+{% block content %}
+
+    <!-- Bootstrap Datepicker CSS -->
+    <link href="{% static 'css/bootstrap-datepicker3.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-datepicker3.standalone.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-datepicker.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-datepicker.standalone.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-datepicker3.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-datepicker3.standalone.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-datepicker.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/bootstrap-datepicker.standalone.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/course_style.css' %}" rel="stylesheet">
+
+    <!-- Bootstrap Datepicker libs -->
+    <script src="{% static 'js/bootstrap-datepicker.js' %}"></script>
+    <script src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
+    <script src="{% static 'js/locales/bootstrap-datepicker.fr-CH.min.js' %}"></script>
+
+    <!-- App libs -->
+    <script src="{% static 'samaweb/app/directives/sectionView.js' %}" type="text/javascript" charset="utf-8"></script>
+
+    <!-- Page Content -->
+    <div class="container" ng-controller="sectionController" ng-init="initSection('{% url 'section_list' %}')">
+
+        <!-- Modal -->
+        <div class="modal fade" id="modalsuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Nouveau cours</h4>
+              </div>
+              <div class="modal-body">
+                Modification sur le programme effectué avec succès!
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" onClick="location.href='{{URL_PREFIX}}/specific_cours/?coursetype={{coursetype}}'">OK</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="modalfailure" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Nouveau cours</h4>
+              </div>
+              <div class="modal-body">
+                Erreur dans l'ajout du programme.
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <a id="btn_section_download_programme" class="btn btn-success button_actions_course button_download" buttondownloadprogram>
+                    <i class="fa fa-download fa-2x"></i> Télécharger programme
+                </a>
+                <h1 class="page-header">
+                <img class="img-responsive logo-img-program" src="{% static 'img/sama_logo.png' %}" alt="">
+            </div>
+        </div>
+
+        <!-- /.row -->
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h3 class="panel-title">Programme annuel {$ year $}</h3>
+          </div>
+          <div class="panel-body">
+            <!--<a id="btn_add_new_date" class="btn btn-warning button_new_course_date" ng-if="authState.user">
+                <i class="fa fa-plus-circle fa-2x"></i> Ajouter une nouvelle date de cours
+            </a>-->
+            <div class="row table-responsive">
+              <div class="col-sm-12">
+                <table class="table table-hover table-striped table-condensed">
+                  <thead>
+                    <tr>
+                      <td><b> Mois </b></td>
+                      <td><b> Date </b></td>
+                      <td><b> Heures </b></td>
+                      <td><b> Lieu </b></td>
+                      <td><b> Cours </b></td>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="(course_key, course_val) in section.section_program" item="course_key">
+                    <td> {$ course_val.month $} </td>
+                    <td> {$ course_val.dates $} </td>
+                    <td> {$ course_val.time $} </td>
+                    <td> {$ course_val.location $} </td>
+                    <td> {$ course_val.topic $} </td>
+                    </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; SamaMartigny 2016</p>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+    <!-- /.container -->
+    <script type='text/javascript'>
+        $(document).ready(function() {
+            $('.collapse').on('show.bs.collapse', function() {
+                var id = $(this).attr('id');
+                $('a[href="#' + id + '"]').closest('.panel-heading').addClass('active-faq');
+                $('a[href="#' + id + '"] .panel-title span').html('<i class="glyphicon glyphicon-minus"></i>');
+            });
+            $('.collapse').on('hide.bs.collapse', function() {
+                var id = $(this).attr('id');
+                $('a[href="#' + id + '"]').closest('.panel-heading').removeClass('active-faq');
+                $('a[href="#' + id + '"] .panel-title span').html('<i class="glyphicon glyphicon-plus"></i>');
+            });
+        });
+    </script>
+    <script type='text/javascript'>
+    jQuery(document).ready(function() {
+        //var url = "{% url 'course_list' %}";
+        //$.ajax({
+        //    type: "GET",
+        //    url: url,
+        //    data: {
+        //        coursetype: "{{ coursetype }}",
+        //    },
+        //    contentType: "application/json; charset=utf-8",
+        //    dataType: "json",
+
+        //    success: function(data) {
+        //        console.log(data);
+        //    },
+
+        //    error: function(jqXHR, textStatus, errorThrown) {
+        //        alert('Error: ' + errorThrown);
+        //    }
+        //});
+    //$("#btn_add_new_date").click(function(){
+    //    console.log("clicked");
+    //    //$('#space_for_dates').append('<br>a datepicker <input class="datepicker_recurring_start"/>');
+    //   $('#space_for_dates').append('<div class="input-group date"><input type="text" class="form-control datepicker_recurring_start"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span></div>');
+
+    //});
+
+    $('body').on('focus',".datepicker_course", function(){
+        $(this).datepicker({
+            format: "dd/mm/yyyy",
+            language: "fr-CH",
+            multidate: true,
+            multidateSeparator: " "
+        });
+    });
+
+    });
+    </script>
+{% endblock %}

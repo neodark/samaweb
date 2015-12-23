@@ -9,6 +9,12 @@ from rest_framework.generics import (
 
 from api.serializers import UserSerializer
 
+from samacore.models import Section
+from api.serializers import BasicSectionSerializer, SectionCreationSerializer, SectionUpdateSerializer
+
+from api.serializers import SectionCreationFailedException
+
+
 from samacore.models import Course
 from api.serializers import BasicCourseSerializer, CourseCreationSerializer, CourseUpdateSerializer
 
@@ -46,6 +52,106 @@ from django.conf.urls.static import static
 # Create your views here.
 
 # Class based views
+
+class SectionCreationNewView(ListCreateAPIView):
+    """
+    List/Create APIView
+    """
+    model = Section
+    serializer_class = BasicSectionSerializer
+    writing_serializer_class =  SectionCreationSerializer
+
+    def get_serializer(self, *args, **kwargs):
+        if self.request.method == 'POST':
+            self.serializer_class = self.writing_serializer_class
+
+        return super(SectionCreationNewView, self).get_serializer(*args, **kwargs)
+
+    def list(self, request):
+        queryset = Section.objects.all()
+
+        serializer = BasicSectionSerializer(queryset, many=True, context={'request': request})
+
+        return Response(serializer.data)
+
+    def post(self, request):
+
+        serializer = self.get_serializer(data=request.data, context={'request': request}, partial=True)
+        serializer.is_valid(raise_exception=True)
+        try:
+            section = serializer.save()
+        except SectionCreationFailedException:
+            pass
+
+        details = serializer.details
+
+        if details['success']:
+            result = {
+                'status_api' : 'success_creation',
+                'section_program' : section.section_program,
+            }
+            return Response(result, status=status.HTTP_201_CREATED)
+        else:
+            return BadRequestResponse()
+
+class SectionDetailView(RetrieveUpdateDestroyAPIView):
+    model = Section
+    serializer_class = BasicSectionSerializer
+    writing_serializer_class = SectionUpdateSerializer
+
+    def get_queryset(self, object_id):
+        #queryset = Section.objects.all()
+        queryset = Section.objects.get(id=object_id)
+        return queryset
+
+    def get_serializer(self, *args, **kwargs):
+        if self.request.method in ['PUT', 'PATCH']:
+            self.serializer_class = self.writing_serializer_class
+
+        return super(SectionDetailView, self).get_serializer(*args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        if self.kwargs.has_key('pk'):
+            section = self.get_queryset(self.kwargs.get('pk'))
+            serializer = self.serializer_class(section, context={'request': request})
+            data = serializer.data
+
+            return Response(data)
+
+    def delete(self, request, *args, **kwargs):
+        if self.kwargs.has_key('pk'):
+            section = self.get_queryset(self.kwargs.get('pk'))
+            section.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def update(self, request, *args, **kwargs):
+        # Process the query string
+        if request.GET.has_key('fields'):
+            fields_to_return = request.GET['fields'].split(',')
+        else:
+            # Available fields (not returned by default):
+            #    - html_description
+            fields_to_return = []
+
+        if self.kwargs.has_key('pk'):
+            section = self.get_queryset(self.kwargs.get('pk'))
+
+            serializer = self.writing_serializer_class(section, data=request.data, partial=True)
+            if not(serializer.is_valid()):
+                return BadRequestResponse(serializer.errors)
+
+            db_object = serializer.save()
+            #details = serializer.details
+
+            result = {
+                'status_api' : 'success_update',
+                'section_program' : section.section_program,
+            }
+
+            response = Response(result, status=status.HTTP_200_OK)
+            #response['Location'] = result['url']
+            return response
+
 
 class CourseCreationNewView(ListCreateAPIView):
     """

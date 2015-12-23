@@ -8,10 +8,22 @@
     float: right;
 }
 
+.button_download
+{
+    float: right;
+    margin-top: 0.5em;
+}
+
+
 img.course-img
 {
     display:inline;
     max-width: 2em;
+}
+
+img.logo-img-program
+{
+    display:inline;
 }
 
 select.course_add

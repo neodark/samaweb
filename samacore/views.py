@@ -39,6 +39,35 @@ def faq(request):
     context = {'params': param_1}
     return render(request, 'samacore/faq.html', context)
 
+def membres(request):
+    param_1 = 2
+    context = {'params': param_1}
+    if request.user.is_anonymous():
+        return render(request, 'samacore/section_program_section.html', context)
+    else:
+        return render(request, 'samacore/section_program_section_admin.html', context)
+
+def add_program(request):
+
+    context = {}
+
+    if request.user.is_anonymous():
+        raise exceptions.PermissionDenied
+    else:
+        return render(request, 'samacore/section_program_add.html', context)
+
+def edit_program(request):
+    if request.GET.has_key('sectionid'):
+        sectionid = request.GET['sectionid']
+
+    context = {'sectionid': sectionid}
+
+    if request.user.is_anonymous():
+        raise exceptions.PermissionDenied
+    else:
+        return render(request, 'samacore/section_program_edit.html', context)
+
+
 def course(request):
     coursetype = ''
     coursestatus = ''
