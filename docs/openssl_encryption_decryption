@@ -1,0 +1,11 @@
+#Generate private key
+openssl genrsa -out samaweb_private_key.pem 4096
+
+#Generate public key associated to the private key
+openssl rsa -in private_key.pem -out public_key.pem -outform PEM -pubout
+
+#Encrypting data
+openssl rsautl -encrypt -inkey public_key.pem -pubin -in encrypt.txt -out encrypt.dat
+
+#Decrypting data
+openssl rsautl -decrypt -inkey private_key.pem -in encrypt.dat -out decrypt.txt
