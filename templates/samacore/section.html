@@ -51,7 +51,7 @@
     Comme vous pouvez le constater, nous ne sommes pas au chômage et recherchons de nouveaux membres qui pourraient venir étoffer nos rangs et apporter des forces vives à notre section.
     </p>
     <p>
-    MARTIGNY, FEVRIER 2007               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                   LA PRESIDENTE I.UDRY                    
+    MARTIGNY, FEVRIER 2016
     </p>
     
     </div>
@@ -111,14 +111,14 @@
         data.addColumn('string', 'Manager');
         data.addColumn('string', 'ToolTip');
         data.addRows([
-                [{v:'Udry', f:'Isabelle UDRY<div style="color:red; font-style:italic">Présidente de Section</div>'}, '', 'Presidente'],
-                [{v:'Heritier', f:'Clément HERITIER<div style="color:red; font-style:italic">Vice Président</div>'}, 'Udry', 'Vice-President'],
-                [{v:'Kalbermatten', f:'Béatrice KALBERMATTEN<div style="color:red; font-style:italic">Caissière</div>'}, 'Heritier', 'Caissiere'],
-                [{v:'Neveu', f:'Morgane NEVEU<div style="color:red; font-style:italic">Secrétaire</div>'}, 'Heritier', 'Secretaire'],
-                [{v:'Perraudin', f:'Dr Georges Perraudin<div style="color:red; font-style:italic">Médecin de Section</div>'}, 'Heritier', 'Medecin'],
-                [{v:'Follonier', f:'Léa FOLLONIER<div style="color:red; font-style:italic">Responsable Matériel</div>'}, 'Heritier', 'Materiel'],
-                [{v:'Tarsetti', f:'Flavio TARSETTI<div style="color:red; font-style:italic">Responsable Commission Technique & Moniteur</div>'}, 'Heritier', 'Commission Technique'],
-                [{v:'LoCicero', f:'Nadine LOCICERO<div style="color:red; font-style:italic">Monitrice</div>'}, 'Tarsetti', 'Monitrice']
+                [{v:'Decurnex', f:'Christian DECURNEX<div style="color:red; font-style:italic">Président de Section</div>'}, '', 'President'],
+                [{v:'Udry', f:'Isabelle UDRY<div style="color:red; font-style:italic">Vice Présidente</div>'}, 'Decurnex', 'Vice-Presidente'],
+                [{v:'Kalbermatten', f:'Béatrice KALBERMATTEN<div style="color:red; font-style:italic">Caissière</div>'}, 'Udry', 'Caissiere'],
+                [{v:'Neveu', f:'Morgane NEVEU<div style="color:red; font-style:italic">Secrétaire</div>'}, 'Udry', 'Secretaire'],
+                [{v:'Perraudin', f:'Dr Georges PERRAUDIN<div style="color:red; font-style:italic">Médecin de Section</div>'}, 'Udry', 'Medecin'],
+                [{v:'Cavallucci', f:'Fabrice CAVALLUCCI<div style="color:red; font-style:italic">Responsable Matériel</div>'}, 'Udry', 'Materiel'],
+                [{v:'Tarsetti', f:'Flavio TARSETTI<div style="color:red; font-style:italic">Responsable Commission Technique & Moniteur</div>'}, 'Udry', 'Commission Technique'],
+                [{v:'Aussems', f:'Philippe AUSSEMS<div style="color:red; font-style:italic">Moniteur</div>'}, 'Tarsetti', 'Moniteur']
                 ]);
         var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
         chart.draw(data, {allowHtml:true});
