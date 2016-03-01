@@ -1,3 +1,8 @@
+print "preparing general config"
+print "loading dependencies..."
+
+import os
+
 # generate deployment samaweb/settings.py
 def get_line_number(filename, search_phrase):
     _f = open(filename,'r')
@@ -10,6 +15,7 @@ def get_line_number(filename, search_phrase):
     _f.close()
     return found_line_num
 
+print "writing settings.py file..."
 line_to_add = get_line_number('samaweb/samaweb/deployment_settings.py','TEMPLATE_DEBUG')
 
 f = open("samaweb/samaweb/deployment_settings.py", "r")
@@ -29,13 +35,23 @@ contents = "".join(contents)
 f.write(contents)
 f.close()
 
+print "generate RUN file..."
 # generate RUN
 from shutil import copyfile
-copyfile("deployment_RUN", "samaweb/RUN")
-import os
+copyfile("samaweb_config/samawebdeployment_RUN", "samaweb/RUN")
 os.system("chmod ug+x samaweb/RUN")
 os.system("chmod o-r samaweb/RUN")
 
+print "generate samaweb.pid file..."
 # generate samaweb.pid
 from shutil import copyfile
-copyfile("deployment_samaweb_pid", "samaweb/samaweb.pid")
+copyfile("samaweb_config/deployment_samaweb_pid", "samaweb/samaweb.pid")
+
+print "collect static files..."
+# collect static files
+os.system("python samaweb/manage.py collectstatic")
+
+print "relaunch server..."
+# relaunch server
+os.system("./init/samaweb restart")
+print "preparing general config"
