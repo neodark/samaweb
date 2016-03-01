@@ -22,7 +22,7 @@ f = open("samaweb/samaweb/deployment_settings.py", "r")
 contents = f.readlines()
 f.close()
 
-f = open("settings_data_to_insert.txt", "r")
+f = open("samaweb_config/settings_data_to_insert.txt", "r")
 contents_to_insert = f.readlines()
 f.close()
 
@@ -38,7 +38,7 @@ f.close()
 print "generate RUN file..."
 # generate RUN
 from shutil import copyfile
-copyfile("samaweb_config/samawebdeployment_RUN", "samaweb/RUN")
+copyfile("samaweb_config/deployment_RUN", "samaweb/RUN")
 os.system("chmod ug+x samaweb/RUN")
 os.system("chmod o-r samaweb/RUN")
 
