@@ -12,6 +12,9 @@ Bonjour __TAG_PERSON__,
 Nous vous confirmons votre inscriptions pour <b>le cours __TAG_COURSE_TYPE__ </b>:
 <br>
 <br>
+    <i>Prix du cours</i>: 150.- (à régler le premier soir)
+<br>
+<br>
     <i>Dates du cours</i>: __TAG_COURSE_DATES__
 <br>
 <br>
