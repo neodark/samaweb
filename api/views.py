@@ -523,7 +523,9 @@ class AuthView(APIView):
         username = base64.standard_b64decode(request.data["username"])
         password = base64.standard_b64decode(request.data["password"])
         user = authenticate(username=username, password=password)
-        login(request, user)
+        #Check if user has been successfully authenticated
+        if user != None:
+            login(request, user)
         return Response(serializers.UserSerializer(user).data)
 
     def delete(self, request, *args, **kwargs):
