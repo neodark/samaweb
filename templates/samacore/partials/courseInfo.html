@@ -20,8 +20,24 @@
                         et de l'utilisation du défibrillateur.</p>
                 <p ng-if="course_type == 'UPE'">Enseignement des techniques de premiers secours en cas d'Urgence
                         pour la Petite Enfance.</p>
-                <p><i>Prix du cours (à régler, sur place, le premier jour du cours):</i><br>
-                <b>150.-</b></p>
+                <p><i>Prix du cours (à régler par versement bancaire au minimum 2 jours avant le cours!):</i><br>
+                <b>150.-</b><br>
+
+				<ul class="list-group">
+				  <li class="list-group-item">
+					<i class="fas fa-university"></i>
+						UBS - 1920 Martigny
+				  </li>
+				  <li class="list-group-item">
+					<i class="fas fa-info-circle"></i>
+						Titulaire : Section des Samaritains<br>
+						IBAN : CH52 0026 4264 6228 92J1 N<br>
+					<i class="fas fa-edit"></i>
+						Mention : {$ course_type $} NOM PRÉNOM {$ course.additional_information.dates $}
+				  </li>
+				</ul>
+
+                </p>
                 <p><i>Dates du cours:</i><br>
                 <b>{$ course.additional_information.dates $}</b></p>
                 <p><i>Horaires du cours:</i><br>
