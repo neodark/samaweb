@@ -24,7 +24,7 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
    $scope.gender_db_selection = ["M", "F"];
    $scope.current_course_type;
    $scope.gender = [];
-   $scope.new_course_address = "Martigny - Rue de Rossetan - sous la salle de gymnastique";
+   $scope.new_course_address = "Martigny - Rue de Rossettan - sous la salle de gymnastique";
    $scope.new_course_time = "Les cours ont lieu de 19h à 22h";
    $scope.new_course_dates = "";
    $scope.new_course_maximum_participants = 12;
