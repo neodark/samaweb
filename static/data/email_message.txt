@@ -12,23 +12,22 @@ Bonjour __TAG_PERSON__,
 Nous vous confirmons votre inscriptions pour <b>le cours __TAG_COURSE_TYPE__ </b>:
 <br>
 <br>
-    <p><b>Prix du cours: 150.- (à régler par versement bancaire au minimum 2 jours avant le cours!)</b><br>
+<b>Prix du cours: 150.- (à régler par versement bancaire au minimum 2 jours avant le cours!)</b><br>
 
 	<ul class="list-group">
 	  <li class="list-group-item">
-	    <i class="fas fa-university"></i>
-	        UBS - 1920 Martigny
+	        PostFinance SA - 1920 Martigny
 	  </li>
-	  <li class="list-group-item">
-	    <i class="fas fa-info-circle"></i>
-	        Titulaire : Section des Samaritains<br>
-	        IBAN : CH52 0026 4264 6228 92J1 N<br>
-	    <i class="fas fa-edit"></i>
-	        Mention : {$ course_type $} NOM PRÉNOM {$ course.additional_information.dates $}
+	  <li class="list-group">
+            Titulaire : Section des Samaritains de Martigny
+      </li>
+	  <li class="list-group">
+	        IBAN : CH88 0900 0000 1900 9896 8<br>
+      </li>
+	  <li class="list-group">
+	        Mention : __TAG_COURSE_TYPE__ NOM PRÉNOM __TAG_COURSE_DATES__
 	  </li>
 	</ul>
-
-    </p>
 
 <br>
 <br>
