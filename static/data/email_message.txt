@@ -25,7 +25,10 @@ Nous vous confirmons votre inscriptions pour <b>le cours __TAG_COURSE_TYPE__ </b
 	        IBAN : CH88 0900 0000 1900 9896 8<br>
       </li>
 	  <li class="list-group">
-	        Mention : __TAG_COURSE_TYPE__ NOM PRÉNOM __TAG_COURSE_DATES__
+	        Mention :
+                __TAG_COURSE_TYPE__
+                NOM PRÉNOM
+                __TAG_COURSE_DATES__
 	  </li>
 	</ul>
 
