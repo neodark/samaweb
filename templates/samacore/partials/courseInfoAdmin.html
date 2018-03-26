@@ -48,11 +48,11 @@
                 <b>{$ course.max_inscription_counter - course.inscription_counter $}/{$ course.max_inscription_counter $}</b></p>
                 <div class="btn-group" role="group" aria-label="...">
                   <a id="btn_course_edit" href="{{URL_PREFIX}}/edit_cours/?coursetype={$ course_type $}&courseid={$ course.id $}" class="btn btn-success button_actions_course" ng-if="authState.user">
-                      <i class="fa fa-pencil fa-2x"></i> Editer le cours
+                      <i class="fas fa-pencil-alt fa-2x"></i> Editer le cours
                   </a>
                   <a id="btn_course_participants" href="{{URL_PREFIX}}/participants_cours/?coursetype={$ course_type $}&courseid={$ course.id $}" class="btn btn-primary button_actions_course" ng-if="authState.user">
                       <i class="fa fa-user fa-2x"></i>
-                      <i class="fa fa-pencil"></i>
+                      <i class="fas fa-pencil-alt"></i>
                       <i class="fa fa-plus-circle"></i>
                       <i class="fa fa-minus-circle"></i>
                       Participant
