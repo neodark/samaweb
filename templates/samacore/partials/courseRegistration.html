@@ -15,7 +15,22 @@
                     Merci pour votre inscription au cours <b>{$ coursetype $}</b>!
                     <p>Un email de confirmation vous sera envoyé dans les prochaines minutes.</p>
                     <p>Dernier rappel des informations concernant le cours:</p>
-                    <p><b>Prix du cours: 150.- (à régler le premier soir)</b><br>
+                    <p><b>Prix du cours: 150.- (à régler par versement bancaire au minimum 2 jours avant le cours!)</b><br>
+
+				    <ul class="list-group">
+				      <li class="list-group-item">
+				        <i class="fas fa-university"></i>
+				            UBS - 1920 Martigny
+				      </li>
+				      <li class="list-group-item">
+				        <i class="fas fa-info-circle"></i>
+				            Titulaire : Section des Samaritains<br>
+				            IBAN : CH52 0026 4264 6228 92J1 N<br>
+				        <i class="fas fa-edit"></i>
+				            Mention : {$ course_type $} NOM PRÉNOM {$ course.additional_information.dates $}
+				      </li>
+				    </ul>
+
                     </p>
                     <p><b>Dates du cours:</b><br>
                     <i>{$ single_course_dates $}</i>
