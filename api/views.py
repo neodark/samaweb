@@ -32,6 +32,7 @@ from rest_framework.views import APIView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from rest_framework import viewsets
+from rest_framework import permissions
 from rest_framework.permissions import AllowAny
 
 from .permissions import IsStaffOrTargetUser
@@ -320,6 +321,15 @@ class ParticipantCreationView(ListCreateAPIView):
     model = Participant
     serializer_class = BasicParticipantSerializer
     writing_serializer_class =  ParticipantCreationSerializer
+
+    def get_permissions(self):
+        permission_classes = []
+        if self.request.method == 'GET':
+            permission_classes = [permissions.IsAuthenticated]
+
+        self.permission_classes = permission_classes
+
+        return super(ParticipantCreationView, self).get_permissions()
 
     def get_serializer(self, *args, **kwargs):
         if self.request.method == 'POST':
