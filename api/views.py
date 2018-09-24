@@ -209,7 +209,11 @@ class CourseCreationNewView(ListCreateAPIView):
                     course_idx[dates] = idx_course
                 idx_course +=1
 
-        sorted_course_list = sorted(course_to_sort, key=lambda d: map(int, reversed(d.split('-'))))
+        if len(course_to_sort) > 0:
+            sorted_course_list = sorted(course_to_sort, key=lambda d: map(int, reversed(d.split('-'))))
+        else:
+            sorted_course_list = []
+
         tempqueryset = []
         for course in sorted_course_list:
             tempqueryset.append(queryset[course_idx[course]])
