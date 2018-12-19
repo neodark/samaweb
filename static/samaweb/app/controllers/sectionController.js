@@ -64,6 +64,16 @@ app.controller('sectionController',['$scope', 'sectionFactory', 'authState', 'au
    var currentTime = new Date();
    var year = currentTime.getFullYear();
 
+	endYearTime = new Date(year, 11, 14);
+	if( currentTime < endYearTime)
+	{
+		//Don't change the year
+	}
+	else
+	{
+		year+=1;
+	}
+
    $scope.year = year;
 
    $scope.initSection = function(section_list_url)
