@@ -138,6 +138,18 @@
                     {% endif %}
                   {% endfor %}
                 </select>
+                <br>
+                Prix du cours:
+                {% mkrange 90 170 20 as price %}
+                <select class="form-control course_add" ng-if="course_type == 'UPE'" ng-model="new_course_price">
+                  {% for j in price %}
+                    {% if j == 90 %}
+                        <option ng-if="course_type == 'UPE'" selected>{{j}}</option>
+                    {% else %}
+                        <option ng-if="course_type != 'UPE'">{{j}}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
           </div>
         </div>
 

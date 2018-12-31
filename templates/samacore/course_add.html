@@ -138,6 +138,22 @@
                     {% endif %}
                   {% endfor %}
                 </select>
+                <br><br>
+                Prix du cours:
+                {% mkrange 1 17 1 as num_participant %}
+                <select class="form-control course_add" ng-model="new_course_maximum_participants">
+                  {% for i in num_participant %}
+                    {% if i == 12 %}
+                        <option selected>{{i}}</option>
+                        <!-- to be used in case of conditional course maximum>
+                        <option ng-if="course_type == 'Sauveteurs'" selected>{{i}}</option>
+                        <option ng-if="course_type != 'Sauveteurs'">{{i}}</option>
+                        <-->
+                    {% else %}
+                    <option>{{i}}</option>
+                    {% endif %}
+                  {% endfor %}
+                </select>
           </div>
         </div>
 

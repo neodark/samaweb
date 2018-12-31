@@ -62,6 +62,7 @@ class SamaTestCase(APITestCase):
                      'status':'O',\
                      'course_type':'B',\
                      'max_inscription_counter':12,\
+                     'course_price':10,\
                      'additional_information':{\
                         'dates':'10-02-2015 10-03-2015',\
                         'location':'Geneva',\
@@ -73,6 +74,7 @@ class SamaTestCase(APITestCase):
                      'status':'O',\
                      'course_type':'B',\
                      'max_inscription_counter':12,\
+                     'course_price':10,\
                      'additional_information':"{\"dates\": \"10-02-2015 10-03-2015\", \"location\": \"Geneva\", \"time\": \"Le cours a lieu de 19h00 a 22h30\"}"\
                      }
 
@@ -82,6 +84,7 @@ class SamaTestCase(APITestCase):
                      'course_type':'samaritains',\
                      'inscription_counter':0,\
                      'max_inscription_counter':12,\
+                     'course_price':10,\
                      'participants':[],\
                      'additional_information':{\
                         'dates':'10-02-2015 10-03-2015',\
@@ -94,6 +97,7 @@ class SamaTestCase(APITestCase):
                      'status':'C',\
                      'course_type':'D',\
                      'max_inscription_counter':14,\
+                     'course_price':10,\
                      'additional_information':{\
                         'dates':'09-03-2016 07-05-2016',\
                         'location':'Lausanne',\
@@ -105,6 +109,7 @@ class SamaTestCase(APITestCase):
                      'status':'C',\
                      'course_type':'D',\
                      'max_inscription_counter':14,\
+                     'course_price':10,\
                      'additional_information':"{\"dates\": \"09-03-2016 07-05-2016\", \"location\": \"Lausanne\", \"time\": \"Le cours a lieu de 15h00 a 16h45\"}"\
                      }
 
@@ -114,6 +119,7 @@ class SamaTestCase(APITestCase):
                      'course_type':'bls-aed',\
                      'inscription_counter':0,\
                      'max_inscription_counter':14,\
+                     'course_price':10,\
                      'participants':[],\
                      'additional_information':{\
                         'dates':'09-03-2016 07-05-2016',\
@@ -173,6 +179,7 @@ class SamaTestCase(APITestCase):
                      'course_type':'samaritains',\
                      'inscription_counter':1,\
                      'max_inscription_counter':12,\
+                     'course_price':10,\
                      'participants':[self.json_data_participant_post_get_verification],\
                      'additional_information':{\
                         'dates':'10-02-2015 10-03-2015',\
@@ -231,6 +238,7 @@ class SamaTestCase(APITestCase):
                      'course_type':'samaritains',\
                      'inscription_counter':1,\
                      'max_inscription_counter':12,\
+                     'course_price':10,\
                      'participants':[self.json_data_participant_put_get_verification],\
                      'additional_information':{\
                         'dates':'10-02-2015 10-03-2015',\

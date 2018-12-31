@@ -246,6 +246,7 @@ class CourseCreationNewView(ListCreateAPIView):
                 'course_type' : course.course_type,
                 'max_inscription_counter' : course.max_inscription_counter,
                 'additional_information' : course.additional_information,
+                'course_price' : course.course_price,
             }
             return Response(result, status=status.HTTP_201_CREATED)
         else:
@@ -312,6 +313,7 @@ class CourseDetailView(RetrieveUpdateDestroyAPIView):
                 'course_type' : course.course_type,
                 'max_inscription_counter' : course.max_inscription_counter,
                 'additional_information' : course.additional_information,
+                'course_price' : course.course_price,
             }
 
             response = Response(result, status=status.HTTP_200_OK)

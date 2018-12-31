@@ -7,7 +7,7 @@ from samacore.models import Participant
 
 class CourseAdmin(admin.ModelAdmin):
 
-    list_display = ('id', 'status', 'course_type', 'inscription_counter', 'max_inscription_counter', 'additional_information')
+    list_display = ('id', 'status', 'course_type', 'inscription_counter', 'max_inscription_counter', 'additional_information', 'course_price')
 
 admin.site.register(Course, CourseAdmin)
 
