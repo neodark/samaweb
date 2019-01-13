@@ -6,6 +6,7 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
 
    $scope.courses;
    $scope.course_type;
+   $scope.course_price;
    $scope.course_id;
    $scope.course_list_url;
    $scope.single_course_dates;
@@ -28,7 +29,6 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
    $scope.new_course_time = "Les cours ont lieu de 19h à 22h";
    $scope.new_course_dates = "";
    $scope.new_course_maximum_participants = 12;
-   $scope.new_course_price = 90;
    $scope.signup = {};
    $scope.signup_gender_selected;
    $scope.signup_birthdate_selected;
@@ -201,32 +201,36 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
    }
 
 
-   $scope.initCourse = function(course_type, course_list_url)
+   $scope.initCourse = function(course_type, course_price, course_list_url)
    {
        $scope.course_type     = course_type;
+       $scope.course_price    = course_price;
        $scope.course_list_url = course_list_url;
        getCourseData($scope.course_type, $scope.course_list_url);
    }
 
-   $scope.initSingleCourse = function(course_type, course_list_url, course_id)
+   $scope.initSingleCourse = function(course_type, course_price, course_list_url, course_id)
    {
        $scope.course_type     = course_type;
+       $scope.course_price    = course_price;
        $scope.course_list_url = course_list_url;
        getSingleCourseData(course_id, $scope.course_list_url);
    }
 
-   $scope.initCourseRegistration = function(course_type, course_dates, course_time, course_location, course_list_url)
+   $scope.initCourseRegistration = function(course_type, course_price, course_dates, course_time, course_location, course_list_url)
    {
        $scope.course_type     = course_type;
+       $scope.course_price    = course_price;
        $scope.course_list_url = course_list_url;
        $scope.single_course_dates = course_dates;
        $scope.single_course_time = course_time;
        $scope.single_course_location = course_location;
    }
 
-   $scope.initParticipantEdition = function(course_type, course_dates, course_time, course_location, course_list_url, participant_detail_url, participant_id)
+   $scope.initParticipantEdition = function(course_type, course_price, course_dates, course_time, course_location, course_list_url, participant_detail_url, participant_id)
    {
        $scope.course_type     = course_type;
+       $scope.course_price    = course_price;
        $scope.course_list_url = course_list_url;
        $scope.single_course_dates = course_dates;
        $scope.single_course_time = course_time;
@@ -317,11 +321,6 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
 
                //set maximum participants in course edition ui
 			   $scope.new_course_maximum_participants = $scope.singleCourse.max_inscription_counter;
-
-               //set course price in course edition ui
-			   $scope.new_course_price = $scope.singleCourse.course_price;
-
-
            })
            .error(function (error) {
                $scope.status = 'Unable to load course data: ' + error.message;
@@ -511,5 +510,4 @@ app.controller('courseController',['$scope', 'courseFactory', 'authState', 'auth
    //            $scope.status = 'Unable to logout user: ' + error.message;
    //        });
    //}
-
 }]);

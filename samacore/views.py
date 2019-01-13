@@ -13,6 +13,14 @@ import simplejson as json
 # Create your views here.
 
 #from django.http import HttpResponse
+courseprice = {
+        'UPE': 90,
+        'BLS-AED': 90,
+        'Sauveteurs': 130,
+        'IAS1': 150,
+        'IAS2': 150,
+        'Samaritains': 150
+        }
 
 
 def index(request):
@@ -77,6 +85,7 @@ def course(request):
         coursestatus = request.GET['coursestatus']
 
     context = {'coursetype': coursetype,
+               'courseprice': courseprice[coursetype],
                'coursestatus': coursestatus}
     if request.user.is_anonymous():
         return render(request, 'samacore/course.html', context)
@@ -91,7 +100,8 @@ def add_course(request):
         if request.GET.has_key('coursetype'):
             coursetype = request.GET['coursetype']
 
-        context = {'coursetype': coursetype}
+        context = {'coursetype': coursetype,
+                   'courseprice': courseprice[coursetype]}
 
         return render(request, 'samacore/course_add.html', context)
 
@@ -107,6 +117,7 @@ def edit_course(request):
             courseid = request.GET['courseid']
 
         context = {'coursetype': coursetype,
+                   'courseprice': courseprice[coursetype],
                    'courseid': courseid}
 
         return render(request, 'samacore/course_edit.html', context)
@@ -123,6 +134,7 @@ def archive_course(request):
             courseid = request.GET['courseid']
 
         context = {'coursetype': coursetype,
+                   'courseprice': courseprice[coursetype],
                    'courseid': courseid}
 
         return render(request, 'samacore/course_archive.html', context)
@@ -168,6 +180,7 @@ def participant_course_edit(request):
             participant = Participant.objects.get(id=participantid)
 
         context = {'coursetype': coursetype,
+                   'courseprice': courseprice[coursetype],
                    'courseid': courseid,
                    'coursedates': coursedates,
                    'coursetime': coursetime,
@@ -201,6 +214,7 @@ def participant_course_delete(request):
             participant = Participant.objects.get(id=participantid)
 
         context = {'coursetype': coursetype,
+                   'courseprice': courseprice[coursetype],
                    'courseid': courseid,
                    'coursedates': coursedates,
                    'coursetime': coursetime,
@@ -234,6 +248,7 @@ def register_course(request):
 
 
     context = {'coursetype': coursetype,
+               'courseprice': courseprice[coursetype],
                'courseid': courseid,
                'coursedates': coursedates,
                'coursetime': coursetime,

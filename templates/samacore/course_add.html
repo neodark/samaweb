@@ -30,7 +30,7 @@
     <script src="{% static 'samaweb/app/directives/courseView.js' %}" type="text/javascript" charset="utf-8"></script>
 
     <!-- Page Content -->
-    <div class="container" ng-init="initCourse('{{ coursetype }}', '{% url 'course_list' %}')">
+    <div class="container" ng-init="initCourse('{{ coursetype }}', '{{ courseprice }}', '{% url 'course_list' %}')">
 
         <!-- Page Heading/Breadcrumbs -->
         <div class="row" ng-show="authState.user">
@@ -125,7 +125,7 @@
                 <br><br>
                 Nombre maximum de participants:
                 {% mkrange 1 17 1 as num_participant %}
-                <select class="form-control course_add" ng-model="new_course_maximum_participants">
+                <select ng-model="new_course_maximum_participants" class="form-control course_add">
                   {% for i in num_participant %}
                     {% if i == 12 %}
                         <option selected>{{i}}</option>
@@ -138,22 +138,9 @@
                     {% endif %}
                   {% endfor %}
                 </select>
-                <br><br>
+                <br>
                 Prix du cours:
-                {% mkrange 1 17 1 as num_participant %}
-                <select class="form-control course_add" ng-model="new_course_maximum_participants">
-                  {% for i in num_participant %}
-                    {% if i == 12 %}
-                        <option selected>{{i}}</option>
-                        <!-- to be used in case of conditional course maximum>
-                        <option ng-if="course_type == 'Sauveteurs'" selected>{{i}}</option>
-                        <option ng-if="course_type != 'Sauveteurs'">{{i}}</option>
-                        <-->
-                    {% else %}
-                    <option>{{i}}</option>
-                    {% endif %}
-                  {% endfor %}
-                </select>
+				<label>{{ courseprice }}</label>
           </div>
         </div>
 

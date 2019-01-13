@@ -395,10 +395,12 @@ class ParticipantCreationView(ListCreateAPIView):
                 mydict["__TAG_COURSE_TYPE__"] = "%s"%value
                 break
 
+        mydict["__TAG_COURSE_PRICE__"] = "%s"%course.course_price
+
         mydict["__TAG_COURSE_DATES__"] = "%s"%additional_information["dates"].encode('utf-8')
         mydict["__TAG_COURSE_TIME__"] = "%s"%additional_information["time"].encode('utf-8')
         mydict["__TAG_COURSE_LOCATION__"] = "%s"%additional_information["location"].encode('utf-8')
-        tags = ["__TAG_LOGO__", "__TAG_PERSON__", "__TAG_COURSE_TYPE__", "__TAG_COURSE_DATES__",
+        tags = ["__TAG_LOGO__", "__TAG_PERSON__", "__TAG_COURSE_TYPE__", "__TAG_COURSE_PRICE__", "__TAG_COURSE_DATES__",
                 "__TAG_COURSE_TIME__", "__TAG_COURSE_LOCATION__"]
 
         final_text = ""

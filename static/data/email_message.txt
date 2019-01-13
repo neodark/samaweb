@@ -12,7 +12,7 @@ Bonjour __TAG_PERSON__,
 Nous vous confirmons votre inscriptions pour <b>le cours __TAG_COURSE_TYPE__ </b>:
 <br>
 <br>
-<b>Prix du cours: 150.- (à régler par versement bancaire au minimum 2 jours avant le cours!)</b><br>
+<b>Prix du cours: __TAG_COURSE_PRICE__.-(à régler par versement bancaire au minimum 2 jours avant le cours!)</b><br>
 
 	<ul class="list-group">
 	  <li class="list-group-item">

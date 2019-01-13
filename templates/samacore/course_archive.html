@@ -30,7 +30,7 @@
     <script src="{% static 'samaweb/app/directives/courseView.js' %}" type="text/javascript" charset="utf-8"></script>
 
     <!-- Page Content -->
-    <div class="container" ng-init="initSingleCourse('{{ coursetype }}', '{% url 'course_list' %}', '{{ courseid }}')">
+    <div class="container" ng-init="initSingleCourse('{{ coursetype }}', '{{ courseprice }}', '{% url 'course_list' %}', '{{ courseid }}')">
 
         <!-- Page Heading/Breadcrumbs -->
         <div class="row" ng-show="authState.user">
@@ -154,6 +154,10 @@
                     {% endif %}
                   {% endfor %}
                 </select>
+                <br>
+                Prix du cours:
+				<label>{{ courseprice }}</label>
+
           </div>
         </div>
 
