@@ -246,6 +246,7 @@ class CourseCreationNewView(ListCreateAPIView):
                 'course_type' : course.course_type,
                 'max_inscription_counter' : course.max_inscription_counter,
                 'additional_information' : course.additional_information,
+                'course_price' : course.course_price,
             }
             return Response(result, status=status.HTTP_201_CREATED)
         else:
@@ -312,6 +313,7 @@ class CourseDetailView(RetrieveUpdateDestroyAPIView):
                 'course_type' : course.course_type,
                 'max_inscription_counter' : course.max_inscription_counter,
                 'additional_information' : course.additional_information,
+                'course_price' : course.course_price,
             }
 
             response = Response(result, status=status.HTTP_200_OK)
@@ -393,10 +395,12 @@ class ParticipantCreationView(ListCreateAPIView):
                 mydict["__TAG_COURSE_TYPE__"] = "%s"%value
                 break
 
+        mydict["__TAG_COURSE_PRICE__"] = "%s"%course.course_price
+
         mydict["__TAG_COURSE_DATES__"] = "%s"%additional_information["dates"].encode('utf-8')
         mydict["__TAG_COURSE_TIME__"] = "%s"%additional_information["time"].encode('utf-8')
         mydict["__TAG_COURSE_LOCATION__"] = "%s"%additional_information["location"].encode('utf-8')
-        tags = ["__TAG_LOGO__", "__TAG_PERSON__", "__TAG_COURSE_TYPE__", "__TAG_COURSE_DATES__",
+        tags = ["__TAG_LOGO__", "__TAG_PERSON__", "__TAG_COURSE_TYPE__", "__TAG_COURSE_PRICE__", "__TAG_COURSE_DATES__",
                 "__TAG_COURSE_TIME__", "__TAG_COURSE_LOCATION__"]
 
         final_text = ""

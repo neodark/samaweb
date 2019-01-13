@@ -235,11 +235,12 @@ class BasicCourseSerializer(serializers.ModelSerializer):
     additional_information = serializers.SerializerMethodField()
     inscription_counter = serializers.SerializerMethodField()
     max_inscription_counter = serializers.SerializerMethodField()
+    course_price = serializers.SerializerMethodField()
     participants = BasicParticipantSerializer(many=True)
 
     class Meta:
         model = Course
-        fields = ['id', 'status', 'course_type', 'additional_information', 'inscription_counter', 'max_inscription_counter', 'participants']
+        fields = ['id', 'status', 'course_type', 'additional_information', 'inscription_counter', 'max_inscription_counter', 'course_price', 'participants']
 
     def get_status(self, obj):
         if obj.status == Course.OPEN:
@@ -273,9 +274,12 @@ class BasicCourseSerializer(serializers.ModelSerializer):
     def get_max_inscription_counter(self, obj):
         return obj.max_inscription_counter
 
+    def get_course_price(self, obj):
+        return obj.course_price
+
 class FullCourseSerializer(BasicCourseSerializer):
     class Meta(BasicCourseSerializer.Meta):
-        fields = ['id', 'status', 'course_type', 'additional_information', 'inscription_counter', 'max_inscription_counter']
+        fields = ['id', 'status', 'course_type', 'additional_information', 'inscription_counter', 'max_inscription_counter', 'course_price']
 
 class CreatedCourseSerializer(BasicCourseSerializer):
     class Meta(BasicCourseSerializer.Meta):
@@ -291,7 +295,7 @@ class CourseCreationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Course
-        fields = ['status', 'course_type', 'inscription_counter', 'max_inscription_counter', 'additional_information']
+        fields = ['status', 'course_type', 'inscription_counter', 'max_inscription_counter', 'additional_information', 'course_price']
 
     def create(self, validated_data):
         course = None
@@ -310,6 +314,7 @@ class CourseCreationSerializer(serializers.ModelSerializer):
         instance.course_type = validated_data.get('course_type', instance.course_type)
         instance.inscription_counter = validated_data.get('inscription_counter', instance.inscription_counter)
         instance.max_inscription_counter = validated_data.get('max_inscription_counter', instance.max_inscription_counter)
+        instance.course_price = validated_data.get('course_price', instance.course_price)
         instance.additional_information = validated_data.get('additional_information', instance.additional_information)
         instance.save()
 
@@ -338,6 +343,9 @@ class CourseCreationSerializer(serializers.ModelSerializer):
     def validate_max_inscription_counter(self, value):
         return value
 
+    def validate_course_price(self, value):
+        return value
+
     def validate_additional_information(self, value):
         return json.dumps(value)
 
@@ -352,7 +360,7 @@ class CourseCreationSerializer(serializers.ModelSerializer):
 class CourseUpdateSerializer(CourseCreationSerializer):
 
     class Meta(CourseCreationSerializer.Meta):
-        fields = ['status', 'course_type', 'inscription_counter', 'max_inscription_counter', 'additional_information', 'participants']
+        fields = ['status', 'course_type', 'inscription_counter', 'max_inscription_counter', 'course_price', 'additional_information', 'participants']
 
     #def to_representation(self, obj):
     #    serializer = CourseUpdateSerializer(obj)

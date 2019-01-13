@@ -9,7 +9,7 @@
 {% block content %}
 
     <!-- Page Content -->
-    <div class="container" ng-init="initCourse('{{ coursetype }}', '{% url 'course_list' %}')">
+    <div class="container" ng-init="initCourse('{{ coursetype }}', '{{ courseprice }}', '{% url 'course_list' %}')">
 
         <!-- Page Heading/Breadcrumbs -->
         <div class="row">

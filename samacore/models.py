@@ -44,7 +44,7 @@ class Section(models.Model):
 
 class CourseManager(models.Manager):
 
-    def create_object(self, status, course_type, max_inscription_counter, inscription_counter=0, additional_information={}):
+    def create_object(self, status, course_type, course_price, max_inscription_counter, inscription_counter=0, additional_information={}):
 
         #Creation of a course
         course              = Course()
@@ -54,6 +54,7 @@ class CourseManager(models.Manager):
         course.additional_information = additional_information
         course.inscription_counter = inscription_counter
         course.max_inscription_counter = max_inscription_counter
+        course.course_price = course_price
 
         if isinstance(additional_information, dict):
             course.additional_information = json.dumps(additional_information, indent=4)
@@ -91,12 +92,16 @@ class Course(models.Model):
     SAMARITAINS = 'B'
     BLSAED = 'D'
     UPE = 'E'
+    IAS1 = 'F'
+    IAS2 = 'G'
 
     COURSE_TYPE = (
         (SAUVETEURS, 'Sauveteurs'),
         (SAMARITAINS, 'Samaritains'),
         (BLSAED, 'BLS-AED'),
         (UPE, 'UPE'),
+        (IAS1, 'IAS1'),
+        (IAS2, 'IAS2'),
     )
 
     #_______ Fields _______
@@ -106,6 +111,7 @@ class Course(models.Model):
     additional_information  = models.TextField(default='{}', blank=True)
     inscription_counter     = models.PositiveIntegerField(_("Inscription Counter"), default=0)
     max_inscription_counter = models.PositiveIntegerField(_("Maximum Inscription Counter"), default=0)
+    course_price            = models.PositiveIntegerField(_("Course Price"), default=0)
 
     objects = CourseManager()
 
