@@ -5,7 +5,7 @@ from django.template import loader, RequestContext
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden, Http404
 from django.core import exceptions
 from django.conf import settings
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import get_object_or_404
 
 from django.views.generic import TemplateView
 from samacore.models import Course, Participant
@@ -37,7 +37,7 @@ def section(request):
 def courses(request):
     param_1 = 2
     context = {'params': param_1}
-    if request.user.is_anonymous():
+    if request.user.is_anonymous:
         return render(request, 'samacore/courses.html', context)
     else:
         return render(request, 'samacore/courses_admin.html', context)
@@ -50,13 +50,13 @@ def faq(request):
 def membres(request):
     param_1 = 2
     context = {'params': param_1}
-    if request.user.is_anonymous():
+    if request.user.is_anonymous:
         return render(request, 'samacore/section_program_section.html', context)
     else:
         return render(request, 'samacore/section_program_section_admin.html', context)
 
 def add_program(request):
-    if request.user.is_anonymous():
+    if request.user.is_anonymous:
         raise exceptions.PermissionDenied
     else:
         context = {}
@@ -64,10 +64,10 @@ def add_program(request):
         return render(request, 'samacore/section_program_add.html', context)
 
 def edit_program(request):
-    if request.user.is_anonymous():
+    if request.user.is_anonymous:
         raise exceptions.PermissionDenied
     else:
-        if request.GET.has_key('sectionid'):
+        if 'sectionid' in request.GET:
             sectionid = request.GET['sectionid']
 
         context = {'sectionid': sectionid}
@@ -78,26 +78,26 @@ def edit_program(request):
 def course(request):
     coursetype = ''
     coursestatus = ''
-    if request.GET.has_key('coursetype'):
+    if 'coursetype' in request.GET:
         coursetype = request.GET['coursetype']
 
-    if request.GET.has_key('coursestatus'):
+    if 'coursestatus' in request.GET:
         coursestatus = request.GET['coursestatus']
 
     context = {'coursetype': coursetype,
                'courseprice': courseprice[coursetype],
                'coursestatus': coursestatus}
-    if request.user.is_anonymous():
+    if request.user.is_anonymous:
         return render(request, 'samacore/course.html', context)
     else:
         return render(request, 'samacore/course_admin.html', context)
 
 def add_course(request):
-    if request.user.is_anonymous():
+    if request.user.is_anonymous:
         raise exceptions.PermissionDenied
     else:
         coursetype = ''
-        if request.GET.has_key('coursetype'):
+        if 'coursetype' in request.GET:
             coursetype = request.GET['coursetype']
 
         context = {'coursetype': coursetype,
@@ -106,14 +106,14 @@ def add_course(request):
         return render(request, 'samacore/course_add.html', context)
 
 def edit_course(request):
-    if request.user.is_anonymous():
+    if request.user.is_anonymous:
         raise exceptions.PermissionDenied
     else:
         coursetype = ''
-        if request.GET.has_key('coursetype'):
+        if 'coursetype' in request.GET:
             coursetype = request.GET['coursetype']
 
-        if request.GET.has_key('courseid'):
+        if 'courseid' in request.GET:
             courseid = request.GET['courseid']
 
         context = {'coursetype': coursetype,
@@ -123,14 +123,14 @@ def edit_course(request):
         return render(request, 'samacore/course_edit.html', context)
 
 def archive_course(request):
-    if request.user.is_anonymous():
+    if request.user.is_anonymous:
         raise exceptions.PermissionDenied
     else:
         coursetype = ''
-        if request.GET.has_key('coursetype'):
+        if 'coursetype' in request.GET:
             coursetype = request.GET['coursetype']
 
-        if request.GET.has_key('courseid'):
+        if 'courseid' in request.GET:
             courseid = request.GET['courseid']
 
         context = {'coursetype': coursetype,
@@ -140,14 +140,14 @@ def archive_course(request):
         return render(request, 'samacore/course_archive.html', context)
 
 def participants_course(request):
-    if request.user.is_anonymous():
+    if request.user.is_anonymous:
         raise exceptions.PermissionDenied
     else:
         coursetype = ''
-        if request.GET.has_key('coursetype'):
+        if 'coursetype' in request.GET:
             coursetype = request.GET['coursetype']
 
-        if request.GET.has_key('courseid'):
+        if 'courseid' in request.GET:
             courseid = request.GET['courseid']
 
         context = {'coursetype': coursetype,
@@ -156,7 +156,7 @@ def participants_course(request):
         return render(request, 'samacore/course_participants.html', context)
 
 def participant_course_edit(request):
-    if request.user.is_anonymous():
+    if request.user.is_anonymous:
         raise exceptions.PermissionDenied
     else:
         coursetype = ''
@@ -165,9 +165,9 @@ def participant_course_edit(request):
         coursetime = ''
         courselocation = ''
         participantid = ''
-        if request.GET.has_key('coursetype'):
+        if 'coursetype' in request.GET:
             coursetype = request.GET['coursetype']
-        if request.GET.has_key('courseid'):
+        if 'courseid' in request.GEt:
             courseid = request.GET['courseid']
             course = Course.objects.get(id=courseid)
             courseinformation = course.additional_information
@@ -175,7 +175,7 @@ def participant_course_edit(request):
             coursedates     = jsoncourse['dates']
             coursetime      = jsoncourse['time']
             courselocation  = jsoncourse['location']
-        if request.GET.has_key('participantid'):
+        if 'participantid' in request.GET:
             participantid = request.GET['participantid']
             participant = Participant.objects.get(id=participantid)
 
@@ -190,7 +190,7 @@ def participant_course_edit(request):
         return render(request, 'samacore/participant_course.html', context)
 
 def participant_course_delete(request):
-    if request.user.is_anonymous():
+    if request.user.is_anonymous:
         raise exceptions.PermissionDenied
     else:
         coursetype = ''
@@ -199,9 +199,9 @@ def participant_course_delete(request):
         coursetime = ''
         courselocation = ''
         participantid = ''
-        if request.GET.has_key('coursetype'):
+        if 'coursetype' in request.GET:
             coursetype = request.GET['coursetype']
-        if request.GET.has_key('courseid'):
+        if 'courseid' in request.GET:
             courseid = request.GET['courseid']
             course = Course.objects.get(id=courseid)
             courseinformation = course.additional_information
@@ -209,7 +209,7 @@ def participant_course_delete(request):
             coursedates     = jsoncourse['dates']
             coursetime      = jsoncourse['time']
             courselocation  = jsoncourse['location']
-        if request.GET.has_key('participantid'):
+        if 'participantid' in request.GET:
             participantid = request.GET['participantid']
             participant = Participant.objects.get(id=participantid)
 
@@ -235,9 +235,9 @@ def register_course(request):
     coursedates = ''
     coursetime = ''
     courselocation = ''
-    if request.GET.has_key('coursetype'):
+    if 'coursetype' in request.GET:
         coursetype = request.GET['coursetype']
-    if request.GET.has_key('courseid'):
+    if 'courseid' in request.GET:
         courseid = request.GET['courseid']
         course = Course.objects.get(id=courseid)
         courseinformation = course.additional_information
