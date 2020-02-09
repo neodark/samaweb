@@ -1,5 +1,4 @@
 from django.db import models
-from django_extensions.db.fields import UUIDField
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -196,8 +195,8 @@ class Participant(models.Model):
     npa                 = models.IntegerField(_("NPA"), default=0)
     city                = models.CharField(_("City"), max_length=400)
     phone               = models.CharField(_("Phone Number"), max_length=100)
-    course              = models.ForeignKey(Course, verbose_name=_("Course Participation"), related_name='participants', blank=True, null=True)
-    uuid_field          = UUIDField()
+    course              = models.ForeignKey("Course", verbose_name=_("Course Participation"), related_name='participants', blank=True, null=True, on_delete=models.PROTECT)
+    uuid_field          = models.UUIDField()
 
     objects = ParticipantManager()
 
