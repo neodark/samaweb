@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 
 # Rest framework
 from rest_framework import routers
@@ -11,7 +11,8 @@ from api.views import AuthView
 
 router = routers.SimpleRouter()
 
-urlpatterns = patterns('',
+app_name = 'api'
+urlpatterns = [
 
     # Regular URLs
 
@@ -25,4 +26,4 @@ urlpatterns = patterns('',
     url(r'^accounts/$', UserView.as_view('list')),
     url(r'^auth/$', AuthView.as_view(), name='authenticate'),
     url( r'^', include(router.urls) ),
-)
+]

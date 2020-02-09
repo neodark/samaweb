@@ -145,27 +145,27 @@ class ParticipantCreationSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         participant = None
-        if not validated_data.has_key('status'):
+        if 'status' not in validated_data:
             raise serializers.ValidationError('Participant status not specified')
-        if not validated_data.has_key('first_name'):
+        if 'first_name' not in validated_data:
             raise serializers.ValidationError('Participant first_name not specified')
-        if not validated_data.has_key('last_name'):
+        if 'last_name' not in validated_data:
             raise serializers.ValidationError('Participant last_name not specified')
-        if not validated_data.has_key('birth_date'):
+        if 'birth_date' not in validated_data:
             raise serializers.ValidationError('Participant birth_date not specified')
-        if not validated_data.has_key('gender'):
+        if 'gender' not in validated_data:
             raise serializers.ValidationError('Participant gender not specified')
-        if not validated_data.has_key('email'):
+        if 'email' not in validated_data:
             raise serializers.ValidationError('Participant email not specified')
-        if not validated_data.has_key('address'):
+        if 'address' not in validated_data:
             raise serializers.ValidationError('Participant address not specified')
-        if not validated_data.has_key('npa'):
+        if 'npa' not in validated_data:
             raise serializers.ValidationError('Participant npa not specified')
-        if not validated_data.has_key('city'):
+        if 'city' not in validated_data:
             raise serializers.ValidationError('Participant city not specified')
-        if not validated_data.has_key('phone'):
+        if 'phone' not in validated_data:
             raise serializers.ValidationError('Participant phone not specified')
-        if not validated_data.has_key('course'):
+        if 'course' not in validated_data:
             raise serializers.ValidationError('Participant course not specified')
 
         (participant, self.details) = self.Meta.model.objects.create_object(**validated_data)
@@ -299,7 +299,7 @@ class CourseCreationSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         course = None
-        if not validated_data.has_key('course_type'):
+        if 'course_type' not in validated_data:
             raise serializers.ValidationError('Course type not specified')
 
         (course, self.details) = self.Meta.model.objects.create_object(**validated_data)
@@ -318,7 +318,7 @@ class CourseCreationSerializer(serializers.ModelSerializer):
         instance.additional_information = validated_data.get('additional_information', instance.additional_information)
         instance.save()
 
-        if validated_data.has_key('status'):
+        if 'status' not in validated_data:
             if len(self.data["participants"]) > 0:
                 for participant_id in self.data["participants"]:
                     participant = Participant.objects.get(id=participant_id)

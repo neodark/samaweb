@@ -112,7 +112,7 @@ class SectionDetailView(RetrieveUpdateDestroyAPIView):
         return super(SectionDetailView, self).get_serializer(*args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        if self.kwargs.has_key('pk'):
+        if 'pk' in self.kwargs:
             section = self.get_queryset(self.kwargs.get('pk'))
             serializer = self.serializer_class(section, context={'request': request})
             data = serializer.data
@@ -120,21 +120,21 @@ class SectionDetailView(RetrieveUpdateDestroyAPIView):
             return Response(data)
 
     def delete(self, request, *args, **kwargs):
-        if self.kwargs.has_key('pk'):
+        if 'pk' in self.kwargs:
             section = self.get_queryset(self.kwargs.get('pk'))
             section.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
 
     def update(self, request, *args, **kwargs):
         # Process the query string
-        if request.GET.has_key('fields'):
+        if 'fields' in request.GET:
             fields_to_return = request.GET['fields'].split(',')
         else:
             # Available fields (not returned by default):
             #    - html_description
             fields_to_return = []
 
-        if self.kwargs.has_key('pk'):
+        if 'pk' in self.kwargs:
             section = self.get_queryset(self.kwargs.get('pk'))
 
             serializer = self.writing_serializer_class(section, data=request.data, partial=True)
@@ -171,9 +171,9 @@ class CourseCreationNewView(ListCreateAPIView):
     def list(self, request):
         queryset = Course.objects.all()
 
-        #self.request.QUERY_PARAMS.has_key('coursetype')
-        coursetype = self.request.QUERY_PARAMS.get('coursetype', None)
-        coursestatus = self.request.QUERY_PARAMS.get('coursestatus', None)
+        #self.request.query_params.has_key('coursetype')
+        coursetype = self.request.query_params.get('coursetype', None)
+        coursestatus = self.request.query_params.get('coursestatus', None)
 
         #Filter course by course type if requested
         if coursetype is not None:
@@ -195,7 +195,7 @@ class CourseCreationNewView(ListCreateAPIView):
         course_idx = {}
         for item in queryset:
             additional_information = json.loads(item.additional_information)
-            if additional_information.has_key('dates'):
+            if 'dates' in additional_information:
                 dates = additional_information['dates']
                 if len(dates.split(' ')) > 1:
                     course_list=[]
@@ -269,7 +269,7 @@ class CourseDetailView(RetrieveUpdateDestroyAPIView):
         return super(CourseDetailView, self).get_serializer(*args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        if self.kwargs.has_key('pk'):
+        if 'pk' in self.kwargs:
             course = self.get_queryset(self.kwargs.get('pk'))
             serializer = self.serializer_class(course, context={'request': request})
             data = serializer.data
@@ -277,14 +277,14 @@ class CourseDetailView(RetrieveUpdateDestroyAPIView):
             return Response(data)
 
     def delete(self, request, *args, **kwargs):
-        if self.kwargs.has_key('pk'):
+        if 'pk' in self.kwargs:
             course = self.get_queryset(self.kwargs.get('pk'))
             course.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
 
     def update(self, request, *args, **kwargs):
         # Process the query string
-        if request.GET.has_key('fields'):
+        if 'fields' in request.GET:
             fields_to_return = request.GET['fields'].split(',')
         else:
             # Available fields (not returned by default):
@@ -297,7 +297,7 @@ class CourseDetailView(RetrieveUpdateDestroyAPIView):
                     request.data["course_type"] = key
                     break
 
-        if self.kwargs.has_key('pk'):
+        if 'pk' in self.kwargs:
             course = self.get_queryset(self.kwargs.get('pk'))
 
             serializer = self.writing_serializer_class(course, data=request.data, partial=True)
@@ -462,7 +462,7 @@ class ParticipantDetailView(RetrieveUpdateDestroyAPIView):
         return super(ParticipantDetailView, self).get_serializer(*args, **kwargs)
 
     def get(self, request, *args, **kwargs):
-        if self.kwargs.has_key('pk'):
+        if 'pk' in self.kwargs:
             participant = self.get_queryset(self.kwargs.get('pk'))
             serializer = self.serializer_class(participant, context={'request': request})
             data = serializer.data
@@ -470,7 +470,7 @@ class ParticipantDetailView(RetrieveUpdateDestroyAPIView):
             return Response(data)
 
     def delete(self, request, *args, **kwargs):
-        if self.kwargs.has_key('pk'):
+        if 'pk' in self.kwargs:
             participant = self.get_queryset(self.kwargs.get('pk'))
 
             course = Course.objects.get(id=participant.course.id)
@@ -484,14 +484,14 @@ class ParticipantDetailView(RetrieveUpdateDestroyAPIView):
 
     def update(self, request, *args, **kwargs):
         # Process the query string
-        if request.GET.has_key('fields'):
+        if 'fields' in request.GET:
             fields_to_return = request.GET['fields'].split(',')
         else:
             # Available fields (not returned by default):
             #    - html_description
             fields_to_return = []
 
-        if self.kwargs.has_key('pk'):
+        if 'pk' in self.kwargs:
             participant = self.get_queryset(self.kwargs.get('pk'))
 
             serializer = self.writing_serializer_class(participant, data=request.data, partial=True)
