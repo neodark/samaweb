@@ -1,7 +1,7 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 from . import views
 
-
+app_name = 'samacore'
 partial_patterns = [
     url(
         r'^courseInfo/$',
@@ -32,7 +32,8 @@ urlpatterns = [
     # url(r'^$', 'samaweb.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^partials/', include(partial_patterns, namespace='partials')),
+    #url(r'^partials/', include(partial_patterns, namespace='partials')),
+    url(r'^partials/', include((partial_patterns, "samacore"), namespace='partials')),
     url(r'^$', views.index, name='index'),
     url(r'^index/$', views.index, name='index'),
     url(r'^section/$', views.section, name='section'),
