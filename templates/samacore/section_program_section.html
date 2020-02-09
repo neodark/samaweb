@@ -1,6 +1,6 @@
 {% extends "samacore/base.html" %}
 
-{% load staticfiles %}
+{% load static %}
 
 {% load samacore_extras %}
 
@@ -30,7 +30,7 @@
     <script src="{% static 'samaweb/app/directives/sectionView.js' %}" type="text/javascript" charset="utf-8"></script>
 
     <!-- Page Content -->
-    <div class="container program_section" ng-controller="sectionController" ng-init="initSection('{% url 'section_list' %}')">
+    <div class="container program_section" ng-controller="sectionController" ng-init="initSection('{% url 'api:section_list' %}')">
 
         <!-- Modal -->
         <div class="modal fade" id="modalsuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -142,7 +142,7 @@
     </script>
     <script type='text/javascript'>
     jQuery(document).ready(function() {
-        //var url = "{% url 'course_list' %}";
+        //var url = "{% url 'api:course_list' %}";
         //$.ajax({
         //    type: "GET",
         //    url: url,

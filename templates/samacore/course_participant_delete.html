@@ -1,6 +1,6 @@
 {% extends "samacore/base.html" %}
 
-{% load staticfiles %}
+{% load static %}
 
 {% load samacore_extras %}
 
@@ -30,7 +30,7 @@
     <script src="{% static 'samaweb/app/directives/courseView.js' %}" type="text/javascript" charset="utf-8"></script>
 
     <!-- Page Content -->
-    <div class="container" ng-init="initParticipantEdition('{{ coursetype }}', '{{ courseprice }}', '{{coursedates}}', '{{coursetime}}', '{{courselocation}}', '{% url 'course_list' %}', '{% url 'participant_detail' participant.id %}', '{{participantid}}')">
+    <div class="container" ng-init="initParticipantEdition('{{ coursetype }}', '{{ courseprice }}', '{{coursedates}}', '{{coursetime}}', '{{courselocation}}', '{% url 'api:course_list' %}', '{% url 'api:participant_detail' participant.id %}', '{{participantid}}')">
 
 
         <!-- Page Heading/Breadcrumbs -->
@@ -179,7 +179,7 @@
     </script>
     <script type='text/javascript'>
     jQuery(document).ready(function() {
-        //var url = "{% url 'course_list' %}";
+        //var url = "{% url 'api:course_list' %}";
         //$.ajax({
         //    type: "GET",
         //    url: url,

@@ -1,5 +1,5 @@
 {% load i18n %}
-{% load staticfiles %}
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en" data-ng-app="samawebApp">
@@ -57,25 +57,25 @@
                     <span class="icon-bar"></span>
                 </button>
                <!-- <a class="navbar-brand" href="index.html">Samaritains de Martigny</a>-->
-               <a class="navbar-brand" href="{% url 'index' %}">Samaritains de Martigny</a>
+               <a class="navbar-brand" href="{% url 'samacore:index' %}">Samaritains de Martigny</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="{% url 'section' %}">Section</a>
+                        <a href="{% url 'samacore:section' %}">Section</a>
                     </li>
                     <li>
-                        <a href="{% url 'courses' %}">Cours</a>
+                        <a href="{% url 'samacore:courses' %}">Cours</a>
                     </li>
                     <li>
-                        <a href="{% url 'faq' %}">FAQ</a>
+                        <a href="{% url 'samacore:faq' %}">FAQ</a>
                     </li>
                     <li>
-                        <a href="{% url 'membres' %}">Membres</a>
+                        <a href="{% url 'samacore:membres' %}">Membres</a>
                     </li>
                     <li>
-                        <a href="{% url 'admin_login' %}">Admin</a>
+                        <a href="{% url 'samacore:admin_login' %}">Admin</a>
                     </li>
 
                     <!--
