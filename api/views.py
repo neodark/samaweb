@@ -538,8 +538,8 @@ class AuthView(APIView):
     def post(self, request, *args, **kwargs):
         #Decode in base 64 and retrieve username and password
         import base64
-        username = base64.standard_b64decode(request.data["username"])
-        password = base64.standard_b64decode(request.data["password"])
+        username = base64.standard_b64decode(request.data["username"]).decode('ascii')
+        password = base64.standard_b64decode(request.data["password"]).decode('ascii')
         user = authenticate(username=username, password=password)
         #Check if user has been successfully authenticated
         if user != None:
