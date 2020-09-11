@@ -95,6 +95,7 @@ TEMPLATES = [
         'DIRS': [
             # insert your TEMPLATE_DIRS here
             os.path.join(BASE_DIR, "templates"),
+            os.path.join(BASE_DIR, "env/lib/python3.6/site-packages/django/contrib/admin/templates"),
         ],
         'OPTIONS': {
             'context_processors': [
