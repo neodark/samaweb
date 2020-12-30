@@ -283,7 +283,7 @@ app.controller('sectionController',['$scope', 'sectionFactory', 'authState', 'au
 
             content: [
               { text: 'Samaritains de Martigny', fontSize: 17, bold: true, margin: [0, 20, 0, 8] },
-              { text: 'Programme annuel ' + $scope.year, fontSize: 14, bold: true, margin: [0, 20, 0, 8] },
+              { text: 'Programme annuel ' + $scope.year + ' - Des cours peuvent être annulés en fonction de l\'évolution de la situation sanitaire -', fontSize: 14, bold: true, margin: [0, 20, 0, 8] },
               {
                       style: 'tableBody',
                       table: {
