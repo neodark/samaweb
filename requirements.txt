@@ -13,7 +13,7 @@ djangorestframework==3.0.5
 gunicorn==19.9.0
 gevent==1.0.2
 greenlet==0.4.9
-httpie==0.9.2
+httpie==1.0.3
 psycopg2==2.7.4
 requests==2.20.0
 simplejson==3.8.1
